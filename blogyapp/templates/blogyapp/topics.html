@@ -1,0 +1,52 @@
+{% extends 'blogyapp/base.html' %}
+
+{% load bootstrap5 %}
+
+{% block content %}
+
+
+           
+<h3 style="font-weight: 300;">{{topic|title}}</h3>
+<p>
+<a href="{% url 'blogyapp:new_entry' topic.id %}" style = "text-decoration: none;">New Entry</a>
+</p>
+ {% for entry in entries %}
+ <div class="card text-center">
+
+   <div class="card-header">
+     <ul class="nav nav-pills card-header-pills">
+       <li class="nav-item">
+         <a class="btn btn-outline-primary " href="{% url 'blogyapp:edit_entry' entry.id %}">Edit</a>
+       </li>
+       &nbsp;&nbsp;&nbsp;
+       <li class="nav-item">
+         <a class=" btn btn-outline-danger" href="{% url 'blogyapp:delete_entry' entry.id %}">Delete</a>
+       </li>
+       <li class ="nav-item">
+
+       </li>
+     </ul>
+   </div>
+
+   <div class="card-body">
+     <h4 class="card-title">{{ entry.entry_title|title}}</h4>
+     <p class="card-text">{{ entry.introduction|truncatewords:30 }}</p>
+     <a href="{% url 'blogyapp:read' entry.id %}" class="btn btn-primary"> view </a>
+   </div>
+
+ </div>
+ <br>
+
+ {% empty %}
+     <p>There are no entries for this topic yet.</p>
+{% endfor %}
+
+
+ 
+
+
+
+   
+
+
+{% endblock content %}

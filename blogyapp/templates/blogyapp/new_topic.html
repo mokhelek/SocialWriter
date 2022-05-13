@@ -1,0 +1,17 @@
+{% extends 'blogyapp/base.html' %}
+
+{% load bootstrap5 %}
+
+{% block content %}
+ <p>Add a new topic:</p>
+ 
+<form action="{% url 'blogyapp:new_topic'%}" method='post'> 
+
+{% csrf_token %}
+{% bootstrap_form form %}
+
+{% buttons %}
+<button class="btn btn-primary" >Add Topic</button>
+{% endbuttons %}
+</form>
+ {% endblock content %}

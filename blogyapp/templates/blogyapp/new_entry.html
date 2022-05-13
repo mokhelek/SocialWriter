@@ -1,0 +1,18 @@
+{% extends 'blogyapp/base.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+<p><h3><a href="{% url 'blogyapp:topic' topic.id %}" style="
+    text-decoration: solid; color: black; font-weight: 300;">{{ topic|title }}</a></h3></p>
+ 
+ <p>Add a new entry:</p>
+<form action="{% url 'blogyapp:new_entry' topic.id %}" method='post'>
+    
+{% bootstrap_form form %}
+ {% csrf_token %}
+ {% buttons %}
+ <button class="btn btn-outline-success" name="submit"> upload_>></button>
+ {% endbuttons %}
+ </form>
+
+ {% endblock content %}
