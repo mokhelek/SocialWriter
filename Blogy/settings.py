@@ -141,6 +141,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'blogyapp/static')
 ]
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 LOGIN_URL = 'users:login'
 
 TINYMCE_DEFAULT_CONFIG = {
@@ -170,3 +172,4 @@ TINYMCE_DEFAULT_CONFIG = {
     'statusbar': True,
 }
 
+django_heroku.settings(locals())

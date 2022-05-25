@@ -1,0 +1,16 @@
+asgiref==3.5.2
+beautifulsoup4==4.11.1
+dj-database-url==0.5.0
+Django==4.0.4
+django-bootstrap-v5==1.0.11
+django-heroku==0.3.1
+django-tinymce==3.4.0
+docopt==0.6.2
+gitignore==0.0.8
+gunicorn==20.1.0
+psycopg2==2.9.3
+soupsieve==2.3.2.post1
+sqlparse==0.4.2
+static3==0.7.0
+tzdata==2022.1
+whitenoise==6.1.0
