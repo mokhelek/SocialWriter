@@ -4,48 +4,45 @@
 
 
 
+
 <br>
 <h2>My Topics </h2>
 <a class="btn btn-primary btn-sm" href="{% url 'blogyapp:new_topic' %}">Add Topic +</a>
 <br>
 
+<div class = "container">
+  <div class ="row">
+    {% for topic in topics %}
+    <div class = "col-lg-4">
+    <br>
+        <div class="card ">
 
-<ul>
-{% for topic in topics %}
+            <div class="card text-center">
+                <div class="card-header">
+                  <ul class="nav nav-pills card-header-pills">
+                        <li class="nav-item">
+                            <a class="btn btn-outline-primary " href="{% url 'blogyapp:edit_topic' topic.id %}">Edit</a>
+                        </li>
+                        &nbsp;&nbsp;&nbsp;
+                        <li class="nav-item">
+                            <a id="king"  class="btn btn-outline-danger" href="{% url 'blogyapp:delete_topic' topic.id %}">Delete</a>
+                        </li>
+                  </ul>
+                </div>
 
-<div class="card w-50">
+                <div class="card-body">
+                    <h5 class="card-title">{{topic}}</h5>
+                    <p class="card-text">{{topic.topic_description}}</p>
+                    <a href="{% url 'blogyapp:topic' topic.id %}" class="btn btn-primary"> view topic </a>
+                </div>
+            </div>
+        </div>
 
-
-  <div class="card text-center">
-    <div class="card-header">
-      <ul class="nav nav-pills card-header-pills">
-        <li class="nav-item">
-            <a class="btn btn-outline-primary " href="{% url 'blogyapp:edit_topic' topic.id %}">Edit</a>
-        </li>
-        &nbsp;&nbsp;&nbsp;
-        <li class="nav-item">
-            <a class="btn btn-outline-danger" href="{% url 'blogyapp:delete_topic' topic.id %}">Delete</a>
-        </li>
-      </ul>
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">{{topic}}</h5>
-      <p class="card-text">{{topic.topic_description}}</p>
-      <a href="{% url 'blogyapp:topic' topic.id %}" class="btn btn-primary"> view topic </a>
-    </div>
-  </div>
+          </div>
+            {% empty %}
+            <strong>No topics for you</strong>
+            {% endfor %}
+   </div>
 </div>
 
-
-
-{% empty %}
-<p>No topics for you</p>
-{% endfor %}
-</ul>
-
-
-  
-
-
-
-  {% endblock content%}
+{% endblock content%}

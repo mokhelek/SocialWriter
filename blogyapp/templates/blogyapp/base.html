@@ -41,7 +41,7 @@
             <div class="navbar-text"> Hello {{ user.username|title }}--</div>
         </li>
         <li class="nav-item">
-            <a href="{% url 'users:logout' %}" class="btn btn-warning">Logout</a>
+            <a href="{% url 'users:logout' %}" class="btn btn-outline-warning">Logout</a>
         </li>
          {% else %}
         <li class="nav-item">

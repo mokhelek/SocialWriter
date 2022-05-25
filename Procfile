@@ -1,0 +1,1 @@
+web gunicorn Blogy.wsgi:apllication --log-file -

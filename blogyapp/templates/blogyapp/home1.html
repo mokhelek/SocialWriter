@@ -5,20 +5,54 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
 
 {% block content %}
-<div class="card" style="width: 25rem;"style = "height: 25rem;" >
-<h1 class="display-4" style = 'background-color: rgb(196, 196, 247);'>Track your learning.</h1>
-<p class="lead">Make your own Learning Log, and keep a list of the
- topics you're learning about. Whenever you learn something new
- about a topic, make an entry summarizing what you've learned.</p>
-<a class="btn btn-lg btn-primary" href="{% url 'users:register' %}"
- role="button">Register &raquo;</a>
- </div>
+<h1>home page</h1>
+<div class="container">
+    <div class ="row">
+        <div class = "col-md-3">
+            <div class="card card-body">
+                content goes here...
+            </div>
+        </div>
+
+        <div class = "col-md-5">
+            <div class="card card-body">
+                content goes here ...
+            </div>
+        </div>
+    </div>
+
+    <div class ="row">
+        <div class = "col-md-3">
+            <div class="card card-body">
+                content goes here ...
+            </div>
+        </div>
+
+        <div class = "col-md-5">
+            <div class="card card-body">
+                <p>content goes here ...</p>
+                <p>content goes here ...</p>
+                <p>content goes here ...</p>
+                <p>content goes here ...</p>
+                <p>content goes here ...</p>
+                <p>content goes here ...</p>
+            </div>
+        </div>
+        <div class = "col-md-4">
+            <div class="card card-body">
+                <p>content goes here ...</p>
+                <p>content goes here ...</p>
+                <p>content goes here ...</p>
+                <p>content goes here ...</p>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
 
 {% endblock content %}
