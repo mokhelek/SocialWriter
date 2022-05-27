@@ -18,8 +18,8 @@
 </head>
 
 
-<body style="background-color: rgb(236, 240, 245);">
-    
+<body>
+    <!-- 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="{% url 'blogyapp:home1' %}" style="color:rgb(123, 255, 0); font-style: italic; font-weight: 600;">+Blogy_>></a>
@@ -54,7 +54,73 @@
          {% endif %}
 
 </nav>
-
+-->
+<nav class="navbar fixed-top navbar-dark " style="background-color: #3c44ab; ">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'blogyapp:home1' %}" style="color:rgb(123, 255, 0); font-style: italic; font-weight: 600;">+Bloggy_>></a>
+    <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"  style= "width: 6cm; background-color: black;" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        {% if user.is_authenticated %}
+            <div  style=" color:#626cfb; font-weight: 600; font-size: larger;" class="navbar-text"> {{ user.username|title }}</div>
+  
+        {% endif %}
+       
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li class="nav-item">
+            <a style=" color:#626cfb; font-weight: 600; font-size: larger;" class="nav-link active" aria-current="page" href="{% url 'blogyapp:home1' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a style=" color:#626cfb; font-weight: 600; font-size: larger;" class="nav-link active" aria-current="page" href="{% url 'blogyapp:index' %}">Topics </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a style=" color:#626cfb; font-weight: 600; font-size: larger;" class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+        </ul>
+        
+        <div class="form-inline my-2 my-lg-0">
+          <ul class="navbar-nav ml-auto">
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                  <a href="{% url 'users:logout' %}" class="btn btn-outline-warning">Logout</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'users:register' %}">Register</a>
+              </li>
+              <li class="nav-item">
+                  
+                  <a href="{% url 'users:login' %}"class="btn btn-success">Login</a>
+              </li>
+              {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<br>
+<br>
+<br>
                         
            
 <div class = "container">

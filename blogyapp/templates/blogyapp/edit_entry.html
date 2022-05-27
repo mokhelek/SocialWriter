@@ -2,39 +2,21 @@
 {% load bootstrap5 %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="row flex-nowrap">
-        <div class="col-auto px-0">
-            <div id="sidebar" class="collapse collapse-horizontal show border-end">
-                <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start min-vh-100">
-                    <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-parent="#sidebar"><span>Item</span> </a>
-                    (more nav items) ... 
-                </div>
-            </div>
-        </div>
-        <main class="col ps-md-2 pt-2">
-            <a href="#" data-bs-target="#sidebar" data-bs-toggle="collapse" class="border rounded-3 p-1 text-decoration-none"><i class="bi bi-list bi-lg py-2 p-1"></i> Menu</a>
-            <div class="row">
-                <div class="col-12">
-                    <p><h3><a href="{% url 'blogyapp:topic' topic.id %}" style="
-                        text-decoration: solid; border-radius: 15%; color: black; font-weight: 300;">{{ topic|title }}</a></h3></p>
-                     
-                     <p>Edit entry:</p>
-                     
-                    <form action="{% url 'blogyapp:edit_entry' entry.id %}" method='post'>
-                     {% csrf_token %}
-                     {% bootstrap_form form %}
-                    
-                     {% buttons %}
-                    <button class="btn btn-outline-success" name="submit">Save changes</button>
-                    {% endbuttons %}
-                     </form>
-                    
-                </div>
-            </div>
-        </main>
-    </div>
-</div>
+
+<p><h3><a href="{% url 'blogyapp:topic' topic.id %}" style="
+    text-decoration: solid; border-radius: 15%; color: black; font-weight: 300;">{{ topic|title }}
+</a></h3></p>
+ 
+ <p>Edit entry:</p>
+ 
+<form action="{% url 'blogyapp:edit_entry' entry.id %}" method='post'>
+ {% csrf_token %}
+ {% bootstrap_form form %}
+
+ {% buttons %}
+<button class="btn btn-outline-success" name="submit">Save changes</button>
+{% endbuttons %}
+ </form>
 
 
  {% endblock content%}
