@@ -1,21 +1,24 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User 
+
 from tinymce.models import HTMLField
 
 # Create your models here.
 class Topic(models.Model):
-     #A topic the user is learning about.
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)  #It is called owner!!
+    #activity = models.ForeignKey(LogEntry, on_delete=models.CASCADE)  # summoning all the user action data saved in LogEntry model
     text = models.CharField(max_length=200)
     topic_description = models.CharField(max_length=80)
     date_added = models.DateTimeField(auto_now_add=True) 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+  
+
     def __str__(self):
          #Return a string representation of the model.
         return self.text
 
 class Entry(models.Model):
-    #Something specific learned about a topic."""
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    uploaded = models.BooleanField(default=False)
     entry_title = models.TextField()
     introduction = models.TextField(" make it catchy ")
     text = HTMLField()
@@ -23,6 +26,6 @@ class Entry(models.Model):
     
     class Meta:
         verbose_name_plural = 'entries'
-        def __str__(self):
-            #Return a string representation of the model."""
-            return self.entry_title
+    def __str__(self):
+        #Return a string representation of the model."""
+        return self.entry_title

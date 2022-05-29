@@ -16,7 +16,10 @@ urlpatterns = [
     path('delete_entry/<int:entry_id>/', views.delete_entry , name = "delete_entry"),
     path('delete_topic/<int:topic_id>/', views.delete_topic, name = "delete_topic"),
 
-    path('practice/',  views.practice , name=" practice ")
+
+    path('dashboard/',  views.dashboard , name="dashboard"),
+    
+    path('upload/<int:topic_id>/', views.upload, name='upload'),
 
 ]
 

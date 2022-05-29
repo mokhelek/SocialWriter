@@ -1,9 +1,14 @@
 {% extends 'blogyapp/base.html' %}
-
+{% load static %}
 {% block content %}
 
 
-
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+</svg>
+<svg class="bi bi-exclamation-triangle text-success" width="32" height="32" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+</svg>
 
 <br>
 <h2>My Topics </h2>
@@ -17,17 +22,22 @@
     <br>
         <div class="card ">
 
-            <div style="box-shadow: 0 0 10px #3c44ab;" class="card text-center">
+            <div style="box-shadow: 0 0 10px black;">
                 <div class="card-header">
-                  <ul class="nav nav-pills card-header-pills">
-                        <li class="nav-item">
-                            <a class="btn btn-outline-primary " href="{% url 'blogyapp:edit_topic' topic.id %}">Edit</a>
-                        </li>
-                        &nbsp;&nbsp;&nbsp;
-                        <li class="nav-item">
-                            <a id="king"  class="btn btn-outline-danger" href="{% url 'blogyapp:delete_topic' topic.id %}">Delete</a>
-                        </li>
-                  </ul>
+                
+                  <div style = "padding-left:8cm;"class="dropdown">
+                    <div class="dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                      </svg>
+                    </div>
+                    <ul class="dropdown-menu">
+                      <li><a  href="{% url 'blogyapp:edit_topic' topic.id %}">Edit</a></li>
+                      <li><a  href="{% url 'blogyapp:delete_topic' topic.id %}">Delete</a><li>
+                    </ul>
+                  </div>
+
+          
                 </div>
 
                 <div class="card-body">

@@ -2,15 +2,21 @@
 
 {% block content %}
 
-<h2 style="font-weight: 700;"> {{entry.entry_title}}</h2>
+{% if entry.uploaded is True %}
 
-<div class="into" style="font-family: Georgia, 'Times New Roman', Times, serif; font-style: oblique; background-color: rgba(137, 223, 202, 0.377);">
-    <h4>{{entry.introduction}}</h4>
-</div>
-<hr>
-<div class = "entry_text" style="font-weight: 400;font-size: medium; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" >
-{{entry.text|safe}}
-</div>
+    <h2 style="font-weight: 700;"> {{entry.entry_title}}</h2>
+
+    <div class="into" style="font-family: Georgia, 'Times New Roman', Times, serif; font-style: oblique; background-color: rgba(137, 223, 202, 0.377);">
+        <h4>{{entry.introduction}}</h4>
+    </div>
+    <hr>
+    <div class = "entry_text" style="font-weight: 400;font-size: medium; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" >
+    {{entry.text|safe}}
+    </div>
+{% else %}
+<strong> Entry not published yet </strong>
+
+{% endif %}
 
 
 

@@ -6,13 +6,36 @@
     text-decoration: solid; color: black; font-weight: 300;">{{ topic|title }}</a></h3></p>
  
  <p>Add a new entry:</p>
+
+<div class = "container">
+
 <form action="{% url 'blogyapp:new_entry' topic.id %}" method='post'>
     
-{% bootstrap_form form %}
- {% csrf_token %}
- {% buttons %}
- <button class="btn btn-outline-success" name="submit"> upload_>></button>
- {% endbuttons %}
+    {% bootstrap_form form %}
+    {% csrf_token %}
+    {% buttons %}
+    <button class="btn btn-outline-primary" name="save"> save </button>
+    <button class="btn btn-outline-success" name="upload"> upload_>> </button>
+    {% endbuttons %}
  </form>
 
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
  {% endblock content %}

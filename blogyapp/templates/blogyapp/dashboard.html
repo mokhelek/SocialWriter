@@ -1,0 +1,78 @@
+{% extends 'blogyapp/base.html' %}
+{% block content %}
+
+
+
+<h1 style = "color: #263258 ; font-family: sans-serif;"> Dashboard </h1>
+
+<div class ="container">
+    <div class="row">
+
+        <div class="col-md-3">
+            <div style = "background-color: white ;color: black; box-shadow: 0 0 6px rgba(0, 0, 0, 0.452);" class="card card-body">
+                <h3>{{topics|length}}</h3>
+                <h6  style = "text-decoration: none; color: gray;">Number of your total topics </h6>
+                <a style = "text-decoration: none; color: rgb(71, 69, 120);"  href = "{% url 'blogyapp:index' %}">see topics</a>
+            </div>
+        </div>
+
+        <div   class="col-md-3">
+            <div style = "background-color: white ;color: black;  box-shadow: 0 0 6px rgba(0, 0, 0, 0.452); "class="card card-body">
+                <h3> {{uploaded_entries|length}}</h3>
+                <h6  style = "text-decoration: none; color: gray;">Number of your total uploads </h6>
+                <a style = "text-decoration: none; color: gray;"  href = "{% url 'blogyapp:index' %}">see uploads</a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div style = "background-color: white ;color: black; box-shadow: 0 0 6px rgba(0, 0, 0, 0.452);" class="card card-body">
+                <h3> {{entry|length}}</h3>
+                <h6  style = "text-decoration: none; color: gray;">Number of your total entries </h6>
+                <a style = "text-decoration: none; color: gray;"  href = "{% url 'blogyapp:index' %}">see entries </a>
+            </div>
+        </div>
+        
+
+        <div class="col-md-3">
+            <div style = "background-color: white ;color: black; box-shadow: 0 0 6px rgba(0, 0, 0, 0.452);" class="card card-body">
+                <h3> {{draft_entries|length}}</h3>
+                <h6  style = "text-decoration: none; color: gray;">Number of your total Drafts </h6>
+                <a style = "text-decoration: none; color: gray;" href = "{% url 'blogyapp:index' %}">see drafts </a>
+            </div>
+        </div>
+    </div>
+<br>
+    <div class = "row">
+        <div class = "col-md-6">
+                <h3 style = "color: #263258 ; font-family: sans-serif;">Recent Activity</h3>
+            <div style = "background-color: white ;color: black;" >
+                <p> Testing Below </p>
+                {% for action in activity %}
+                <div>  {{action}}  </div>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <div class = "col-md-6">
+            <h3 style = "color: #263258 ; font-family: sans-serif;">Entries</h3>
+        <div style = "background-color: white ;color: black; box-shadow: 0 0 6px rgba(0, 0, 0, 0.452);" class = "card card-body">
+          {% for entries in entry %}
+          <div class = "card card-body">
+            {{entries.entry_title|title}}
+          </div>
+
+          {% empty %}
+             <p>There are no entries for this topic yet.</p>
+
+          {% endfor %}
+        </div>
+    </div>
+
+    </div>
+
+</div>
+
+
+
+{% endblock content %}
