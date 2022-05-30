@@ -145,6 +145,10 @@ STATICFILES_DIRS = [
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+MEDIA_URL = "/images/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'blogyapp/static/images')
+
 LOGIN_URL = 'users:login'
 
 TINYMCE_DEFAULT_CONFIG = {
@@ -160,14 +164,12 @@ TINYMCE_DEFAULT_CONFIG = {
             anchor pagebreak
             ''',
     'toolbar1': '''
-            fullscreen preview bold italic underline | fontselect,
-            fontsizeselect  | forecolor backcolor | alignleft alignright |
-            aligncenter alignjustify | indent outdent | bullist numlist table |
-            | link image media | codesample |
+            bold italic underline |fontselect|fontsizeselect| forecolor backcolor | alignleft alignright |
+            aligncenter alignjustify | 
+            | link image | codesample |
             ''',
     'toolbar2': '''
-            visualblocks visualchars |
-            charmap hr pagebreak nonbreaking anchor |  code |
+            |charmap hr  |  code | indent outdent | bullist numlist | |preview |"preview"
             ''',
     'contextmenu': 'formats | link image',
     'menubar': True,

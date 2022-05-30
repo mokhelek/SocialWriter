@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
 
+from django.contrib.auth.models import User 
 from .models import Topic, Entry
+
 from django.contrib.admin.models import LogEntry , ADDITION
 from .forms import TopicForm, EntryForm
 
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+
+from PIL import Image
 
 # Create your views here.
 
@@ -14,15 +18,11 @@ def home1(request):
     #topics = Topic.objects.filter(owner=request.user).order_by('date_added')
     #topics = Topic.objects.order_by('date_added')
     return render(request, 'blogyapp/home1.html')
-
-
 @login_required
 def index(request):
     topics = Topic.objects.filter(owner=request.user).order_by('-date_added')
     #topics = Topic.objects.order_by('date_added')
     return render(request, 'blogyapp/home.html', {'topics': topics})
-
-
 @login_required
 def topic(request, topic_id):
     topic = Topic.objects.get(id=topic_id)
@@ -33,7 +33,6 @@ def topic(request, topic_id):
     entries = topic.entry_set.order_by('-date_added')
     context = {'topic': topic, 'entries': entries}
     return render(request, 'blogyapp/topics.html', context)
-
 
 @login_required
 def new_topic(request):
@@ -54,7 +53,6 @@ def new_topic(request):
     context = {'form': form}
     return render(request, 'blogyapp/new_topic.html', context)
 
-
 @login_required
 def new_entry(request, topic_id):
     topic = Topic.objects.get(id=topic_id)
@@ -62,7 +60,7 @@ def new_entry(request, topic_id):
     if request.method != 'POST':
         form = EntryForm()
     else:  # the form is  submited
-        form = EntryForm(data=request.POST)
+        form = EntryForm(request.POST , request.FILES)
         if form.is_valid():
             new_entry = form.save(commit=False)
             new_entry.topic = topic
@@ -80,7 +78,6 @@ def new_entry(request, topic_id):
             return redirect('blogyapp:topic', topic_id=topic_id)
     context = {'topic': topic, 'form': form}
     return render(request, 'blogyapp/new_entry.html', context)
-
 
 @login_required
 def edit_entry(request, entry_id):
@@ -136,19 +133,12 @@ def delete_topic(request, topic_id):
     topic.delete()
     return redirect('blogyapp:index')
 
-
-""" 
-def dashboard(request,dashboard_id):
-    owner = Entry.objects.get(id=dashboard_id)
-    context = {"owner":owner}
-    return render(request, 'blogyapp/dashboard.html', context )
-
-"""
-
-
 def dashboard(request):
     topics = Topic.objects.filter(owner=request.user).order_by('-date_added')
+    
     entry = Entry.objects.all()
+   # topic = entry.topic # summoning the fieds from the Topic model and storing them in this variable
+    
     activity = LogEntry.objects.filter(action_flag = ADDITION)
     uploaded_entries = []
     draft_entries = []
@@ -161,7 +151,6 @@ def dashboard(request):
     context = {'topics': topics, "entry": entry, "uploaded_entries": uploaded_entries,
                "draft_entries": draft_entries, "activity": activity}
     return render(request, 'blogyapp/dashboard.html', context)
-
 
 def upload(request, topic_id):
     topic = Topic.objects.get(id=topic_id)
@@ -183,6 +172,7 @@ def upload(request, topic_id):
 
 
 def read(request, read_id):
-    entry = Entry.objects.get(id=read_id)
-    context = {"entry": entry}
+    entry = Entry.objects.get(id=read_id)  # getting data from the Entry MOdel....
+    topic = entry.topic  # summoned the foreignkey...now i have access to all fields of the Topic Model
+    context = {"entry": entry, "topic":topic}
     return render(request, "blogyapp/read.html", context)

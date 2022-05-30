@@ -12,11 +12,15 @@
 {% bootstrap_javascript %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+<link re="stylesheet" type ="text/css" href="prim.css">
+<script src = "prim.js"></script>
+
+<link rel="stylesheet" type="text/css" href="{% static 'blogyapp/css/read.css' %}"/>
 {{form.media}}
 </head>
 
 
-<body style=" color: #1A223B; background-color:rgb(255, 255, 255)">
+<body>
     <!-- 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -56,10 +60,13 @@
 <nav class="navbar fixed-top navbar-dark " style="background-color:#1A223B; height: 2.5cm; box-shadow:0 0 6px #000000; ">
   <div class="container-fluid">
   
-    <button style= "color: black;" class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-      <span style=" background-color: rgba(50, 50, 50, 0.298); height: 0.8cm; width: 1cm; border-radius: 3px;" class="navbar-toggler-icon"></span>
-    </button>
-    <br>
+    <div class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+      </svg>
+    </div>
+  
+    
     
     <form class="d-flex" role="search">
       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -76,13 +83,14 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-item">
+            <a style=" color:white; ; font-weight: 600; font-size: larger;" class="nav-link active" aria-current="page" href="{% url 'blogyapp:home1' %}">Home</a>
+          </li>
+          <li class="nav-item">
             {% if user.is_authenticated %}
             <div> <a style=" color:white; font-weight: 600; font-size: larger;" class="nav-link" href="{% url 'blogyapp:dashboard' %}">Dashboard</a> </div>
             {% endif %}
           </li>
-          <li class="nav-item">
-            <a style=" color:white; ; font-weight: 600; font-size: larger;" class="nav-link active" aria-current="page" href="{% url 'blogyapp:home1' %}">Home</a>
-          </li>
+          
           <li class="nav-item">
             <a style="  color:white;  font-weight: 600; font-size: larger;" class="nav-link active" aria-current="page" href="{% url 'blogyapp:index' %}">Topics </a>
           </li>
@@ -125,14 +133,16 @@
 <br>
 <br>
 <br>
-                        
-           
+
+
+    
+
 <div class = "container"  style="padding-top: 1cm;">
     {% block content %}
     
     {% endblock content %}
-
 </div>
+
 
 
 

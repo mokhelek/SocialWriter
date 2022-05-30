@@ -9,9 +9,8 @@
 
 <div class = "container">
 
-<form action="{% url 'blogyapp:new_entry' topic.id %}" method='post'>
-    
-    {% bootstrap_form form %}
+<form  method='POST' enctype="multipart/form-data" action="{% url 'blogyapp:new_entry' topic.id %}"  >
+    {% bootstrap_form form%}
     {% csrf_token %}
     {% buttons %}
     <button class="btn btn-outline-primary" name="save"> save </button>

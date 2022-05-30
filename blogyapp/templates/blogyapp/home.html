@@ -1,5 +1,9 @@
 {% extends 'blogyapp/base.html' %}
 {% load static %}
+
+
+
+
 {% block content %}
 
 
@@ -11,8 +15,12 @@
 </svg>
 
 <br>
-<h2>My Topics </h2>
-<a class="btn btn-primary btn-sm" href="{% url 'blogyapp:new_topic' %}">Add Topic +</a>
+<h1 style = "color: #263258 ; font-family: sans-serif;"> My Topics </h1>
+<a style = "text-decoration: none; font-size: x-large; color: #2B7A78" href="{% url 'blogyapp:new_topic' %}">
+  Topic <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-plus-square-fill " viewBox="0 0 16 16">
+    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
+  </svg>
+</a>
 <br>
 
 <div class = "container">
@@ -20,33 +28,46 @@
     {% for topic in topics %}
     <div class = "col-lg-4">
     <br>
-        <div class="card ">
 
-            <div style="box-shadow: 0 0 10px black;">
-                <div class="card-header">
-                
-                  <div style = "padding-left:8cm;"class="dropdown">
-                    <div class="dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                      </svg>
-                    </div>
-                    <ul class="dropdown-menu">
-                      <li><a  href="{% url 'blogyapp:edit_topic' topic.id %}">Edit</a></li>
-                      <li><a  href="{% url 'blogyapp:delete_topic' topic.id %}">Delete</a><li>
-                    </ul>
-                  </div>
-
-          
-                </div>
-
+            <div id ="hovering"  style="height: 3cm; box-shadow: 0 0 6px rgba(0, 0, 0, 0.452);">
                 <div class="card-body">
-                    <h5 class="card-title">{{topic}}</h5>
-                    <p class="card-text">{{topic.topic_description}}</p>
-                    <a href="{% url 'blogyapp:topic' topic.id %}" class="btn btn-primary"> view topic </a>
+                  <div class="container">
+                  <div class="row">
+                      <div class="col-md-11">
+                          <a  style = "text-decoration: none;color: black; display: block;" href="{% url 'blogyapp:topic' topic.id %}">
+                              <h5 class="card-title">{{topic}}</h5>
+                              <p class="card-text">{{topic.topic_description|truncatechars:40}}</p>
+                        </a>
+                      </div>
+                      <div class="col-md-1">
+                        <div class="dropdown">
+                          <div class="dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                              <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                            </svg>
+                          </div>
+                          <ul style="  padding-left: 0.2cm; min-width: 3cm; background-color: rgb(222, 216, 216); " class="dropdown-menu dropdown-menu-end" >
+                            <li><a  style=" font-weight: 500 ; color: rgb(231, 7, 7); text-decoration: none;" href="{% url 'blogyapp:edit_topic' topic.id %}">
+                              Edit  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+                              </svg>
+                            </a></li>
+                            <li><a  style="font-weight: 500 ; color: rgb(21, 14, 227); text-decoration: none;" href="{% url 'blogyapp:delete_topic' topic.id %}">
+                              Delete <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                              </svg>
+                            </a><li>
+                          </ul>
+                        </div>
+                      </div>
+
+                     
+                  </div>
+                </div>
+                    
                 </div>
             </div>
-        </div>
 
           </div>
             {% empty %}
@@ -56,3 +77,6 @@
 </div>
 
 {% endblock content%}
+
+
+<!--   <a href="{% url 'blogyapp:topic' topic.id %}" class="btn btn-primary"> view topic </a> --> 

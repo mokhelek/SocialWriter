@@ -17,7 +17,8 @@ class Topic(models.Model):
         return self.text
 
 class Entry(models.Model):
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE) # field with Topic data ...!
+    thumbnail = models.ImageField(upload_to="images")
     uploaded = models.BooleanField(default=False)
     entry_title = models.TextField()
     introduction = models.TextField(" make it catchy ")

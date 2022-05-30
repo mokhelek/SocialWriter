@@ -11,12 +11,14 @@ class TopicForm(forms.ModelForm):
         labels = {'text': 'topic_description'}
 
 class EntryForm(forms.ModelForm):
+    thumbnail = forms.ImageField()
     introduction = forms.CharField(widget= forms.Textarea())
-    entry_title = forms.CharField(widget = forms.Textarea(attrs={'cols': 30, 'rows':2}))
+    entry_title = forms.CharField(widget = forms.Textarea(attrs={'cols': 10, 'rows':1}))
     text = forms.CharField(widget = TinyMCE(attrs={'cols': 80, 'rows':20}))
     
     class Meta:
-        fields =['entry_title','introduction','text']
         model = Entry
+        fields =['thumbnail' ,'entry_title','introduction','text']
+        
         labels = {'text': 'Entry:'}
         #widgets = {'text': forms.Textarea(attrs={'cols': 80})}
