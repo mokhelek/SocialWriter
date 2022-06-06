@@ -1,8 +1,10 @@
 {% extends "blogyapp/base.html" %}
 {% load static %}
 <link rel="stylesheet"  href="{% static 'blogyapp/css/read.css' %}">
+
 {% block content %}
 
+<div class ="container">
 <div class="writer">  
     <div style="color: #1A223B; font-size: larger; font-weight: 700;">
         {{  topic.owner.username|title }}
@@ -14,7 +16,7 @@
 </div>  
 <br><br>
 
-<div class=" w-75 position-relative top-50 start-50 translate-middle-x">
+<div id="content" class=" position-relative top-50 start-50 translate-middle-x">
     <div class = "myblogpost">
     <div class="card card-body">
 
@@ -22,7 +24,8 @@
         <h2 style="font-weight: 700;"> 
             {{entry.entry_title}}
         </h2>
-        <div class="intor" style="font-family: Georgia, 'Times New Roman', Times, serif; font-style: oblique; background-color: rgba(137, 223, 202, 0.377);">
+        <div class="intor" style="font-family: Georgia, 'Times New Roman', Times, serif; font-style: oblique; background-color: rgba(238, 188, 24, 0.595);">
+   
             <h4>{{entry.introduction}}</h4>
             </div>
         <div class = "crop">
@@ -43,6 +46,6 @@
 </div>
 </div>
 
-
+</div>
 
 {% endblock %}

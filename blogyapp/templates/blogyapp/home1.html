@@ -1,35 +1,50 @@
 {% extends 'blogyapp/base.html' %}
 {% load bootstrap5 %}
 {% load static %}
-
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
-{% block home %}
-djfhkasfal
-
-{% endblock home %}
 
 
 {% block content %}
-<div  class = "container">
-    <div class="row">
-        <div  class ="col-md-12">
-            <div class = "card card-body">
-                ________________ ________________ ________________ ________________ ________________
-                ________________ ________________ ________________ ________________ ________________
-                ________________ ________________ ________________ ________________ ________________
-                ________________ ________________ ________________ ________________ ________________
-                ________________ ________________ ________________ ________________ ________________
-                ________________ ________________ ________________ ________________ ________________ 
-                ________________ ________________ ________________ ________________ ________________
-                ________________ ________________ ________________ ________________ ________________
-                ________________ ________________ ________________ ________________ ________________
-                ________________ ________________ ________________ ________________ ________________
-            </div>
+<center>
+<section class="position-relative top-50 ">
+    <div class ="intro">
+        <h5>Your all in one blog</h5>
+        <h1 style="color: rgb(251, 143, 1);">All Bloggers Assemble!</h1>
+        <h5>Bloggy is dream destinaton to writers and bloggers of all type </h5>
+        <h5>It allows rapit blogging while giving full control to the user.The blog posts are 100% customazible</h5>
+        <a href="#" class="btn btn-warning">Sign Up</a>     <a href="#" class="btn btn-outline-warning">Sign in</a>
+    </div>
+</section>
+
+
+<div class="container">
+<section>
+    <br>
+   <h1> Trending Posts on Bloggy</h1>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card card-body">
+            <img  class="img-thumbnail" src= "{{entry.thumbnail.url}}" >
+        </div>
+        {{entry.entry_title}}
+    </div>
+    <div class="col-md-4">
+        <div class="card card-body">
+            mokhele
         </div>
     </div>
+    <div class="col-md-4">
+        <div class="card card-body">
+            mokhele
+        </div>
+    </div>
+
 </div>
 
+</section>
+</div>
+</center>
 
 {% endblock content %}

@@ -1,18 +1,80 @@
 .crop{
- 
     height: 30%;
     overflow: hidden;
 }
-
 body {
     background-color: white;
     color: #1A223B;
 }
-
 #hovering:hover {
     background-color: rgb(241, 241, 241);
 }
 .writer{
    justify-items: left;
+}
 
+#content{
+    width: 90%;
+}
+
+.intro{
+    min-height: 450px;
+    background-color: #2B7A78;
+    color: aliceblue;
+    padding-top: 9%;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width:775px) {
+    .search{
+       display: none;
+    }
+    .icon{
+        display: inline-block;
+    }
+    #input{
+        display: none;
+    }
+}
+
+@media screen and (min-width:776px) {
+    .search{
+       display: inline-block;
+    }
+    .icon{
+        display: none;
+    }
 }

@@ -20,6 +20,8 @@ urlpatterns = [
     path('dashboard/',  views.dashboard , name="dashboard"),
     
     path('upload/<int:topic_id>/', views.upload, name='upload'),
+    
+    path("practice/",views.practice,name='practice'), 
 
 ]
 

@@ -15,9 +15,10 @@ from PIL import Image
 
 
 def home1(request):
-    #topics = Topic.objects.filter(owner=request.user).order_by('date_added')
-    #topics = Topic.objects.order_by('date_added')
-    return render(request, 'blogyapp/home1.html')
+    entry = Entry.objects.get(id=42)  # getting data from the Entry MOdel....
+    topic = entry.topic  # summoned the foreignkey...now i have access to all fields of the Topic Model
+    context = {"entry": entry, "topic":topic}
+    return render(request, 'blogyapp/home1.html',context)
 @login_required
 def index(request):
     topics = Topic.objects.filter(owner=request.user).order_by('-date_added')
@@ -128,16 +129,20 @@ def delete_entry(request, entry_id):
 
 
 @login_required
-def delete_topic(request, topic_id):
+def delete_topic( topic_id):
     topic = Topic.objects.get(id=topic_id)
     topic.delete()
     return redirect('blogyapp:index')
 
 def dashboard(request):
     topics = Topic.objects.filter(owner=request.user).order_by('-date_added')
-    
-    entry = Entry.objects.all()
-   # topic = entry.topic # summoning the fieds from the Topic model and storing them in this variable
+  
+    recent_5 =[]
+    entry = Entry.objects.filter(topic__owner=request.user)
+    for i in entry:
+        recent_5.append(i)
+        
+
     
     activity = LogEntry.objects.filter(action_flag = ADDITION)
     uploaded_entries = []
@@ -149,7 +154,7 @@ def dashboard(request):
             draft_entries.append(i)
 
     context = {'topics': topics, "entry": entry, "uploaded_entries": uploaded_entries,
-               "draft_entries": draft_entries, "activity": activity}
+               "draft_entries": draft_entries, "activity": activity , "recent_5":recent_5}
     return render(request, 'blogyapp/dashboard.html', context)
 
 def upload(request, topic_id):
@@ -176,3 +181,7 @@ def read(request, read_id):
     topic = entry.topic  # summoned the foreignkey...now i have access to all fields of the Topic Model
     context = {"entry": entry, "topic":topic}
     return render(request, "blogyapp/read.html", context)
+
+def practice(request):
+    
+    return render(request , "blogyapp/practice.html")
