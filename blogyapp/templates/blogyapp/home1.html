@@ -23,24 +23,17 @@
 <section>
     <br>
    <h1> Trending Posts on Bloggy</h1>
-<div class="row">
-    <div class="col-md-4">
-        <div class="card card-body">
-            <img  class="img-thumbnail" src= "{{entry.thumbnail.url}}" >
-        </div>
-        {{entry.entry_title}}
-    </div>
-    <div class="col-md-4">
-        <div class="card card-body">
-            mokhele
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card card-body">
-            mokhele
-        </div>
-    </div>
 
+<div class="row">
+    {% for ent in entry %}
+    <div class="col-md-4">
+        <div class="card card-body">
+            <img  class="img-thumbnail" src= "{{ent.thumbnail.url}}" >
+        </div>
+        {{ent.entry_title}}
+    </div>
+    {% endfor %}
+   
 </div>
 
 </section>

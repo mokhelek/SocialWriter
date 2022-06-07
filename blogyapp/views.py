@@ -15,9 +15,9 @@ from PIL import Image
 
 
 def home1(request):
-    entry = Entry.objects.get(id=42)  # getting data from the Entry MOdel....
-    topic = entry.topic  # summoned the foreignkey...now i have access to all fields of the Topic Model
-    context = {"entry": entry, "topic":topic}
+    entry = Entry.objects.filter(topic__owner=request.user)[0:3]  # getting data from the Entry MOdel....
+
+    context = {"entry": entry}
     return render(request, 'blogyapp/home1.html',context)
 @login_required
 def index(request):
@@ -129,7 +129,7 @@ def delete_entry(request, entry_id):
 
 
 @login_required
-def delete_topic( topic_id):
+def delete_topic(request, topic_id):
     topic = Topic.objects.get(id=topic_id)
     topic.delete()
     return redirect('blogyapp:index')

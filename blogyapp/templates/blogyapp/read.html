@@ -7,18 +7,21 @@
 <div class ="container">
 <div class="writer">  
     <div style="color: #1A223B; font-size: larger; font-weight: 700;">
-        {{  topic.owner.username|title }}
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+          </svg> {{  topic.owner.username|title }}
     </div>
 
     <div style=" color: #1A223B; font-size: medium; font-weight: 500;">
         {{entry.date_added}}
     </div>
 </div>  
-<br><br>
+<br>
 
 <div id="content" class=" position-relative top-50 start-50 translate-middle-x">
     <div class = "myblogpost">
-    <div class="card card-body">
+    <div >
 
         {% if entry.uploaded is True %}
         <h2 style="font-weight: 700;"> 
@@ -26,7 +29,7 @@
         </h2>
         <div class="intor" style="font-family: Georgia, 'Times New Roman', Times, serif; font-style: oblique; background-color: rgba(238, 188, 24, 0.595);">
    
-            <h4>{{entry.introduction}}</h4>
+            <h5 style="margin-left: 0.5cm;margin-right: 0.5cm;margin-top: 0.2cm;">{{entry.introduction}}</h5>
             </div>
         <div class = "crop">
             <img  class="img-thumbnail" src= "{{entry.thumbnail.url}}" >

@@ -1,9 +1,9 @@
 .crop{
-    height: 30%;
+    height: 60%;
     overflow: hidden;
 }
 body {
-    background-color: white;
+    background-color: rgb(235, 234, 234);
     color: #1A223B;
 }
 #hovering:hover {
@@ -14,7 +14,7 @@ body {
 }
 
 #content{
-    width: 90%;
+    width: 93%;
 }
 
 .intro{
@@ -23,8 +23,13 @@ body {
     color: aliceblue;
     padding-top: 9%;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    
 
+}
+
+#thumbnail{
+    height: 30%;
+    width: auto;
+    overflow: hidden;
 }
 
 
