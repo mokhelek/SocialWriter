@@ -81,7 +81,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 
-                #'blogyapp.context_processors.access_profile',
+                'blogyapp.context_processors.access_profile',
             ],
         },
     },
