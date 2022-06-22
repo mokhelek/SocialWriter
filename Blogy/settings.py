@@ -80,6 +80,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
+                'blogyapp.context_processors.access_profile',
             ],
         },
     },
@@ -150,6 +152,7 @@ MEDIA_URL = "/images/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'blogyapp/static/images')
 
 LOGIN_URL = 'users:login'
+LOGOUT_REDIRECT_URL = 'users:login'
 
 TINYMCE_DEFAULT_CONFIG = {
     'cleanup_on_startup': True,

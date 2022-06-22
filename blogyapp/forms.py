@@ -1,7 +1,10 @@
 
+from logging import PlaceHolder
 from django import forms 
-from .models import Topic , Entry
+from .models import Topic , Entry ,Comments
 from tinymce.widgets import TinyMCE
+
+
 class TopicForm(forms.ModelForm):
     text = forms.CharField(widget= forms.Textarea(attrs={'cols': 10, 'rows':2}))
     topic_description = forms.CharField(widget= forms.Textarea(attrs={'cols': 20, 'rows':2}))
@@ -22,3 +25,10 @@ class EntryForm(forms.ModelForm):
         
         labels = {'text': 'Entry:'}
         #widgets = {'text': forms.Textarea(attrs={'cols': 80})}
+        
+class CommentsForm(forms.ModelForm):
+    comment = forms.CharField(widget= forms.Textarea(attrs={'cols': 10, 'rows':3 , "placeholder":"Comments"}) , label="",)
+    class Meta:
+        model = Comments
+        fields =["comment"]
+        #label = {"comment":"Discussion"}

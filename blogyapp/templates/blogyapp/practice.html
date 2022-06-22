@@ -1,42 +1,27 @@
-<!DOCTYPE html>
+ 
+{% extends "blogyapp/base.html" %}
+{% load bootstrap5 %}
 {% load static %}
-<html lang="en">
- 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
- 
-<link rel="stylesheet" type="text/css" href="{% static 'blogyapp/css/practice.css' %}"/>
-</head>
-<body>
-  <p>Because my website was for a location based business I was able to use reviews 
-    to gain Googles trust. Google takes reviews from local listings 
-    into serious consideration in order to give users the best results.
-    My competitors were much more established than me so they already had 
-    lots of reviews from years prior. However, they were not intentionally
-     trying to gain more reviews, at least not effectively. Because I saw this as 
-     a strong signal to google I made it a point for employees interacting with customers to 
-     mention reviews. Never incentives or offer anything in return, but just mention that if
-    they gave feedback online it would help our business.
-    </p>
-    <img style = "height: 8cm;" src = "{% static 'blogyapp/images/school.jpg'%}">
-    <p>
-    Well it didn't take long for hundreds of reviews to pour in from sites like
-    yelp, google plus, yahoo local, etc. This had a tremendous effect on local rankings!
-    #3 Website Articles
-    The more content you have on your website the easier it is 
-    for google to know what your business is about, plain and simple. 
-    For local business this could be a bit more challenging due to the lack of 
-    resources or content ideas people will care to read and for google to index. It took some time b
-    ut after doing some research on what users may be searching up I found plenty of ideas.
-    Here are some general topics I wrote about, the website was for a locksmith company
-    </p>
-    
-    
-</body>
-</html>
+<link rel="stylesheet"  href="{% static 'blogyapp/css/read.css' %}">
+
+{% block content %}
+<div class="container">
+<br>
+
+ <center><h1>User Profiles </h1></center>
+ <br>
+ <ul>  
+ {% for profile in profiles %}
+ <div style="border: 1px solid rgb(187, 184, 184); width: 5cm; padding: 0.3cm;" class="profiles">
+   <p> {{profile.name}}</p>
+   <a href="{% url 'blogyapp:profile_detail' profile.id %}" class="btn btn-outline-success btn-sm" >view profile</a>
+ </div>
+ <br>
+ {% endfor %}
+</ul>
+</div>
+{% endblock content %}
+
 
 
 

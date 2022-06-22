@@ -1,29 +1,25 @@
 {% extends 'blogyapp/base.html' %}
 {% load static %}
 
-
-
-
 {% block content %}
 <div class="container">
 
 
 <br>
 <h1 style = "color: #263258 ; font-family: sans-serif;"> My Topics </h1>
-<a style = "text-decoration: none; font-size: x-large; color: #2B7A78" href="{% url 'blogyapp:new_topic' %}">
-  Topic <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-plus-square-fill " viewBox="0 0 16 16">
-    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
-  </svg>
+
+<a style = "text-decoration: none; font-size: x-large; color: #051622" href="{% url 'blogyapp:new_topic' %}">
+  Add Topic 
 </a>
 <br>
 
 <div class = "container">
   <div class ="row">
     {% for topic in topics %}
-    <div class = "col-lg-4">
+    <div class = "col-md-4">
     <br>
 
-            <div id ="hovering"  style="height: 2.5cm; box-shadow: 0 0 6px rgba(0, 0, 0, 0.452);">
+            <div id ="hovering"  style=" box-shadow: 0 0 4px rgba(154, 154, 154, 0.824); min-height: 9cm;">
                 <div class="card-body">
                   <div class="container">
                   <div class="row">
@@ -53,8 +49,22 @@
                         </div>
 
                           <a  style = "text-decoration: none;color: black; display: block;" href="{% url 'blogyapp:topic' topic.id %}">
-                              <h5 class="card-title">{{topic}}</h5>
+                              <h5 class="card-title">{{topic.text}}</h5>
                         </a>  
+                        <h6> {{topic.topic_description}}</h6>
+                          
+                        <div style="box-shadow: 0px -8px 14px -1px rgba(205, 205, 205, 0.841) inset;">   
+                          <strong>Articles( {{topic.entry_set.all.count}} )</strong>
+                          <ul>
+                            {% for i in topic.entry_set.all %}
+                              <li> {{i}} </li>
+                            {% endfor %}
+                         </ul>
+                         <a id="arrow"  style = "text-decoration: none; " href="{% url 'blogyapp:topic' topic.id %}"> <center style="color:rgb(20, 27, 221)"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                        </svg></center></a>
+                      </div>
+
 
                        
                       </div>
@@ -69,7 +79,7 @@
 
           </div>
             {% empty %}
-            <strong>No topics for you</strong>
+            <h2><strong>You Have not created any topics yet</strong> </h2>
             {% endfor %}
    </div>
 </div>

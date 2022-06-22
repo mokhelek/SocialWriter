@@ -21,7 +21,9 @@ urlpatterns = [
     
     path('upload/<int:topic_id>/', views.upload, name='upload'),
     
-    path("practice/",views.practice,name='practice'), 
+    path("practice/",views.practice,name='practice'),
+    path('profile_detail/<int:profile_id>/', views.profile_detail, name='profile_detail'), 
+    path('follow_unfollow/<int:profile_id>/', views.follow_unfollow, name='follow_unfollow'), 
 
 ]
 

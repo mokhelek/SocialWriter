@@ -1,11 +1,22 @@
 {% extends "blogyapp/base.html" %}
+{% load bootstrap5 %}
 {% block content %}
- <form method="post" action="{% url 'users:register' %}">
- {% csrf_token %}
- {{ form.as_p }}
- 
- <button name="submit">Register</button>
- <input type="hidden" name="next" value="{% url 'blogyapp:index' %}" />
- </form>
+<br>
+<div class="container"> 
+    <form method="post" action="{% url 'users:register' %}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        
+        {% buttons %}
+        <button class="btn btn-outline-success btn-sm" name="submit">Register</button>
+        {% endbuttons %}
+     
+    </form>
+</div>
  
 {% endblock content %}
+
+<!--
+
+       <input type="hidden" name="next" value="{% url 'blogyapp:index' %}" />
+-->

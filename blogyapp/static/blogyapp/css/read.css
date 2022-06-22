@@ -1,9 +1,16 @@
 .crop{
-    height: 60%;
+  
+    position: relative;
     overflow: hidden;
+
 }
+.pic{
+    height: 80%;
+    width: 100%;
+}
+
 body {
-    background-color: rgb(235, 234, 234);
+    background-color: rgb(243, 243, 243);
     color: #1A223B;
 }
 #hovering:hover {
@@ -14,16 +21,15 @@ body {
 }
 
 #content{
-    width: 93%;
+    width: 85%;
 }
 
 .intro{
-    min-height: 450px;
-    background-color: #2B7A78;
+    padding-top: 2.5cm;
+    height: 450px;
+    background-color: #051622;
     color: aliceblue;
-    padding-top: 9%;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-
 }
 
 #thumbnail{
@@ -31,12 +37,59 @@ body {
     width: auto;
     overflow: hidden;
 }
+.comments{
+    min-height: 2cm;
+    border: 0.5px solid rgb(176, 175, 175);
+    padding-left: 0.8cm;
+    padding-top: 0.2cm;
+}
 
 
+.postIntro{
+    font-style: oblique;
+    font-size: larger;
+}
 
+.avatar{
+    border-radius: 50%;
+    border: 3px rgb(221, 153, 26) solid;
+    width: 300px;
+    height: 300px;
+}
+.img-wrap{
 
+    position: relative;
+    padding-top: 2.5cm;
+}
+.avatar-home{
+    border-radius: 50%;
+    border: 1px rgb(234, 161, 16) solid;
+    width: 38px;
+    height: 38px;   
+}
 
+#mymenu a{
+    color: #051622;
+    display: list-item;
+    list-style: none;
+    text-decoration: none;
+    font-size: medium;
+    font-family: fantasy;
+}
 
+#mymenu-nav a{
+    color: #ffffff;
+    display: list-item;
+    list-style: none;
+    text-decoration: none;
+    font-size: medium;
+    font-family: fantasy;
+}
+#arrow:hover{
+    background-color: #051622;
+    color: red;
+
+}
 
 
 

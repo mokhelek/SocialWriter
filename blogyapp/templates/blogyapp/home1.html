@@ -4,40 +4,154 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
-
+<link rel="stylesheet" type="text/css" href="{% static 'blogyapp/css/read.css' %}"/>
 
 {% block content %}
-<center>
-<section class="position-relative top-50 ">
-    <div class ="intro">
-        <h5>Your all in one blog</h5>
-        <h1 style="color: rgb(251, 143, 1);">All Bloggers Assemble!</h1>
-        <h5>Bloggy is dream destinaton to writers and bloggers of all type </h5>
-        <h5>It allows rapit blogging while giving full control to the user.The blog posts are 100% customazible</h5>
-        <a href="#" class="btn btn-warning">Sign Up</a>     <a href="#" class="btn btn-outline-warning">Sign in</a>
-    </div>
-</section>
 
+    {% if user.is_anonymous%}
 
+    <center> 
+        <section class="position-relative top-50 ">
+            <div class ="intro position-relative top-50">
+                <h5>Your all in one blog</h5>
+                <h1 style="color: rgb(231, 172, 46);">All Bloggers Assemble!</h1>
+                <h5 style="color: rgb(235, 235, 235);">Bloggy is dream destinaton to writers and bloggers of all type </h5>
+                <h5 style="color: rgb(235, 235, 235);">It allows rapit blogging while giving full control to the user.The blog posts are 100% customazible</h5>
+                <a href="{% url 'users:register' %}" class="btn btn-warning btn-sm">Sign Up</a> <a href="{% url 'users:login' %}" class="btn btn-outline-warning btn-sm">Sign in</a>
+            </div>
+        </section>
+    </center>
+
+    {% else %} 
+    
 <div class="container">
-<section>
-    <br>
-   <h1> Trending Posts on Bloggy</h1>
+    <section>
+        <br>
+    <h1> Home - News Feed</h1>
+    <div class="row"> 
+        <div class="col-sm-9">
+        {% for i in entries %}
+            {% for entry in i %}
+                
+                    <div class="card card-body">
+                        <div class="row">  
+                      
+                            <div class="col-sm-4">  
+                                <a href="{% url 'blogyapp:read' entry.id %}"> <img  class="img-thumbnail" src= "{{entry.thumbnail.url}}" > </a>
+                            </div>
+                            <div class="col-sm-8">  
+                                <div style="margin-top: 0.6cm;">  
+                                   {{entry.introduction|truncatechars:400}}
+                                </div>  
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div >
+                                <h5 style="margin: 0.1cm;font-weight: 400;font-style: oblique;">
+                                    <a style="text-decoration: none;color: rgb(26, 18, 102);" href="{% url 'blogyapp:profile_detail' entry.profile.id %}">@{{entry.profile.name}}</a>
+                                </h5> 
+                                <h6 style="margin: 0.1cm;color: rgb(59, 59, 59);"> {{entry.date_added}}</h6> 
+                            </div>
+                            <h4 style="font-weight: 600; margin: 0.1cm;" > {{entry.entry_title}}</h4> 
+                        </div>
+                    </div> 
+             
+                <br>
+            {% endfor %}
+        {% endfor %}
+      </div>
+      <div class="col-sm-3">
+          <div style="box-shadow: 0 0 4px rgb(157, 157, 157);">
+                <br>
+               <div> 
+                    <ul id="mymenu" >  
+                        <a  href="{% url 'blogyapp:profile_detail' my_profile.id  %}"> <img class="avatar-home"  src="{{my_profile.avatar.url}}">  {{ user.username|title }} </a>
+                        <hr style="color: blue; width:85%">
+                        
+                        <a style="display: flex;"  href="{% url 'blogyapp:home1' %}">
+                            <div style="color:rgb(202, 130, 21);"> <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                            <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                          </svg></div> &nbsp;&nbsp; Home</a>
 
-<div class="row">
-    {% for ent in entry %}
-    <div class="col-md-4">
-        <div class="card card-body">
-            <img  class="img-thumbnail" src= "{{ent.thumbnail.url}}" >
-        </div>
-        {{ent.entry_title}}
+                        <a style="display: flex;" href="{% url 'blogyapp:dashboard' %}"> 
+                            <div style="color:rgb(202, 130, 21);"> <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-speedometer" viewBox="0 0 16 16">
+                            <path d="M8 2a.5.5 0 0 1 .5.5V4a.5.5 0 0 1-1 0V2.5A.5.5 0 0 1 8 2zM3.732 3.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 8a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 7.31A.91.91 0 1 0 8.85 8.569l3.434-4.297a.389.389 0 0 0-.029-.518z"/>
+                            <path fill-rule="evenodd" d="M6.664 15.889A8 8 0 1 1 9.336.11a8 8 0 0 1-2.672 15.78zm-4.665-4.283A11.945 11.945 0 0 1 8 10c2.186 0 4.236.585 6.001 1.606a7 7 0 1 0-12.002 0z"/>
+                          </svg></div> &nbsp;&nbsp; Dashboard</a>
+
+                        <a style="display: flex;" href="{% url 'blogyapp:index' %}"> 
+                            <div style="color:rgb(202, 130, 21); background-color: antiquewhite;"> <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-book-half" viewBox="0 0 16 16">
+                            <path d="M8.5 2.687c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
+                          </svg></div> &nbsp;&nbsp;  Topics </a>
+
+                        <a style="display: flex;" href="{% url 'blogyapp:profile_detail' my_profile.id  %}">
+                            <div style="color:rgb(202, 130, 21);"> <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                          </svg></div> &nbsp;&nbsp; Account</a>
+
+
+                          {% if user.is_authenticated %}
+                          
+                        <a style="display: flex;" href="{% url 'users:logout' %}" >
+                            <div style="color:rgb(202, 130, 21);">  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+                            <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                          </svg></div> &nbsp;&nbsp; Logout</a>
+                         
+                          {% endif %}
+                          <hr style="color: blue; width:85%">
+                    </ul>
+                 </div>
+                
+
+                 {% if user.is_authenticated %}
+                <center>My Subscriptions </center>
+                <ul id="mymenu">
+                    
+                    {% for i in my_guys %}
+                     <div style= " margin-top: 0.1cm;"> <a style= "text-decoration: none; " href="{% url 'blogyapp:profile_detail' i.id %}">
+                        <img class="avatar-home" src="{{i.avatar.url}}"> </img> {{i.name}} 
+                      </a> </div>
+                    {% endfor %}
+                    <a style="padding-left: 1.4cm; text-decoration: none; font-size: 15px;color: rgb(64, 64, 64);" href="#">
+                        See More <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                        <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                      </svg></a>
+                    <hr style="color: blue; width:85%">
+                </ul >
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                <div style="color: rgb(32, 16, 102); font-weight: 600;"><center> Who to Follow </center> </div>
+                <ul  id="mymenu">
+                    {% for i in other_users %}
+                       <div style= " margin-top: 0.1cm;"> <a style= "text-decoration: none;" href="{% url 'blogyapp:profile_detail' i.id %}">
+                        <img class="avatar-home" src="{{i.avatar.url}}"> </img> {{i.name}} </a> </div>
+                    {% endfor %}
+                    <a style="padding-left: 1.4cm; text-decoration: none; font-size: 15px;color: rgb(64, 64, 64);"  href="#">
+                        See More <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                        <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                      </svg></a>
+                      
+                </ul>
+                <br>
+                {% endif %}
+          </div>
+      </div>
     </div>
-    {% endfor %}
-   
-</div>
-
 </section>
 </div>
-</center>
+
+    {% endif %}
+
+
+
+
+
 
 {% endblock content %}
+

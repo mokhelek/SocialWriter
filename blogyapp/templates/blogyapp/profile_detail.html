@@ -1,0 +1,79 @@
+{% extends "blogyapp/base.html" %}
+{% load bootstrap5 %}
+{% load static %}
+<link rel="stylesheet"  href="{% static 'blogyapp/css/read.css' %}">
+
+{% block content %}
+
+    <div style="background-color:#2B7A78; height: 6cm;margin-top:0cm;">   
+        <center> 
+            <div class="img-wrap">  
+                <img class="avatar" src= "{{profile.avatar.url}}" >
+                <h3>@{{profile.name}}</h3>
+                <h6 style="color:rgb(87, 87, 87)">{{profile.bio}}</h6>
+            </div>
+        </center>
+
+    </div>
+    
+
+<div class="container"> 
+    <div class=" position-relative start-100" style="padding-top: 1cm;"> 
+        <form action="{% url 'blogyapp:follow_unfollow' profile.id %}" method='post'>
+            {% csrf_token %}
+            {% if profile.name in followings %}
+            
+            <button href="#" class="btn btn-outline-danger" name="submit">Unsubscribe</button>
+            {% else %}
+            <button href="#" class="btn btn-outline-primary" name="submit">Subscribe</button>
+        
+            {% endif %}
+        </form>
+        
+    </div>
+</div>
+
+<div style="position: relative;margin-top: 6cm;" class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <h4>More Info</h4>
+            <hr>
+           <h6>followers: {{profile.followers}}</h6>
+           <h6>Articles: {{profile_posts.count}}</h6>
+           <h6>Joined: {{profile.date_created}}</h6>
+           <h6>website: allstackstudios.herokuapp.com</h6>
+           
+        </div>
+        
+        <div  class="col-sm-8">
+            <h4>Articles</h4>
+            <hr>
+            {% for profile_post in profile_posts %}
+            <div class="card card-body">
+                <div class="row">  
+              
+                    <div class="col-sm-4">  
+                        <a href="{% url 'blogyapp:read' profile_post.id %}"> <img  class="img-thumbnail" src= "{{profile_post.thumbnail.url}}" > </a>
+                    </div>
+                    <div class="col-sm-8">  
+                        <div style="margin-top: 0.6cm;">  
+                           {{profile_post.introduction|truncatechars:300}}
+                        </div>  
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="">  
+                        <h6 style="margin: 0.1cm;color: rgb(59, 59, 59);"> {{profile_post.date_added}}</h6> 
+                    </div>
+                    <h4 style="font-weight: 600; margin: 0.1cm;" > {{profile_post.entry_title}}</h4> 
+                </div>
+            </div> 
+            {% empty %}
+            <h4>  No Articles Yet </h4>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+

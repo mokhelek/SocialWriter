@@ -1,24 +1,30 @@
 {% extends 'blogyapp/base.html' %}
 {% block content %}
 
+{% load custom_tags %}
+
+{% adding %}
+
+
 <div class="container">
 
 <h1 style = "color: #263258 ; font-family: sans-serif;"> Dashboard </h1>
 
 <div class ="container">
+    <center>  
     <div class="row">
 
         <div class="col-md-3">
             <div style = "background-color: white ;color: black; box-shadow: 0 0 6px rgba(0, 0, 0, 0.452);" class="card card-body">
                 <h3>{{topics|length}}</h3>
-                <a style = "text-decoration: none; color: rgb(71, 69, 120);"  href = "{% url 'blogyapp:index' %}">Your Topics</a>
+                <p style = "text-decoration: none; color: rgb(71, 69, 120);" >Your Topics</p>
             </div>
         </div>
 
         <div   class="col-md-3">
             <div style = "background-color: white ;color: black;  box-shadow: 0 0 6px rgba(0, 0, 0, 0.452); "class="card card-body">
                 <h3> {{uploaded_entries|length}}</h3>
-                <a style = "text-decoration: none; color: rgb(71, 69, 120);"  href = "{% url 'blogyapp:index' %}">You Uploads</a>
+                <p style = "text-decoration: none; color: rgb(71, 69, 120);" >You Uploads</p>
             </div>
         </div>
 
@@ -26,7 +32,7 @@
             <div style = "background-color: white ;color: black; box-shadow: 0 0 6px rgba(0, 0, 0, 0.452);" class="card card-body">
                 <h3> {{entry|length}}</h3>
 
-                <a style = "text-decoration: none; color: rgb(71, 69, 120);"  href = "{% url 'blogyapp:index' %}">Your Entries</a>
+                <p style = "text-decoration: none; color: rgb(71, 69, 120);" >Your Entries</p>
             </div>
         </div>
         
@@ -34,19 +40,18 @@
         <div class="col-md-3">
             <div style = "background-color: white ;color: black; box-shadow: 0 0 6px rgba(0, 0, 0, 0.452);" class="card card-body">
                 <h3> {{draft_entries|length}}</h3>
-                <a style = "text-decoration: none; color: rgb(71, 69, 120);"  href = "{% url 'blogyapp:index' %}"> Your Drafts</a>
+                <p style = "text-decoration: none; color: rgb(71, 69, 120);"> Your Drafts</p>
             </div>
         </div>
     </div>
+</center>
 <br>
     <div class = "row">
         <div class = "col-md-6">
                 <h3 style = "color: #263258 ; font-family: sans-serif;">Recent Activity</h3>
             <div style = "background-color: white ;color: black;" >
                 <p> Testing Below </p>
-                {% for action in activity %}
-                <div>  {{action}}  </div>
-                {% endfor %}
+          
             </div>
         </div>
 
