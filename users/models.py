@@ -17,7 +17,7 @@ class Profile(models.Model):
     
     def profiles_posts(self):
         return self.entry_set.all()
-    """  
+
     def __str__(self):
         return str(self.name.username)
-     """
+ 
