@@ -1,3 +1,4 @@
+
 from django.db import models
 from django.contrib.auth.models import User 
 from users.models import Profile
@@ -20,7 +21,7 @@ class Entry(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE) # field with Topic data ...!
     
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE , blank=True , null=True) # Entry attached to a specific profile
-    thumbnail = models.ImageField(upload_to="images")
+    thumbnail = models.ImageField(upload_to="images", blank=True , null=True)
     uploaded = models.BooleanField(default=False)
     entry_title = models.TextField()
     introduction = models.CharField(max_length=600)
@@ -35,8 +36,7 @@ class Entry(models.Model):
     
 
 class Comments(models.Model):
-    # each comment is associated with a user
-    #commenter = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
+   
     profile = models.ForeignKey(Profile,on_delete=models.CASCADE, null=True)
     entry = models.ForeignKey(Entry, on_delete=models.CASCADE) 
     

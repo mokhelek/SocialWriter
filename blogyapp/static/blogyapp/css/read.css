@@ -1,8 +1,6 @@
 .crop{
-  
     position: relative;
     overflow: hidden;
-
 }
 .pic{
     height: 80%;
@@ -53,14 +51,10 @@ body {
 .avatar{
     border-radius: 50%;
     border: 3px rgb(221, 153, 26) solid;
-    width: 300px;
-    height: 300px;
+    width: 270px;
+    height: 270px;
 }
-.img-wrap{
 
-    position: relative;
-    padding-top: 2.5cm;
-}
 .avatar-home{
     border-radius: 50%;
     border: 1px rgb(234, 161, 16) solid;
@@ -90,24 +84,17 @@ body {
     color: red;
 
 }
+#profile-back{
+    background-color:#051622;
+    height: 6cm;
+    margin-top:0cm;
+}
+#bio{
+    max-height: 3cm;
+    max-width: 8cm;
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 
@@ -136,3 +123,109 @@ body {
         display: none;
     }
 }
+
+@media screen and (max-width:775px){
+    #home-menu{
+        display: none;
+    }
+    
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width:370px){
+ 
+    .avatar{
+        border-radius: 50%;
+        border: 3px white solid;
+        width: 120px;
+        height: 120px;
+
+    }
+    .img-wrap{
+
+        position: relative;
+        padding-top: 2cm;
+    }
+    #profile-back{
+        background-color:#051622;
+        height: 3.7cm;
+        margin-top:0cm;
+    }
+ 
+}
+
+
+@media screen and (min-width:371px){
+   
+    .avatar{
+        border-radius: 50%;
+        border: 3px white solid;
+        width: 150px;
+        height: 150px;
+    }
+    .img-wrap{
+
+        position: relative;
+        padding-top: 2cm;
+    }
+    #profile-back{
+        background-color:#051622;
+        height: 4cm;
+        margin-top:0cm;
+    }
+    
+}
+
+
+@media screen and (min-width:790px){
+   
+    .avatar{
+        border-radius: 50%;
+        border: 3px white solid;
+        width: 180px;
+        height: 180px;
+    }
+    .img-wrap{
+
+        position: relative;
+        padding-top: 2cm;
+    }
+    #profile-back{
+        background-color:#051622;
+        height: 4.5cm;
+        margin-top:0cm;
+    }
+    
+}
+
+@media screen and (min-width:1070px){
+   
+    .avatar{
+        border-radius: 50%;
+        border: 3px white solid;
+        width: 220px;
+        height: 220px;
+    }
+    .img-wrap{
+
+        position: relative;
+        padding-top: 2cm;
+    }
+    #profile-back{
+        background-color:#051622;
+        height: 5cm;
+        margin-top:0cm;
+    }
+    
+}
+
