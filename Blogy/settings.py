@@ -82,6 +82,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 
                 'blogyapp.context_processors.access_profile',
+                #'blogyapp.context_processors.profile_detail',
             ],
         },
     },
@@ -152,7 +153,8 @@ MEDIA_URL = "/images/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'blogyapp/static/images')
 
 LOGIN_URL = 'users:login'
-LOGOUT_REDIRECT_URL = 'users:login'
+LOGOUT_REDIRECT_URL = 'blogyapp:home1'
+LOGIN_REDIRECT_URL = 'blogyapp:home1'
 
 TINYMCE_DEFAULT_CONFIG = {
     'cleanup_on_startup': True,
@@ -178,5 +180,17 @@ TINYMCE_DEFAULT_CONFIG = {
     'menubar': True,
     'statusbar': True,
 }
+
+#AWS_QUERYSTRING_AUTH = False
+
+#STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+#AWS_ACCESS_KEY_ID = 'YOUR-AWS-ACCESS-KEY-ID'
+#AWS_SECRET_ACCESS_KEY = 'YOUR_AWS-SECRET-ACCESS-KEY'
+#AWS_STORAGE_BUCKET_NAME = 'YOU_BUCKET_NAME'
+
+#AWS_S3_FILE_OVERWRITE = False
+#AWS_DEFAULT_ACL = None
 
 django_heroku.settings(locals())

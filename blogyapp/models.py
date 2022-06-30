@@ -28,6 +28,10 @@ class Entry(models.Model):
     text = HTMLField()
     date_added = models.DateTimeField(auto_now_add=True)
     
+    popularity = models.IntegerField(default=0)
+    likes = models.IntegerField(default=0)  # number of likes for each Article
+    bookmarks = models.IntegerField(default=0)  # number of bookmarks for each Article ... 
+    
     class Meta:
         verbose_name_plural = 'entries'
     def __str__(self):

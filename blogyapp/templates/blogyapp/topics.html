@@ -6,45 +6,189 @@
 
    
 
-    <div class="container"> 
-      <a href= "{% url 'blogyapp:index' %}">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-        </svg>    
-      </a>   
-  
-        <h3 style="font-weight: 300;"> entries for {{topic|title}}</h3>
-        <a href="{% url 'blogyapp:new_entry' topic.id %}" style = "text-decoration: none;">New Entry</a>
+    <div class="container-fluid" style="width: 90%;">  
+  <br>
+ 
+        <h4 style="font-weight: 600;">  {{topic|title}} Articles</h4>
+      
+        
+          <a class="btn btn-outline-primary btn-sm" href="{% url 'blogyapp:new_entry' topic.id %}" style = "text-decoration: none;">Write</a>
+   
 
-        <div> 
+        <div class="tools" style="display: flex;"> 
+        <div class="dropdown">
+          <button class="btn btn-light dropdown-toggle btn-sm" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
+              <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z"/>
+            </svg>  Filter Articles
+          </button>
+          <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
+            
+       
+
+            <li> 
+              
+              <form action="{% url 'blogyapp:topic' topic.id %}" method='post'>
+                {% csrf_token %}   
+                <div style="margin-left: 0.2cm;">  
+
+                  <div>   
+                    <button style= "color: #051622;font-weight: 600;" href="#" class="btn btn-light btn-sm"  name="all"> All Articles </button> 
+                   </div>
+
+                  <div>   
+                 <button style= "color: #051622;font-weight: 600;" href="#" class="btn btn-light btn-sm"  name="unpublished"> Unpublished Articles </button> 
+                </div>
+
+                <div> 
+                   <button style= "color: #051622;font-weight: 600;" href="#" class="btn btn-light btn-sm " name="published"> Published Articles </button>  
+                  </div>
+
+
+                </div>
+              </form>
+
+            </li>
+
+            
+           
+          </ul>
+        </div>
+        |
+        <div class="dropdown">
+          <button class="btn btn-light dropdown-toggle btn-sm" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-sort-down" viewBox="0 0 16 16">
+              <path d="M3.5 2.5a.5.5 0 0 0-1 0v8.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L3.5 11.293V2.5zm3.5 1a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zM7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zm0 3a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z"/>
+            </svg>  Sort Articles
+          </button>
+          <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
+            
+       
+            <li style="margin-left: 0.4cm;"> Sort by :</li>
+            <hr style="color: black; margin-bottom:0.2cm; margin-top:0.2cm">
+            <li> 
+              
+              <form action="{% url 'blogyapp:topic' topic.id %}" method='post'>
+                {% csrf_token %}   
+                <div style="margin-left: 0.2cm;">  
+
+                  <div>   
+                    <button style= "color: #051622;font-weight: 600;" href="#" class="btn btn-light btn-sm"  name="namedown"> 
+                      Article Title <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-sort-alpha-down" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/>
+                        <path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zM4.5 2.5a.5.5 0 0 0-1 0v9.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L4.5 12.293V2.5z"/>
+                      </svg></button> 
+                   </div>
+
+                   <div>   
+                    <button style= "color: #051622;font-weight: 600;" href="#" class="btn btn-light btn-sm"  name="nameup"> 
+                      Article Title <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-sort-alpha-up" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/>
+                        <path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zm-8.46-.5a.5.5 0 0 1-1 0V3.707L2.354 4.854a.5.5 0 1 1-.708-.708l2-1.999.007-.007a.498.498 0 0 1 .7.006l2 2a.5.5 0 1 1-.707.708L4.5 3.707V13.5z"/>
+                      </svg></button> 
+                   </div>
+
+                  <div>   
+                 <button style= "color: #051622;font-weight: 600;" href="#" class="btn btn-light btn-sm"  name="datedown"> 
+                  Date Created <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-sort-numeric-down" viewBox="0 0 16 16">
+                    <path d="M12.438 1.668V7H11.39V2.684h-.051l-1.211.859v-.969l1.262-.906h1.046z"/>
+                    <path fill-rule="evenodd" d="M11.36 14.098c-1.137 0-1.708-.657-1.762-1.278h1.004c.058.223.343.45.773.45.824 0 1.164-.829 1.133-1.856h-.059c-.148.39-.57.742-1.261.742-.91 0-1.72-.613-1.72-1.758 0-1.148.848-1.835 1.973-1.835 1.09 0 2.063.636 2.063 2.687 0 1.867-.723 2.848-2.145 2.848zm.062-2.735c.504 0 .933-.336.933-.972 0-.633-.398-1.008-.94-1.008-.52 0-.927.375-.927 1 0 .64.418.98.934.98z"/>
+                    <path d="M4.5 2.5a.5.5 0 0 0-1 0v9.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L4.5 12.293V2.5z"/>
+                  </svg> </button> 
+                </div>
+
+                <div> 
+                   <button style= "color: #051622;font-weight: 600;" href="#" class="btn btn-light btn-sm " name="dateup"> 
+                    Date Created <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-sort-numeric-up" viewBox="0 0 16 16">
+                      <path d="M12.438 1.668V7H11.39V2.684h-.051l-1.211.859v-.969l1.262-.906h1.046z"/>
+                      <path fill-rule="evenodd" d="M11.36 14.098c-1.137 0-1.708-.657-1.762-1.278h1.004c.058.223.343.45.773.45.824 0 1.164-.829 1.133-1.856h-.059c-.148.39-.57.742-1.261.742-.91 0-1.72-.613-1.72-1.758 0-1.148.848-1.835 1.973-1.835 1.09 0 2.063.636 2.063 2.687 0 1.867-.723 2.848-2.145 2.848zm.062-2.735c.504 0 .933-.336.933-.972 0-.633-.398-1.008-.94-1.008-.52 0-.927.375-.927 1 0 .64.418.98.934.98z"/>
+                      <path d="M4.5 13.5a.5.5 0 0 1-1 0V3.707L2.354 4.854a.5.5 0 1 1-.708-.708l2-1.999.007-.007a.498.498 0 0 1 .7.006l2 2a.5.5 0 1 1-.707.708L4.5 3.707V13.5z"/>
+                    </svg> </button>  
+                  </div>
+
+
+                </div>
+              </form>
+
+            </li>
+
+            
+           
+          </ul>
+        </div>
+        &nbsp;|&nbsp;
+        <br>
+        <div class = "search">
+          <form class="d-flex"  action="{% url 'blogyapp:topic' topic.id %}" method="POST" >
+            {% csrf_token %}   
+            <input class="form-control  form-control-sm" name = "searchtext" type='text' placeholder="Search Articles" aria-label="Search">
+            
+            <button class="btn btn-outline-success btn-sm" type="submit" name = "search">Search</button>
+          </form>
+        </div>
+       
+      </div>
+
+      
       <div class="row">
+        <h5 style="font-weight: 600;margin-top: 0.2cm;margin-bottom: 0.2cm;"> Articles ({{entries.count}})</h5>
         {% for entry in entries %}
-        <div class="col-lg-3">
-          <br>
+        <div class="col-sm-4">
          
-          <div class="card card-body">
-          
+          <div style=" margin: 0cm;" class="card card-body">
+            
+          <div class="article-thumbnail">  
             <a id="thumbnail" href="{% url 'blogyapp:read' entry.id %}"><img  class="img-thumbnail " src= "{{entry.thumbnail.url}}" ></a>
-         
-            <div style="display:flexbox;" >
-              <a style="text-decoration: none; color:rgb(53, 52, 98)" href="{% url 'blogyapp:edit_entry' entry.id %}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
-                  <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
-                </svg>
-             </a> 
-              <a style=" margin-left: 0.3cm;text-decoration: none; color:rgb(53, 52, 98)" href="{% url 'blogyapp:delete_entry' entry.id %}"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-              </svg></a>
-            </div>
-            <hr>
-            {{ entry.entry_title|title}}
           </div>
+
+          <div style="height: 4cm;overflow: hidden;"> 
+          <h5 style="font-weight: 600;">{{ entry.entry_title|title}}</h5> 
+
+          <h6>  {{entry.introduction}}  </h6>
+        </div>
+            <h5> . . .  </h5>
+
+            <div style="font-style:oblique ; font-size:0.9rem;font-weight:600"> created : {{entry.date_added|date:"d M"}}</div>
+            <hr>
+            <center>  
+            <div style="display:flexbox;" >
+              <a style="text-decoration: none; color:rgb(53, 52, 98)" href="{% url 'blogyapp:edit_entry' entry.id %}"> Edit</a> 
+              <a data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-left: 0.5cm;margin-right:0.5cm;text-decoration: none; color:rgb(53, 52, 98)" href="#"> Delete </a>
+
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> Delete Article ?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    Your Article will be permanently deleted
+                    </div><center> 
+                    <div class="modal-footer" style="background-color: #1c5883;">
+                    <button data-bs-dismiss="modal" type="button" class="btn btn-secondary btn-sm">Cansel</button> <a href="{% url 'blogyapp:delete_entry' entry.id %}" class="btn btn-danger btn-sm">Delete</a>      
+                    </div></center>
+                </div>
+                </div>
+            </div>
+            {% if entry.uploaded is True %}
+              <a style="text-decoration: none; color:rgb(53, 52, 98)" href="{% url 'blogyapp:publish_or_unpublish' entry.id %}"> Unpublish</a>
+             {% else %} 
+              <a style="text-decoration: none; color:rgb(53, 52, 98)" href="{% url 'blogyapp:publish_or_unpublish' entry.id %}"> Publish</a>
+            {% endif %}
+
+            </div>
+          </center>
+
+
+         
+          </div>
+          <br>
           </div>
         
         {% endfor %}
       </div>
-    </div>
+
     
     </div>
     

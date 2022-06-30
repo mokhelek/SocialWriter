@@ -11,16 +11,23 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
 from users.models import Profile
+from itertools import chain
+
+from django.db.models import Q
 
 # Create your views here.
 
 
 def home1(request):
+    popular = Entry.objects.order_by("-popularity")[:4]
     if request.user.is_authenticated:
         user = request.user
         my_profile =Profile.objects.get(name =request.user)  # profile of logged in user
         
         entries = []
+        sorted_articles = None
+        
+        
         followings = my_profile.following.all()#queryset of all the accounts that i follow ...
         my_guys = Profile.objects.filter(name__in = followings)[:4]  
         other_users = Profile.objects.exclude(name__in =followings)[:4]  
@@ -34,12 +41,18 @@ def home1(request):
         my_posts = my_profile.profiles_posts()
         entries.append(my_posts)    
         
-        context = { "entries":entries , "followings":followings, "my_guys":my_guys ,"other_users":other_users , "user":user,
+        if len(entries)>0:
+            sorted_articles = sorted(chain(*entries) , reverse = True , key = lambda obj: obj.date_added)
+            
+        
+        context = { "entries":sorted_articles  , "followings":followings, "my_guys":my_guys ,"other_users":other_users , "user":user,
                    "my_profile":my_profile }
         return render(request, 'blogyapp/home1.html',context)
+    
+    
     else:
     
-        return render(request, 'blogyapp/home1.html')
+        return render(request, 'blogyapp/home1.html' , {"popular":popular})
 
 
   
@@ -58,13 +71,61 @@ def index(request):
 @login_required
 def topic(request, topic_id):
     topic = Topic.objects.get(id=topic_id)
+    entries = topic.entry_set.order_by('-date_added') 
+    if request.method == 'POST':
+        if 'unpublished' in request.POST:
+            entries = topic.entry_set.filter(uploaded=False).order_by('-date_added')  # unpublished
+            context = {'topic': topic, 'entries': entries}
+            return render(request, 'blogyapp/topics.html', context)
+            
+            
+        if 'published' in request.POST:
+            entries = topic.entry_set.filter(uploaded=True).order_by('-date_added')   # published
+            context = {'topic': topic, 'entries': entries}
+            return render(request, 'blogyapp/topics.html', context) 
+        
+        
+        # Sorting the articles  
+        
+        if 'namedown' in request.POST:
+            entries = topic.entry_set.order_by('entry_title')  # unpublished
+            context = {'topic': topic, 'entries': entries}
+            return render(request, 'blogyapp/topics.html', context)
+            
+            
+        if 'nameup' in request.POST:
+            entries = topic.entry_set.order_by('-entry_title')   # published
+            context = {'topic': topic, 'entries': entries}
+            return render(request, 'blogyapp/topics.html', context) 
+        
+        if 'datedown' in request.POST:
+            entries = topic.entry_set.order_by('date_added')  # unpublished
+            context = {'topic': topic, 'entries': entries}
+            return render(request, 'blogyapp/topics.html', context)
+            
+            
+        if 'dateup' in request.POST:
+            entries = topic.entry_set.order_by('-date_added')   # published
+            context = {'topic': topic, 'entries': entries}
+            return render(request, 'blogyapp/topics.html', context) 
+        
+        
+        # searching
+        
+        if 'search' in request.POST:
+            search = request.POST.get('searchtext')
+            
+            print(search)
+            entries = topic.entry_set.filter(Q(entry_title__icontains = search) | Q( introduction__icontains=search ) | Q(text__icontains = search) ).order_by('-date_added')   # published
+            context = {'topic': topic, 'entries': entries}
+            return render(request, 'blogyapp/topics.html', context) 
     
-    if topic.owner != request.user:
-        raise Http404
-
-    entries = topic.entry_set.order_by('-date_added')
-    context = {'topic': topic, 'entries': entries}
-    return render(request, 'blogyapp/topics.html', context)
+    
+    return render(request, 'blogyapp/topics.html', {"topic":topic,"entries":entries})
+        
+        
+        
+    
 
 @login_required
 def new_topic(request):
@@ -212,26 +273,28 @@ def read(request, read_id):
     entry = Entry.objects.get(id=read_id) 
     comments = Comments.objects.filter( entry = entry)  # showing only the comments of a specific entry post
     topic = entry.topic
-    profile_login_user = Profile.objects.get(name = request.user)
-    commenter = profile_login_user  #profile of logged in user
+    #profile_login_user = Profile.objects.get(name = request.user) 
+    
+    #commenter = profile_login_user  #profile of logged in user
+    popularity = entry.popularity
     
     if request.method != 'POST':
         form = CommentsForm()
     else:
-        #profile = request.user  # variable has to be the actual database field
+        
+        
         form = CommentsForm(data=request.POST)
         if form.is_valid():
-            form.profile_login_user = profile_login_user 
+            #form.profile_login_user = profile_login_user 
             new_comment = form.save(commit=False)
+            popularity = popularity + 1
+            entry.popularity = popularity
             new_comment.entry = entry 
             # first variable is the actual field from the model that you want to attach to ...
             # the second variable is the queryset or varible that you update with
             # in simple  terms this is a " from " & "to"
-            new_comment.profile = commenter
-            
-
-            
-            
+            new_comment.profile = Profile.objects.get(name = request.user) 
+            entry.save(update_fields=["popularity"])
             new_comment.save()
             return redirect('blogyapp:read', read_id= entry.id)
     
@@ -282,4 +345,124 @@ def follow_unfollow(request,profile_id):
         return redirect('blogyapp:profile_detail', profile_id = profile.id)
 
     return render(request , "blogyapp/profile_detail.html" )
+
+def like_unlike(request, entry_id):
+    
+    entry = Entry.objects.get(id = entry_id)
+    profile = Profile.objects.get(name = request.user)
+    liked_articles = profile.liked_articles.all()
+    
+    number_of_likes = entry.likes
+    
+    popularity = entry.popularity
+    
+    print(number_of_likes)
+    
+    if request.method == 'POST':
+        
+        if entry in liked_articles:
+            profile.liked_articles.remove(entry)
+            number_of_likes = number_of_likes - 1
+            popularity = popularity - 1
+            entry.popularity = popularity
+            entry.likes = number_of_likes
+            
+            entry.save(update_fields=["likes","popularity"])
+            entry.save()
+            profile.save()
+            
+        else:
+            profile.liked_articles.add(entry)
+            number_of_likes = number_of_likes + 1
+            popularity = popularity + 1
+            entry.popularity = popularity
+            entry.likes = number_of_likes
+            
+            entry.save(update_fields=["likes","popularity"])
+            entry.save()
+            profile.save()
+        
+        return redirect('blogyapp:read', entry_id )
+
+def bookmark(request,entry_id):
+    entry = Entry.objects.get(id = entry_id)
+    bookmarks  = entry.bookmarks  # int value of bookmarks
+    
+    my_profile =Profile.objects.get(name = request.user)
+    
+    popularity = entry.popularity
+    
+    bookmarked_articles = my_profile.bookmarked_articles.all()
+    if request.method == 'POST':
+        if entry in bookmarked_articles: 
+            my_profile.bookmarked_articles.remove(entry)
+            
+            bookmarks = bookmarks - 1
+            popularity = popularity - 1
+            entry.popularity = popularity
+            
+            entry.bookmarks = bookmarks
+            
+            entry.save(update_fields=["bookmarks","popularity"])
+            
+            my_profile.save()
+        else:
+            my_profile.bookmarked_articles.add(entry)
+            
+            bookmarks = bookmarks + 1
+            popularity = popularity + 1
+            entry.popularity = popularity
+            
+            entry.bookmarks = bookmarks
+            
+            entry.save(update_fields=["bookmarks","popularity"])
+            
+            my_profile.save()
+            
+        
+        return redirect('blogyapp:read', entry_id )
+    
+def my_bookmarks(request, profile_id):
+    
+    return render(request,"blogyapp/bookmarks.html")
+
+def user_entries(request):
+    
+    return render(request,"blogyapp/user_entries.html")
+
+def publish_or_unpublish(request , entry_id):
+    entry = Entry.objects.get(id = entry_id)
+    
+    topic = entry.topic
+    
+    topics = Topic.objects.get(id=topic.id)
+    
+    entries = topic.entry_set.order_by('-date_added') 
+    uploaded = entry.uploaded
+    print(uploaded)
+    
+    if uploaded is True:
+        uploaded = False
+        entry.uploaded = uploaded
+        entry.save(update_fields=['uploaded'])
+        entry.save()
+        topic.save()
+        return redirect("blogyapp:topic",topic.id )
+        
+    if uploaded is False:
+        uploaded = True
+        entry.uploaded = uploaded
+        entry.save(update_fields=['uploaded'])
+        entry.save()
+        topic.save()
+        return redirect("blogyapp:topic",topic.id )
+    
+    
+    return render(request, 'blogyapp/topics.html', {"topic":topics,"entries":entries})
+        
+    
+
+
+        
+    
     

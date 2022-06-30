@@ -1,0 +1,23 @@
+{% extends 'blogyapp/base.html' %}
+{% load bootstrap5 %}
+{% load static %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'blogyapp/css/read.css' %}"/>
+
+{% block content %}
+<div class="container">   
+<h2>User entries</h2>
+
+<div class="row">
+
+    {% for i in logged_in_user_articles %}
+
+    {{i.entry_title}}
+
+    {% endfor %}
+</div>
+
+</div>
+{% endblock content %}

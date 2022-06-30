@@ -1,6 +1,8 @@
 
 from django.db import models
 from django.contrib.auth.models import User 
+#from blogyapp.models import Entry
+
 
 
 # Create your models here.
@@ -15,9 +17,13 @@ class Profile(models.Model):
     
     date_created = models.DateField(auto_now=True)
     
+    liked_articles = models.ManyToManyField("blogyapp.Entry",related_name="liked_articles", blank=True)
+    
+    bookmarked_articles = models.ManyToManyField("blogyapp.Entry",related_name="bookmarked_articles", blank=True)
+    
     def profiles_posts(self):
         return self.entry_set.all()
-"""   
+ 
     def __str__(self):
         return str(self.name.username)
- """
+ 

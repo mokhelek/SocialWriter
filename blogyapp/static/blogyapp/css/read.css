@@ -1,11 +1,5 @@
-.crop{
-    position: relative;
-    overflow: hidden;
-}
-.pic{
-    height: 80%;
-    width: 100%;
-}
+
+
 
 body {
     background-color: rgb(243, 243, 243);
@@ -18,9 +12,7 @@ body {
    justify-items: left;
 }
 
-#content{
-    width: 85%;
-}
+
 
 .intro{
     padding-top: 2.5cm;
@@ -57,9 +49,21 @@ body {
 
 .avatar-home{
     border-radius: 50%;
-    border: 1px rgb(234, 161, 16) solid;
+    border: 1px white solid;
     width: 38px;
     height: 38px;   
+}
+.avatar-home-user{
+    border-radius: 50%;
+    border: 1px white solid;
+    width: 52px;
+    height: 52px;   
+}
+.avatar-read{
+    border-radius: 50%;
+    border: 2px white solid;
+    width: 60px;
+    height: 60px;   
 }
 
 #mymenu a{
@@ -69,6 +73,7 @@ body {
     text-decoration: none;
     font-size: medium;
     font-family: fantasy;
+    margin-bottom: 0.8cm;
 }
 
 #mymenu-nav a{
@@ -95,8 +100,52 @@ body {
     
 
 }
+#bio-read{
+    max-height: 3cm;
+    max-width: 8cm;
+    font-size: 1.2rem;
+    
+
+}
+
+.thumbnail {
+ 
+    width: 100%;
+    height: 110px;
+    overflow: hidden;
+  }
+
+  .thumbnail img {
+    position: relative;
+    left: 50%;
+    top: 50%;
+  
+    -webkit-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+  }
 
 
+
+.article-thumbnail{
+    width: 100%;
+    height: 210px;
+    overflow: hidden;
+    margin: 0cm;
+
+
+}
+
+.article-thumbnail img {
+    position: relative;
+    left: 50%;
+    top: 50%;
+    margin: 0cm;
+  
+    -webkit-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+  }
 
 
 

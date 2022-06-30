@@ -24,7 +24,17 @@ urlpatterns = [
     path("practice/",views.practice,name='practice'),
     path('profile_detail/<int:profile_id>/', views.profile_detail, name='profile_detail'), 
     path('follow_unfollow/<int:profile_id>/', views.follow_unfollow, name='follow_unfollow'), 
+    
+    path('like_unlike/<int:entry_id>/', views.like_unlike, name='like_unlike'), 
+    
+    path('bookmark/<int:entry_id>/', views.bookmark, name='bookmark'),
+    
+    path('my_bookmarks/<int:profile_id>/', views.my_bookmarks, name='my_bookmarks'),
+    
+    path('user_entries/', views.user_entries, name='user_entries'),
+    
+    path('publish_or_unpublish/<int:entry_id>/', views.publish_or_unpublish, name='publish_or_unpublish'),
+    
+    
 
 ]
-
- #<a href="{% url 'blogyapp:edit_entry' entry.id %}">Edit entry</a> 
