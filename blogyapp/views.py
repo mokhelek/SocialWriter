@@ -270,6 +270,8 @@ def upload(request, topic_id):
 
 
 def read(request, read_id):
+    my_profile = Profile.objects.get(name =request.user)  
+    followings = my_profile.following.all()
     entry = Entry.objects.get(id=read_id) 
     comments = Comments.objects.filter( entry = entry)  # showing only the comments of a specific entry post
     topic = entry.topic
@@ -298,7 +300,7 @@ def read(request, read_id):
             new_comment.save()
             return redirect('blogyapp:read', read_id= entry.id)
     
-    context = {"entry": entry, "form":form , "topic":topic ,"comments":comments}
+    context = {"entry": entry, "form":form , "topic":topic ,"comments":comments , "followings":followings}
     return render(request, "blogyapp/read.html", context)
 
 def practice(request):
@@ -321,27 +323,27 @@ def follow_unfollow(request,profile_id):
     profile =Profile.objects.get(id=profile_id)
     followers = profile.followers
     
-    
-    my_profile =Profile.objects.get(name =request.user)  
-    followings = my_profile.following.all()
-    
-    if profile.name in followings: # if i am following this guy
-        my_profile.following.remove(profile.name)
-        followers = followers - 1
-        profile.followers = followers
-        profile.save(update_fields=["followers"])
-        
-        my_profile.save()
-    else:
-        my_profile.following.add(profile.name)
-        followers = followers + 1
-        print(followers)
-        profile.followers = followers
-        profile.save(update_fields=["followers"])
-        
-        my_profile.save()
-        
     if request.method == 'POST':
+        my_profile =Profile.objects.get(name =request.user)  
+        followings = my_profile.following.all()
+        
+        if profile.name in followings: # if i am following this guy
+            my_profile.following.remove(profile.name)
+            followers = followers - 1
+            profile.followers = followers
+            profile.save(update_fields=["followers"])
+            
+            my_profile.save()
+        else:
+            my_profile.following.add(profile.name)
+            followers = followers + 1
+            print(followers)
+            profile.followers = followers
+            profile.save(update_fields=["followers"])
+            
+            my_profile.save()
+            
+        
         return redirect('blogyapp:profile_detail', profile_id = profile.id)
 
     return render(request , "blogyapp/profile_detail.html" )

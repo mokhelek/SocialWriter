@@ -38,7 +38,7 @@ body {
 
 .postIntro{
     font-style: oblique;
-    font-size: larger;
+    font-size: medium;
 }
 
 .avatar{
@@ -233,10 +233,7 @@ body {
      }
      #smaller{
         display:none
-     }
-     .reactions{
-        display: none;
-    }
+   
  }
  @media screen and (min-width:850px){
     #desktopview{
@@ -252,10 +249,7 @@ body {
      }
      #smaller{
         display:none;
-     }
-     .reactions{
-        display: block;
-    }
+    
  }
 
 
@@ -265,14 +259,55 @@ body {
 /* ################################################################## Screen Sizes Read Page ###################################################################*/
 
 
-@media screen and (max-width:330px){
- 
-  .reactions{
-      display: none;
-  }
-  
- 
- 
+@media screen and (max-width:574px){
+    .small{
+        display: block;
+    }
+    .tablet{
+        display: none;
+    }
+
+    .desktop{
+        display: none;
+    }
+}
+    .reactions{
+    display: none;
+    }
+ }
+
+ @media screen and (min-width:575px){
+    .small{
+        display: none;
+    }
+    .tablet{
+        display: block;
+    }
+    .desktop{
+        display: none;
+    }
+
+}
+    .reactions{
+    display: none;
+    }
+ }
+
+ @media screen and (min-width:800px){
+    .small{
+        display: none;
+    }
+    .tablet{
+        display: none;
+    }
+    .desktop{
+        display: block;
+    }
+
+    .reactions{
+    display: block;
+    }
+
  }
 
 
