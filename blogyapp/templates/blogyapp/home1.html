@@ -135,31 +135,31 @@
 </div>
     {% else %} 
     
-<div class="container-fluid" style="width:93%">
+<div id="desktopview"  class="container-fluid" style="width:98%">
     <section>
         <br>
         <div style="display: flex;">  
              <h5 style="font-weight:600"> Recommended&nbsp;|&nbsp;</h5><h5>following </h5>
         </div>
     <div class="row"> 
-        <div class="col-sm-8">
+        <div class="col-sm-9" >
         {% for  entry in entries %}
             
         {% if entry.uploaded is True %}
 
 
 
-                    <div class="card card-body" style="margin-bottom: 0.3cm;">
+                    <div class="card card-body" style="box-shadow: 0 0 4px rgb(178, 178, 178);margin-bottom: 0.3cm;">
                         <div class="row">  
                       
                             <div  class="col-sm-3">  
-                                <div class="thumbnail">
+                                <div class="thumbnail" style="margin-top:0.8cm;">
                                     <a href="{% url 'blogyapp:read' entry.id %}"> <img  class="img-thumbnail " src= "{{entry.thumbnail.url}}" > </a>
                                     </div>
                                 
                             </div>
 
-                            <div class="col-sm-8">   
+                            <div class="col-sm-8 ">   
 
                                  <div style="display: flex;" >
                                     
@@ -171,9 +171,9 @@
                                        
                                 </div>
                                
-                                <h5 style="font-weight: 600; margin: 0.1cm;line-height: 1rem;" > {{entry.entry_title}}</h5> 
-                                <div style="font-size:smaller;line-height: 1rem;color:black;margin-left: 0.1cm;">  
-                                   {{entry.introduction|truncatechars:190|linebreaks}}  
+                                <h6 style="font-weight: 600; margin: 0.1cm;line-height: 1rem;font-family: Arial, Helvetica, sans-serif;" > {{entry.entry_title}}</h6> 
+                                <div style="font-size:1rem;line-height: 1.18rem;color:rgb(53, 53, 53);margin-left: 0.1cm; font-family: Arial, Helvetica, sans-serif;">  
+                                   {{entry.introduction|truncatechars:230|linebreaks}}  
                                    <div style="color:rgb(35, 35, 235)"> 
                                     Read more <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
@@ -185,7 +185,7 @@
                             </div>
                             <div class="col-sm-1">
                                 <div>
-                                    <div> <div style="color: rgb(59, 59, 59);;margin-top: 0.3cm;font-size: 0.7rem; "> {{entry.date_added|date:"d M"}}</div> </div>
+                                    <div> <div style="color: rgb(59, 59, 59);;margin-top: 0.3cm;font-size: 0.7rem; font-family: Arial, Helvetica, sans-serif;"> {{entry.date_added|date:"d M"}}</div> </div>
                                     <br>
 
                                     <div>
@@ -237,10 +237,7 @@
                         </div>
 
 
-                        <div class="row">
-                         
-                           
-                        </div>
+                      
                     </div> 
 
 
@@ -248,10 +245,10 @@
         {% endfor %}
       </div>
       <div class="col-sm-3">
-          <div id="home-menu"  style="box-shadow: 0 0 4px rgb(157, 157, 157); border-radius: 3%;">
+          <div id="home-menu"  style="box-shadow: 0 0 4px rgb(187, 185, 185); border-radius: 3%;">
                <div> 
 
-                <div style="height:1.2cm; background-color:#051622;border-radius: 3%;">
+                <div style="height:1.2cm; background-color:#051622;">
                     <div style="padding-left: 0.4cm;padding-top: 0.7cm; ">  
                      <a style="text-decoration: none;color:#051622;font-size:0.9rem;"  href="{% url 'blogyapp:profile_detail' my_profile.id  %}"> 
                     <img class="avatar-home-user"  src="{{my_profile.avatar.url}}"> {{ user.username }}  </a>
@@ -261,28 +258,27 @@
                     <ul id="mymenu" > 
                         <br>
                         <br>
-                        <br>
                         
-                        <a style="display: flex; margin-bottom: 0.25cm;margin-left: 0.4cm;"  href="{% url 'blogyapp:home1' %}">
+                        <a style="display: flex; margin-bottom: 0.25cm;margin-left: 0.2cm;"  href="{% url 'blogyapp:home1' %}">
                              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
                             <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
                           </svg> &nbsp;&nbsp; Home</a>
 
-                        <a style="display: flex; margin-bottom: 0.25cm;margin-left: 0.4cm;" href="{% url 'blogyapp:dashboard' %}"> 
+                        <a style="display: flex; margin-bottom: 0.25cm;margin-left: 0.2cm;" href="{% url 'blogyapp:dashboard' %}"> 
                             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-speedometer" viewBox="0 0 16 16">
                             <path d="M8 2a.5.5 0 0 1 .5.5V4a.5.5 0 0 1-1 0V2.5A.5.5 0 0 1 8 2zM3.732 3.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 8a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 7.31A.91.91 0 1 0 8.85 8.569l3.434-4.297a.389.389 0 0 0-.029-.518z"/>
                             <path fill-rule="evenodd" d="M6.664 15.889A8 8 0 1 1 9.336.11a8 8 0 0 1-2.672 15.78zm-4.665-4.283A11.945 11.945 0 0 1 8 10c2.186 0 4.236.585 6.001 1.606a7 7 0 1 0-12.002 0z"/>
                           </svg> &nbsp;&nbsp; Dashboard</a>
 
-                        <a style="display: flex; margin-bottom: 0.25cm;margin-left: 0.4cm;" href="{% url 'blogyapp:index' %}"> 
+                        <a style="display: flex; margin-bottom: 0.25cm;margin-left: 0.2cm;" href="{% url 'blogyapp:index' %}"> 
                              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-book-half" viewBox="0 0 16 16">
                             <path d="M8.5 2.687c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
                           </svg> &nbsp;&nbsp;  Topics </a>
 
                        
                             {% if user.is_authenticated %}
-                            <a style="display: flex; margin-bottom: 0.25cm;margin-left: 0.4cm;" href="{% url 'blogyapp:user_entries' %}">
+                            <a style="display: flex; margin-bottom: 0.25cm;margin-left: 0.2cm;" href="{% url 'blogyapp:user_entries' %}">
                          
                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
                             <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
@@ -294,7 +290,7 @@
             
                           
                             {% if user.is_authenticated %}
-                            <a style="display: flex; margin-bottom: 0.25cm;margin-left: 0.4cm;" href="{% url 'blogyapp:my_bookmarks' access_profiles.id %}"> 
+                            <a style="display: flex; margin-bottom: 0.25cm;margin-left: 0.2cm;" href="{% url 'blogyapp:my_bookmarks' access_profiles.id %}"> 
                              
                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
@@ -302,7 +298,7 @@
                           {% endif %}
                      
 
-                        <a style="display: flex; margin-bottom: 0.25cm;margin-left: 0.4cm;" href="{% url 'blogyapp:profile_detail' my_profile.id  %}">
+                        <a style="display: flex; margin-bottom: 0.25cm;margin-left: 0.2cm;" href="{% url 'blogyapp:profile_detail' my_profile.id  %}">
                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
@@ -311,7 +307,7 @@
 
                           {% if user.is_authenticated %}
                           
-                        <a style="display: flex; margin-bottom: 0.25cm;margin-left: 0.4cm;" href="{% url 'users:logout' %}" >
+                        <a style="display: flex; margin-bottom: 0.25cm;margin-left: 0.2cm;" href="{% url 'users:logout' %}" >
                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
                             <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
@@ -362,6 +358,366 @@
     </div>
 </section>
 </div>
+
+
+
+<!-- #########################################################################   TABLET VIEW  ################################################################################################################################ -->
+
+    
+<div id="tabletview"  class="container-fluid" style="width:100%">
+  <section>
+      <br>
+      <div style="display: flex;">  
+           <h5 style="font-weight:600"> Recommended&nbsp;|&nbsp;</h5><h5>following </h5>
+      </div>
+  <div class="row"> 
+      <div class="col-sm-12">
+      {% for  entry in entries %}
+          
+      {% if entry.uploaded is True %}
+
+
+
+                  <div class="card card-body" style="margin-bottom: 0.3cm;">
+                      <div class="row">  
+                    
+                          <div  class="col-sm-3">  
+                              <div class="thumbnail" style="margin-top:1cm;">
+                                  <a href="{% url 'blogyapp:read' entry.id %}"> <img  class="img-thumbnail " src= "{{entry.thumbnail.url}}" > </a>
+                                  </div>
+                              
+                          </div>
+
+                          <div class="col-sm-8 ">   
+
+                               <div style="display: flex;" >
+                                  
+                                      <a  style="display: flex;text-decoration:none;"  href="{% url 'blogyapp:profile_detail' my_profile.id  %}">
+                                           <img class="avatar-home"  src="{{entry.profile.avatar.url}}">
+                                            <h6 style="text-decoration:none;color: gray;margin-top: 0.3cm;margin-left: 0.2cm;"> {{ entry.profile.name }}</h6>
+                                      </a>
+                                  
+                                     
+                              </div>
+                             
+                              <h6 style="font-weight: 600; margin: 0.1cm;line-height: 1rem;" > {{entry.entry_title}}</h6> 
+                              <div style="font-size:0.9rem;line-height: 1rem;color:rgb(75, 73, 73);margin-left: 0.1cm;">  
+                                 {{entry.introduction|truncatechars:180|linebreaks}}  
+                                 <div style="color:rgb(35, 35, 235)"> 
+                                  Read more <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                                      <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                                    </svg>
+                              </div>
+                              </div>  
+                              
+                          </div>
+                          <div class="col-sm-1">
+                              <div>
+                                  <div> <div style="color: rgb(59, 59, 59);;margin-top: 0.3cm;font-size: 0.7rem; "> {{entry.date_added|date:"d M"}}</div> </div>
+                                  <br>
+
+                                  <div>
+
+                                      <button style="margin-bottom:0.2cm" type="button" class="btn btn-light btn-sm position-relative">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                                            </svg>
+                                          <span style = "background-color: rgba(128, 128, 128, 0.861);margin-top: 0.1cm;margin-left: -0.1cm;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill ">
+                                            {{entry.likes}}
+                                            <span class="visually-hidden">unread messages</span>
+                                          </span>
+                                        </button>
+                                     
+                                  </div>
+
+
+                                  <div>
+                                      <button style="margin-bottom:0.2cm" type="button" class="btn btn-light btn-sm position-relative">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+                                              <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                                              <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
+                                            </svg>
+                                          <span style = "background-color: rgba(128, 128, 128, 0.861);margin-top: 0.1cm;margin-left: -0.1cm;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill ">
+                                            {{entry.bookmarks}}
+                                            <span class="visually-hidden">unread messages</span>
+                                          </span>
+                                        </button>
+                                      
+                                         
+                                     
+                                  </div>
+                                  <div> 
+                                  <button style="margin-bottom:0.2cm" type="button" class="btn btn-light btn-sm position-relative">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-chat-right-quote" viewBox="0 0 16 16">
+                                          <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/>
+                                          <path d="M7.066 4.76A1.665 1.665 0 0 0 4 5.668a1.667 1.667 0 0 0 2.561 1.406c-.131.389-.375.804-.777 1.22a.417.417 0 1 0 .6.58c1.486-1.54 1.293-3.214.682-4.112zm4 0A1.665 1.665 0 0 0 8 5.668a1.667 1.667 0 0 0 2.561 1.406c-.131.389-.375.804-.777 1.22a.417.417 0 1 0 .6.58c1.486-1.54 1.293-3.214.682-4.112z"/>
+                                        </svg>
+                                      <span style = "background-color: rgba(128, 128, 128, 0.861);margin-top: 0.1cm;margin-left: -0.1cm;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill">
+                                        {{entry.comments_set.count}}
+                                        <span class="visually-hidden">unread messages</span>
+                                      </span>
+                                    </button> </div>
+
+                              </div>
+                          </div>
+
+
+                      </div>
+
+
+                    
+                  </div> 
+
+
+         {% endif%}
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+</div>
+
+<!--  ###################################################################   SMALL  ##################################################################################-->
+
+    
+<div id="small"  style="width:100%">
+  <section>
+      <br>
+      <div style="display: flex;">  
+           <h6 style="font-weight:600"> Recommended&nbsp;|&nbsp;</h6><h5>following </h5>
+      </div>
+  <div class="row"> 
+      <div class="col-sm-12">
+      {% for  entry in entries %}
+          
+      {% if entry.uploaded is True %}
+
+
+
+                  <div class="card card-body" style="margin: 0cm;">
+                      <div class="row">  
+                    
+                          <div  class="col-sm-3" style=" margin: 0cm;">  
+                              <div class="thumbnail text-center" style="height: 125px;" >
+                                  <a style=" margin: 0cm;" href="{% url 'blogyapp:read' entry.id %}"> <img style=" margin: 0cm;" class="img-thumbnail img-fluid" src= "{{entry.thumbnail.url}}" > </a>
+                                  </div>
+                              
+                          </div>
+
+                          <div class="col-sm-8 ">   
+
+                               <div style="display: flex;" >
+                                  
+                                      <a  style="display: flex;text-decoration:none;"  href="{% url 'blogyapp:profile_detail' my_profile.id  %}">
+                                           <img class="avatar-home"  src="{{entry.profile.avatar.url}}">
+                                            <h6 style="text-decoration:none;color: gray;margin-top: 0.3cm;margin-left: 0.2cm;"> {{ entry.profile.name }}</h6>
+                                      </a>
+                                  
+                                      
+                              </div>
+                              <div> <div style="color: rgb(59, 59, 59);;margin-bottom: 0.2cm;font-size: 0.7rem; "> {{entry.date_added|date:"d M"}}</div> </div> 
+                              <h6 style="font-weight: 600; margin: 0.1cm;line-height: 1rem;" > {{entry.entry_title}}</h6> 
+                              <div style="font-size:0.8rem;line-height: 0.95rem;color:rgb(49, 49, 49);margin-left: 0.1cm;">  
+                                 {{entry.introduction|truncatechars:100|linebreaks}}  
+                                 <div style="color:rgb(35, 35, 235)"> 
+                                  Read more <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                                      <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                                    </svg>
+                              </div>
+                              </div>  
+                              
+                          </div>
+                          <div class="row" >
+                              <div style="display:flex;margin-top: 0.5cm;margin-left: 0.2cm;">
+                                  
+                                  <br>
+
+                                  <div>
+
+                                      <button  type="button" class="btn btn-light btn-sm position-relative">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                                            </svg>
+                                          <span style = "background-color: rgba(128, 128, 128, 0.861);margin-top: 0.1cm;margin-left: -0.1cm;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill ">
+                                            {{entry.likes}}
+                                            <span class="visually-hidden">unread messages</span>
+                                          </span>
+                                        </button>
+                                     
+                                  </div>
+
+
+                                  <div>
+                                      <button style="margin-left:0.3cm;margin-right: 0.3cm;" type="button" class="btn btn-light btn-sm position-relative">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+                                              <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                                              <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
+                                            </svg>
+                                          <span style = "background-color: rgba(128, 128, 128, 0.861);margin-top: 0.1cm;margin-left: -0.1cm;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill ">
+                                            {{entry.bookmarks}}
+                                            <span class="visually-hidden">unread messages</span>
+                                          </span>
+                                        </button>
+                                      
+                                         
+                                     
+                                  </div>
+                                  <div> 
+                                  <button type="button" class="btn btn-light btn-sm position-relative">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chat-right-quote" viewBox="0 0 16 16">
+                                          <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/>
+                                          <path d="M7.066 4.76A1.665 1.665 0 0 0 4 5.668a1.667 1.667 0 0 0 2.561 1.406c-.131.389-.375.804-.777 1.22a.417.417 0 1 0 .6.58c1.486-1.54 1.293-3.214.682-4.112zm4 0A1.665 1.665 0 0 0 8 5.668a1.667 1.667 0 0 0 2.561 1.406c-.131.389-.375.804-.777 1.22a.417.417 0 1 0 .6.58c1.486-1.54 1.293-3.214.682-4.112z"/>
+                                        </svg>
+                                      <span style = "background-color: rgba(128, 128, 128, 0.861);margin-top: 0.1cm;margin-left: -0.1cm;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill">
+                                        {{entry.comments_set.count}}
+                                        <span class="visually-hidden">unread messages</span>
+                                      </span>
+                                    </button> </div>
+
+                              </div>
+                          </div>
+
+
+                      </div>
+
+
+                    
+                  </div> 
+
+
+         {% endif%}
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<footer class="position" style="background-color: rgb(255, 255, 255);box-shadow: 0 0 6px gray;height: 2cm;position: sticky;">  
+ Mokhele katleho
+</footer>
+
+</div>
+
+<!--  ###################################################################   SMALLER  ##################################################################################-->
+
+    
+<div id="smaller"  class="container-fluid" style="width:100%">
+  <section>
+      <br>
+      <div style="display: flex;">  
+           <h6 style="font-weight:600"> Recommended&nbsp;|&nbsp;</h6><h5>following </h5>
+      </div>
+  <div class="row"> 
+      <div class="col-sm-12">
+      {% for  entry in entries %}
+          
+      {% if entry.uploaded is True %}
+
+
+
+                  <div class="card card-body" style="margin-bottom: 0.3cm;">
+                      <div class="row">  
+                    
+                          <div  class="col-sm-3">  
+                              <div class="thumbnail" style="height: 175px;" >
+                                  <a href="{% url 'blogyapp:read' entry.id %}"> <img  class="img-thumbnail " src= "{{entry.thumbnail.url}}" > </a>
+                                  </div>
+                              
+                          </div>
+
+                          <div class="col-sm-8 ">   
+
+                               <div style="display: flex;" >
+                                  
+                                      <a  style="display: flex;text-decoration:none;"  href="{% url 'blogyapp:profile_detail' my_profile.id  %}">
+                                           <img class="avatar-home"  src="{{entry.profile.avatar.url}}">
+                                            <h6 style="text-decoration:none;color: gray;margin-top: 0.3cm;margin-left: 0.2cm;"> {{ entry.profile.name }}</h6>
+                                      </a>
+                                  
+                                      
+                              </div>
+                              <div> <div style="color: rgb(59, 59, 59);;margin-top: 0.3cm;font-size: 0.7rem; "> {{entry.date_added|date:"d M"}}</div> </div> 
+                              <h6 style="font-weight: 600; margin: 0.1cm;line-height: 1rem;" > {{entry.entry_title}}</h6> 
+                              <div style="font-size:0.9rem;line-height: 0.95rem;color:rgb(49, 49, 49);margin-left: 0.1cm;">  
+                                 {{entry.introduction|truncatechars:180|linebreaks}}  
+                                 <div style="color:rgb(35, 35, 235)"> 
+                                  Read more <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                                      <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                                    </svg>
+                              </div>
+                              </div>  
+                              
+                          </div>
+                          <div class="row" >
+                              <div style="display:flex;margin-top: 0.5cm;margin-left: 0.2cm;">
+                                  
+                                  <br>
+
+                                  <div>
+
+                                      <button  type="button" class="btn btn-light btn-sm position-relative">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                                            </svg>
+                                          <span style = "background-color: rgba(128, 128, 128, 0.861);margin-top: 0.1cm;margin-left: -0.1cm;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill ">
+                                            {{entry.likes}}
+                                            <span class="visually-hidden">unread messages</span>
+                                          </span>
+                                        </button>
+                                     
+                                  </div>
+
+
+                                  <div>
+                                      <button style="margin-left:0.3cm;margin-right: 0.3cm;" type="button" class="btn btn-light btn-sm position-relative">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+                                              <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                                              <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
+                                            </svg>
+                                          <span style = "background-color: rgba(128, 128, 128, 0.861);margin-top: 0.1cm;margin-left: -0.1cm;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill ">
+                                            {{entry.bookmarks}}
+                                            <span class="visually-hidden">unread messages</span>
+                                          </span>
+                                        </button>
+                                      
+                                         
+                                     
+                                  </div>
+                                  <div> 
+                                  <button type="button" class="btn btn-light btn-sm position-relative">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chat-right-quote" viewBox="0 0 16 16">
+                                          <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/>
+                                          <path d="M7.066 4.76A1.665 1.665 0 0 0 4 5.668a1.667 1.667 0 0 0 2.561 1.406c-.131.389-.375.804-.777 1.22a.417.417 0 1 0 .6.58c1.486-1.54 1.293-3.214.682-4.112zm4 0A1.665 1.665 0 0 0 8 5.668a1.667 1.667 0 0 0 2.561 1.406c-.131.389-.375.804-.777 1.22a.417.417 0 1 0 .6.58c1.486-1.54 1.293-3.214.682-4.112z"/>
+                                        </svg>
+                                      <span style = "background-color: rgba(128, 128, 128, 0.861);margin-top: 0.1cm;margin-left: -0.1cm;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill">
+                                        {{entry.comments_set.count}}
+                                        <span class="visually-hidden">unread messages</span>
+                                      </span>
+                                    </button> </div>
+
+                              </div>
+                          </div>
+
+
+                      </div>
+
+
+                    
+                  </div> 
+
+
+         {% endif%}
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+</div>
+
+
 
     {% endif %}
 

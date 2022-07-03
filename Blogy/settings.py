@@ -154,7 +154,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'blogyapp/static/images')
 
 LOGIN_URL = 'users:login'
 LOGOUT_REDIRECT_URL = 'blogyapp:home1'
-LOGIN_REDIRECT_URL = 'blogyapp:home1'
+
 
 TINYMCE_DEFAULT_CONFIG = {
     'cleanup_on_startup': True,
