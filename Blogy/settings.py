@@ -150,7 +150,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = "/images/"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'blogyapp/static/images')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'blogyapp/static')
 
 LOGIN_URL = 'users:login'
 LOGOUT_REDIRECT_URL = 'blogyapp:home1'

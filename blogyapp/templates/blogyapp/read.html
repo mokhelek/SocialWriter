@@ -3,7 +3,29 @@
 {% load static %}
 <link rel="stylesheet"  href="{% static 'blogyapp/css/read.css' %}">
 
+<style>
+    @font-face {
+        font-family: "poppins";
+        src: url('../static/blogyapp/fonts/poppins/Poppins-Regular.otf');
+    }
+    p, h1, h2, h3, h4, h5, h6, button, a, span{
+        font-family:poppins !important;
+        color: #444444 ;
+    }
+    
+    @font-face {
+        font-family: "poppins-bold";
+        src: url('../static/blogyapp/fonts/poppins/Poppins-Bold.otf');
+    }
+    #hero_text{
+        font-family:poppins-bold !important;
+        color: #444444 ;
+    }
+  </style>
+  
 {% block content %}
+
+
 {% if entry.uploaded is True %}
 <br>
 <div class="container"> 
@@ -11,7 +33,7 @@
 </div>
 
 
-<div class=" small container-fluid"> 
+<div class=" smallr container-fluid"> 
 <div class="row">
 
     <div class="col-sm-7">
@@ -657,13 +679,16 @@
         <div class="col-sm-7">
             
             <div id="content" >
-                <div class = "crop">
-                    <img class="img-thumbnail" src= "{{entry.thumbnail.url}}" >
+                <div class="row">
+                    <div class = "crop col-12">
+                        <img class="img-fluid" src= "{{entry.thumbnail.url}}" >
+                    </div>
                 </div>
+                
                 <br>
                 <div class="writer">  
                     <div style="color: #1A223B; font-size: larger; font-weight: 700;">
-                        <img class="avatar-home" src="{{entry.profile.avatar.url}}"> {{ topic.owner.username|title }}
+                        <img class="avatar-home" src="{{entry.profile.avatar.url}}"> {{ entry.profile.name }}
                     </div>
                 
                     <div>
@@ -697,7 +722,7 @@
             <hr>
             <section class="comment-section" >   
                
-            <h6> Comments  ({{comments.count}})</h6>
+            <h6 id="comments"> Comments  ({{comments.count}})</h6>
            
             <form  method='POST' action="{% url 'blogyapp:read' entry.id %}" >
                 {% bootstrap_form form%}

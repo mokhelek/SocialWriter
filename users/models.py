@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     name = models.OneToOneField(User, on_delete=models.CASCADE ,default=1 ) # this has the username inside
     bio = models.CharField(max_length=300,blank=True, default="Hey There I'm using Bloggy")
-    avatar = models.ImageField(null=True, upload_to="images", default="default.png")
+    avatar = models.ImageField(null=True, upload_to="blogyapp/images/profiles_img", default="default.jpg")
     
     following = models.ManyToManyField(User,related_name="following", blank=True)
     

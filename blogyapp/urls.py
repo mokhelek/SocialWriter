@@ -3,25 +3,19 @@ from .import views
 
 app_name = 'blogyapp'
 urlpatterns = [
-    path("",views.home1,name='home1'), 
-    path("index/",views.index,name='index'),   #name is index
-    path('topics/<int:topic_id>/', views.topic, name='topic'),
-    path('new_topic/', views.new_topic, name='new_topic'),
+    path("",views.home1,name='home1'),
+     
 
-    path('new_entry/<int:topic_id>/', views.new_entry, name='new_entry'),
+    path('new_entry/<int:profile_id>/', views.new_entry, name='new_entry'),
     path('edit_entry/<int:entry_id>/', views.edit_entry, name='edit_entry'), # does entry have an id??
-    path('edit_topic/<int:topic_id>/', views.edit_topic, name = "edit_topic"),
+   
 
     path('read/<int:read_id>/',views.read, name = "read"),
     path('delete_entry/<int:entry_id>/', views.delete_entry , name = "delete_entry"),
-    path('delete_topic/<int:topic_id>/', views.delete_topic, name = "delete_topic"),
 
+    # path('dashboard/',  views.dashboard , name="dashboard"),
+   
 
-    path('dashboard/',  views.dashboard , name="dashboard"),
-    
-    path('upload/<int:topic_id>/', views.upload, name='upload'),
-    
-    path("practice/",views.practice,name='practice'),
     path('profile_detail/<int:profile_id>/', views.profile_detail, name='profile_detail'), 
     path('follow_unfollow/<int:profile_id>/', views.follow_unfollow, name='follow_unfollow'), 
     
