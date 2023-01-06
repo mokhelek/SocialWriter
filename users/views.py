@@ -33,7 +33,7 @@ def register(request):
             #profiles.save(update_fields=['name'])
             # Log the user in and then redirect to home page.
             login(request, new_user)
-            return redirect('blogyapp:index')
+            return redirect('blogyapp:home1')
     context = {'form': form}
     return render(request, 'registration/register.html', context)
 

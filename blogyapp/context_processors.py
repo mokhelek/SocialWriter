@@ -6,14 +6,30 @@ def access_profile(request):
     if request.user.is_authenticated:
         
         logged_in_user_articles = Entry.objects.filter(profile__name=request.user)
-        
-        access_profiles =Profile.objects.get(name =request.user)
-        followings = access_profiles.following.all()#queryset of all the accounts that i follow ...
-        my_guys = Profile.objects.filter(name__in = followings)[:4]  
-        other_users = Profile.objects.exclude(name__in =followings)[:4] 
-        
-        return {"access_profiles":access_profiles , "my_guys":my_guys , "other_users":other_users,"logged_in_user_articles":logged_in_user_articles}
-    
+        try:
+            access_profiles =Profile.objects.get(name =request.user)
+            followings = access_profiles.following.all() #queryset of all the accounts that i follow ...
+            my_guys = Profile.objects.filter(name__in = followings)[:4]  
+            other_users = Profile.objects.exclude(name__in =followings)[:4] 
+            
+            return {"access_profiles":access_profiles ,
+                    "my_guys":my_guys , 
+                    "other_users":other_users,
+                    "logged_in_user_articles":logged_in_user_articles
+                    }
+        except:
+            
+            access_profiles = ""
+            followings = ""
+            my_guys = ""  
+            other_users = ""
+            
+            return {"access_profiles":access_profiles ,
+                    "my_guys":my_guys , 
+                    "other_users":other_users,
+                    "logged_in_user_articles":logged_in_user_articles
+                    }
+               
     else:
         return {}
     """  

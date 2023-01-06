@@ -21,7 +21,57 @@ from django.db.models import Q
 def home1(request):
 
     if request.user.is_authenticated:
- 
+        
+        followings_url = request.path
+        print(followings_url)
+        
+        recommended_articles = Entry.objects.all() 
+        my_profile =Profile.objects.get(name =request.user)  # profile of logged in user
+        comments = Comments.objects.all()
+        entries = Entry.objects.all().order_by("-date_added")
+    
+        followings = my_profile.following.all() #queryset of all the accounts that i follow ...
+        my_guys = Profile.objects.filter(name__in = followings).exclude(Q(name=my_profile.name))[:6]  
+        other_users = Profile.objects.exclude(name__in =followings).exclude(Q(name=my_profile.name))[:6] 
+        
+        
+        context = { "entries":entries   ,
+                   "followings":followings, 
+                   "my_guys":my_guys ,
+                   "other_users":other_users , 
+                   "my_profile":my_profile,
+                   "comments":comments, 
+                   "recommended_articles":recommended_articles,
+                   "followings_url":followings_url
+                   }
+        
+        return render(request, 'blogyapp/landing_page.html',context)
+    
+    
+    else:
+            
+        authors = Entry.objects.order_by("-popularity")
+        top_authors = []
+        
+        for i in authors:
+            if i.profile.name not in top_authors:
+                top_authors.append(i.profile.name) 
+        
+        top_authors_details = Profile.objects.filter(name__in=top_authors)[:10]
+
+        popular = Entry.objects.order_by("-popularity")[:4]
+        
+        return render(request, 'blogyapp/landing_page.html' , {"popular":popular,"top_authors_details":top_authors_details})
+
+
+def following(request):
+
+    if request.user.is_authenticated:
+        
+        followings_url = request.path
+        print(followings_url)
+        
+        recommended_articles = Entry.objects.all() 
         my_profile =Profile.objects.get(name =request.user)  # profile of logged in user
         comments = Comments.objects.all()
         entries = []
@@ -50,7 +100,10 @@ def home1(request):
                    "my_guys":my_guys ,
                    "other_users":other_users , 
                    "my_profile":my_profile,
-                   "comments":comments }
+                   "comments":comments, 
+                   "recommended_articles":recommended_articles,
+                   "followings_url":followings_url
+                   }
         
         return render(request, 'blogyapp/landing_page.html',context)
     
@@ -69,6 +122,53 @@ def home1(request):
         popular = Entry.objects.order_by("-popularity")[:4]
         
         return render(request, 'blogyapp/landing_page.html' , {"popular":popular,"top_authors_details":top_authors_details})
+
+
+
+
+
+def popular(request):
+
+    if request.user.is_authenticated:
+      
+        recommended_articles = Entry.objects.all() 
+        my_profile =Profile.objects.get(name =request.user)  # profile of logged in user
+        comments = Comments.objects.all()
+        entries = Entry.objects.order_by("-popularity")
+    
+        followings = my_profile.following.all() #queryset of all the accounts that i follow ...
+        my_guys = Profile.objects.filter(name__in = followings).exclude(Q(name=my_profile.name))[:6]  
+        other_users = Profile.objects.exclude(name__in =followings).exclude(Q(name=my_profile.name))[:6] 
+        
+        
+        context = { "entries":entries   ,
+                   "followings":followings, 
+                   "my_guys":my_guys ,
+                   "other_users":other_users , 
+                   "my_profile":my_profile,
+                   "comments":comments, 
+                   "recommended_articles":recommended_articles,
+                   
+                   }
+        
+        return render(request, 'blogyapp/landing_page.html',context)
+    
+    
+    else:
+            
+        authors = Entry.objects.order_by("-popularity")
+        top_authors = []
+        
+        for i in authors:
+            if i.profile.name not in top_authors:
+                top_authors.append(i.profile.name) 
+        
+        top_authors_details = Profile.objects.filter(name__in=top_authors)[:10]
+
+        popular = Entry.objects.order_by("-popularity")
+        
+        return render(request, 'blogyapp/landing_page.html' , {"popular":popular,"top_authors_details":top_authors_details})
+
 
 
 

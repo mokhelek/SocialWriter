@@ -1,10 +1,19 @@
 
+@font-face {
+    font-family: "poppins";
+    src: url('../fonts/montserrat/Montserrat-Regular.otf');
+}
+
+p, h1, h2, h3, h4, h5, h6, button, a, span, div{
+    font-family:poppins !important;
+    
+}
 
 
 body {
     background-color: rgb(255, 255, 255);
     color: #1A223B;
-    font-family: Arial, Helvetica, sans-serif;
+
 }
 #hovering:hover {
     background-color: rgb(241, 241, 241);
@@ -13,15 +22,12 @@ body {
    justify-items: left;
 }
 
+a{
+    text-decoration: none !important;
+    color: rgb(50, 50, 50);
 
-
-.intro{
-    padding-top: 2.5cm;
-    height: 450px;
-    background-color: #051622;
-    color: aliceblue;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
+
 
 #thumbnail{
     height: 30%;
@@ -43,9 +49,9 @@ body {
 
 .avatar{
     border-radius: 50%;
-    border: 3px rgb(221, 153, 26) solid;
-    width: 270px;
-    height: 270px;
+    border: 4px rgb(221, 153, 26) solid;
+    width: 250px !important;
+    height: 250px !important;
 }
 
 .avatar-home{
@@ -73,7 +79,6 @@ body {
     list-style: none;
     text-decoration: none;
     font-size: medium;
-    font-family: fantasy;
     margin-bottom: 0.8cm;
 }
 
@@ -83,22 +88,25 @@ body {
     list-style: none;
     text-decoration: none;
     font-size: medium;
-    font-family: fantasy;
+    
 }
 #arrow:hover{
     background-color: #051622;
     color: red;
 
 }
+
+
 #profile-back{
-    background-color:#051622;
-    height: 6cm;
+    background-color:#051622 !important;
+    height: 200px !important;
     margin-top:0cm;
 }
+
+
+
 #bio{
-    max-height: 3cm;
-    max-width: 8cm;
-    
+ width: 56%;
 
 }
 #bio-read{
@@ -125,8 +133,6 @@ body {
         -ms-transform: translate(-50%,-50%);
             transform: translate(-50%,-50%);
   }
-
-
 
 .article-thumbnail{
     width: 100%;

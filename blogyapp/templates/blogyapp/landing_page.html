@@ -5,7 +5,7 @@
   {% load static %}
   {% bootstrap_css %}
   {% bootstrap_javascript %}
-
+  {% load read-time %}
   <link rel="stylesheet" type="text/css" href="{% static 'blogyapp/css/read.css' %}"/>
 
 
@@ -116,13 +116,7 @@
                     </svg></div>  &nbsp; Dashboard</a> 
                   {% endif %}
                 </li>
-                
-                <li class="nav-item">
-                  <a style="  color:white;  font-weight: 600; font-size: larger;display: flex;" class="nav-link active" aria-current="page" href="{% url 'blogyapp:index' %}">
-                    <div style="color:rgb(225, 149, 36);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book-half" viewBox="0 0 16 16">
-                      <path d="M8.5 2.687c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
-                    </svg>  </div>  &nbsp; My Topics </a>
-                </li>
+           
                
                 <li class="nav-item">
                   {% if user.is_authenticated %}
@@ -236,7 +230,7 @@
         </h4>
         <br>
       
-        <a class="btn btn-warning btn-lg" href="#"> Start Writing</a>
+        <a class="btn btn-warning btn-lg" href="{% url 'users:register' %}"> Start Writing</a>
       </div>
       <div class="col-md-4">
        <img class="img-fluid" src="{% static 'blogyapp/images/hero-pic.svg' %}" alt="">
@@ -320,9 +314,18 @@
 
 <!-- ########################################### User is logged in ######################################### -->
 
+
+{% url 'blogyapp:home1' as recommended %}
+{% url 'blogyapp:following' as following %}
+{% url 'blogyapp:popular' as  popular %}
+
 <section style="background-color: rgb(240, 240, 240);">
-  <br>
+  <div class="d-none d-md-block">
+    <br>
+  </div>
+
   <div class="container-fluid" style="width: 100%;">
+
     <div class="row">
 
       <div class="col-md-3 d-none d-md-block ">
@@ -332,8 +335,11 @@
               <img class="avatar-home" src="{{my_profile.avatar.url}}"> 
   
               <span style="font-size: 0.9rem;font-weight: 600;margin-left: 5px;"> 
-                <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.9rem;" >{{my_profile.name.get_full_name}}</h6>
-               <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.85rem;color: rgb(128, 127, 127);"> @{{my_profile.name}}   </h6> 
+                <a href="{% url 'blogyapp:profile_detail' my_profile.id %}">
+                  <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.9rem;" >{{my_profile.name.get_full_name}}</h6>
+                  <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.85rem;color: rgb(128, 127, 127);"> @{{my_profile.name}} </h6> 
+                </a>
+                
               </span>
        
           </div>
@@ -379,7 +385,7 @@
           </a>
         </h5>
 
-        <a href="#" class="btn btn-outline-secondary btn-sm" style="text-decoration: none;">
+        <a href="{% url 'users:logout'  %}" class="btn btn-outline-secondary btn-sm" style="text-decoration: none;">
           <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
             <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
@@ -391,8 +397,13 @@
       </div>
 
       <div class="col-md-6" >
+        
+        {% if request.path == following  %}
+        <div class="d-flex">
+          <a href="{% url 'blogyapp:home1'  %}" style="margin: 6px 23px 8px 0px;font-size: 0.97rem;color: rgb(97, 96, 96);" > Recommended </a>  <a href="{% url 'blogyapp:following'  %}" style="margin: 6px 23px 8px 0px;font-weight: 600;"> Following </a>  <a href="{% url 'blogyapp:popular'  %}" style="margin: 6px 23px 8px 0px;font-size: 0.97rem;color: rgb(97, 96, 96);">Popular</a>
+        </div>
         {% for entry in entries %}
-          
+          {% if entry.uploaded == True %}
           <div class="card " style="margin-bottom: 10px;">
             {% if forloop.counter == 1 or forloop.counter == 5 or forloop.counter == 15 %}
               <img style="width: 100%;height: 270px;" class="card-img-top" src="{{entry.thumbnail.url}}" alt="">
@@ -421,7 +432,6 @@
               
               
                 <!-- ################################################################################################# -->
-
 
 
                 <div class="d-flex" style="width: 100%;">
@@ -515,23 +525,319 @@
 
                   <div style="width: 100% !important;" class="container-fluid d-flex justify-content-end" >
                     <div >
-                     <h6 style="font-size: 0.75rem;cursor:default;padding-left: 0px;"> 2 min read </h6> 
+                     <h6 style="font-size: 0.75rem;cursor:default;padding-left: 0px;"> {{entry.text|safe|readtime}} </h6> 
                     </div>
                   </div>
                 
               </div>
           
-
-
-
               <!-- ####################################################################################################### -->
               </div>
             
             </div>
             
           </div>
-
+          {% endif %}
         {% endfor %}
+
+        {% endif  %}
+
+
+
+        <!-- *************************************** Recommended ************************************* -->
+
+        {% if request.path == recommended  %}
+        <div class="d-flex">
+          <a href="{% url 'blogyapp:home1'  %}" style="margin: 6px 23px 6px 0px;font-weight: 600;" > Recommended </a>  <a href="{% url 'blogyapp:following'  %}" style="margin: 6px 23px 8px 0px;font-size: 0.97rem;color: rgb(97, 96, 96);"> Following </a>  <a href="{% url 'blogyapp:popular'  %}" style="margin: 6px 23px 8px 0px;font-size: 0.97rem;color: rgb(97, 96, 96);">Popular</a>
+        </div>
+        {% for entry in entries %}
+          {% if entry.uploaded == True %}
+          <div class="card " style="margin-bottom: 10px;">
+            {% if forloop.counter == 1 or forloop.counter == 5 or forloop.counter == 15 %}
+              <img style="width: 100%;height: 270px;" class="card-img-top" src="{{entry.thumbnail.url}}" alt="">
+            {% endif %}
+            <div class="card-body">
+
+             <a class="d-flex"  style="text-decoration: none;" href="{% url 'blogyapp:profile_detail' entry.profile.id %}">
+               <img class="avatar-home" src="{{entry.profile.avatar.url}}">
+                <span style="color: rgb(38, 38, 38);margin-left: 10px;">
+                   @{{entry.profile.name}}
+                   <h6 style="color: gray;font-size: 0.8rem;"> {{entry.date_added|date:"d M Y"}}</h6>
+                  </span> 
+             </a>
+              
+              
+              <div id="posts_margin" style="margin-left: 50px;margin-right: 10px">
+                <a id="post_title" href="{% url 'blogyapp:read' entry.id %}" style="font-weight: 700;font-size:1.4rem;color: rgb(45, 45, 45);text-decoration: none;">  {{entry.entry_title}} </a>
+                
+                <p class="d-block d-sm-none" style="color: rgb(100, 100, 100);size: 0.9rem;">
+                  {{entry.introduction|truncatechars:120}}
+                </p>
+
+                <p class="d-none d-sm-block" style="color: rgb(100, 100, 100);size: 0.9rem;">
+                  {{entry.introduction|truncatechars:200}}
+                </p>
+              
+              
+                <!-- ################################################################################################# -->
+
+
+                <div class="d-flex" style="width: 100%;">
+                  
+                  <div class="like" style="margin-right:0.3cm"> 
+               
+                      <form class="d-flex " action="{% url 'blogyapp:like_unlike' entry.id %}" method='post'>
+                          {% csrf_token %}
+      
+                          {% if entry in entry.profile.liked_articles.all %}
+                     
+                          <button  class="btn btn-outline-danger btn-sm position-relative" name="submit" style="border: none;" >
+                            <div class="d-flex">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">                                
+                                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                </svg> 
+                                <span style="font-weight: 500;">
+                                 &nbsp;&nbsp;{{entry.likes}}
+                                </span>
+                              </div>
+                          </button>
+                          {% else %}
+
+                          <button style= "color: #051622;" class="btn btn-outline-light btn-sm position-relative" name="submit">
+                            <div class="d-flex">  
+                               <svg name="submit" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                              </svg> 
+                          
+                          <span style="font-weight: 500;">
+                            &nbsp;&nbsp;{{entry.likes}}  
+                          </span>
+                        </div>
+                        </button>
+       
+                          {% endif %}
+                         
+                      </form>
+                  </div>
+                  
+                  <div class="bookmark"  style="margin-right:0.3cm">
+      
+                    <form action="{% url 'blogyapp:bookmark' entry.id %}" method='post'>
+                        {% csrf_token %}
+    
+                        {% if entry in entry.profile.bookmarked_articles.all %}
+                        <button class="btn btn-outline-warning btn-sm position-relative" name="submit" style="border: none;">
+                          <div class="d-flex">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
+                          </svg> 
+                            <span style="font-weight: 500;">
+                            &nbsp;&nbsp;{{entry.bookmarks}}
+                            </span>
+                               
+                          </div>
+                      </button>
+                        {% else %}
+                        <button style= "color: #051622;border: none;" class="btn btn-outline-secondary btn-sm position-relative" name="submit">
+                          <div class="d-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+                              <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                              <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                            <span  style="font-weight: 500;">
+                              &nbsp;&nbsp;{{entry.bookmarks}}
+                            </span>
+                          </div>
+                         
+                      </button>
+                            
+                        {% endif %}
+                       
+                    </form>
+
+                  </div>
+
+                  <div  id="comments" style="margin-right:0cm">
+                    <a href="{% url 'blogyapp:read' entry.id %}#comments" class="btn btn-outline-secondary btn-sm position-relative" name="submit" style="border: none;">
+                      <div class="d-flex"> 
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                      </svg>
+                        <span style="font-weight: 500;">
+                         &nbsp;&nbsp;{{entry.entry.count}}
+                        </span>
+                      </div>
+                      </a>
+                  </div>
+     
+
+                  <div style="width: 100% !important;" class="container-fluid d-flex justify-content-end" >
+                    <div >
+                     <h6 style="font-size: 0.75rem;cursor:default;padding-left: 0px;"> {{entry.text|safe|readtime}} </h6> 
+                    </div>
+                  </div>
+                
+              </div>
+          
+              <!-- ####################################################################################################### -->
+              </div>
+            
+            </div>
+            
+          </div>
+          {% endif %}
+        {% endfor %}
+
+        {% endif  %}
+
+
+        {% if request.path == popular %}
+        <div class="d-flex">
+          <a href="{% url 'blogyapp:home1'  %}" style="margin: 6px 23px 8px 0px;font-size: 0.97rem;color: rgb(97, 96, 96);" > Recommended </a>  <a href="{% url 'blogyapp:following'  %}" style="margin: 6px 23px 8px 0px;font-size: 0.97rem;color: rgb(97, 96, 96);"> Following </a>  <a href="{% url 'blogyapp:popular'  %}" style="margin: 6px 23px 8px 0px;font-weight: 600;">Popular</a>
+        </div>
+        {% for entry in entries %}
+          {% if entry.uploaded == True %}
+          <div class="card " style="margin-bottom: 10px;">
+            {% if forloop.counter == 1 or forloop.counter == 5 or forloop.counter == 15 %}
+              <img style="width: 100%;height: 270px;" class="card-img-top" src="{{entry.thumbnail.url}}" alt="">
+            {% endif %}
+            <div class="card-body">
+
+             <a class="d-flex"  style="text-decoration: none;" href="{% url 'blogyapp:profile_detail' entry.profile.id %}">
+               <img class="avatar-home" src="{{entry.profile.avatar.url}}">
+                <span style="color: rgb(38, 38, 38);margin-left: 10px;">
+                   @{{entry.profile.name}}
+                   <h6 style="color: gray;font-size: 0.8rem;"> {{entry.date_added|date:"d M Y"}}</h6>
+                  </span> 
+             </a>
+              
+              
+              <div id="posts_margin" style="margin-left: 50px;margin-right: 10px">
+                <a id="post_title" href="{% url 'blogyapp:read' entry.id %}" style="font-weight: 700;font-size:1.4rem;color: rgb(45, 45, 45);text-decoration: none;">  {{entry.entry_title}} </a>
+                
+                <p class="d-block d-sm-none" style="color: rgb(100, 100, 100);size: 0.9rem;">
+                  {{entry.introduction|truncatechars:120}}
+                </p>
+
+                <p class="d-none d-sm-block" style="color: rgb(100, 100, 100);size: 0.9rem;">
+                  {{entry.introduction|truncatechars:200}}
+                </p>
+              
+              
+                <!-- ################################################################################################# -->
+
+
+                <div class="d-flex" style="width: 100%;">
+                  
+                  <div class="like" style="margin-right:0.3cm"> 
+               
+                      <form class="d-flex " action="{% url 'blogyapp:like_unlike' entry.id %}" method='post'>
+                          {% csrf_token %}
+      
+                          {% if entry in entry.profile.liked_articles.all %}
+                     
+                          <button  class="btn btn-outline-danger btn-sm position-relative" name="submit" style="border: none;" >
+                            <div class="d-flex">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">                                
+                                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                </svg> 
+                                <span style="font-weight: 500;">
+                                 &nbsp;&nbsp;{{entry.likes}}
+                                </span>
+                              </div>
+                          </button>
+                          {% else %}
+
+                          <button style= "color: #051622;" class="btn btn-outline-light btn-sm position-relative" name="submit">
+                            <div class="d-flex">  
+                               <svg name="submit" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                              </svg> 
+                          
+                          <span style="font-weight: 500;">
+                            &nbsp;&nbsp;{{entry.likes}}  
+                          </span>
+                        </div>
+                        </button>
+       
+                          {% endif %}
+                         
+                      </form>
+                  </div>
+                  
+                  <div class="bookmark"  style="margin-right:0.3cm">
+      
+                    <form action="{% url 'blogyapp:bookmark' entry.id %}" method='post'>
+                        {% csrf_token %}
+    
+                        {% if entry in entry.profile.bookmarked_articles.all %}
+                        <button class="btn btn-outline-warning btn-sm position-relative" name="submit" style="border: none;">
+                          <div class="d-flex">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
+                          </svg> 
+                            <span style="font-weight: 500;">
+                            &nbsp;&nbsp;{{entry.bookmarks}}
+                            </span>
+                               
+                          </div>
+                      </button>
+                        {% else %}
+                        <button style= "color: #051622;border: none;" class="btn btn-outline-secondary btn-sm position-relative" name="submit">
+                          <div class="d-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+                              <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                              <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                            <span  style="font-weight: 500;">
+                              &nbsp;&nbsp;{{entry.bookmarks}}
+                            </span>
+                          </div>
+                         
+                      </button>
+                            
+                        {% endif %}
+                       
+                    </form>
+
+                  </div>
+
+                  <div  id="comments" style="margin-right:0cm">
+                    <a href="{% url 'blogyapp:read' entry.id %}#comments" class="btn btn-outline-secondary btn-sm position-relative" name="submit" style="border: none;">
+                      <div class="d-flex"> 
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                      </svg>
+                        <span style="font-weight: 500;">
+                         &nbsp;&nbsp;{{entry.entry.count}}
+                        </span>
+                      </div>
+                      </a>
+                  </div>
+     
+
+                  <div style="width: 100% !important;" class="container-fluid d-flex justify-content-end" >
+                    <div >
+                     <h6 style="font-size: 0.75rem;cursor:default;padding-left: 0px;"> {{entry.text|safe|readtime}} </h6> 
+                    </div>
+                  </div>
+                
+              </div>
+          
+              <!-- ####################################################################################################### -->
+              </div>
+            
+            </div>
+            
+          </div>
+          {% endif %}
+        {% endfor %}
+
+        {% endif  %}
+
+
+
+
       </div>
 
       <div class="col-md-3 d-none d-md-block">
