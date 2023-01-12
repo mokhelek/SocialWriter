@@ -4,6 +4,7 @@ from django import forms
 from .models import Entry ,Comments
 from tinymce.widgets import TinyMCE
 
+from users.models import Profile
 
 class EntryForm(forms.ModelForm):
     thumbnail = forms.ImageField()
@@ -24,3 +25,10 @@ class CommentsForm(forms.ModelForm):
         model = Comments
         fields =["comment"]
         #label = {"comment":"Discussion"}
+
+
+class ProfileForm(forms.ModelForm):
+    
+    class Meta:
+        model = Profile
+        fields = ("avatar","bio","twitter_link","linkedin_link","personal_link" )

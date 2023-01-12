@@ -1,6 +1,9 @@
 {% extends "blogyapp/base.html" %}
 {% load bootstrap5 %}
 {% load static %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load read-time %}
 <link rel="stylesheet"  href="{% static 'blogyapp/css/read.css' %}">
 
 <style>
@@ -21,6 +24,13 @@
         font-family:poppins-bold !important;
         color: #444444 ;
     }
+
+
+    @media screen and (max-width:574px){
+       #read_container{
+           width: 95% !important;
+       } 
+   }
   </style>
   
 {% block content %}
@@ -28,705 +38,181 @@
 
 {% if entry.uploaded is True %}
 <br>
-<div class="container"> 
- ...
-</div>
 
+<div id="read_container" class="container-fluid" style="width:100%">  
 
-<div class=" smallr container-fluid"> 
-<div class="row">
-
-    <div class="col-sm-7">
-        
-        <div id="content" >
-            <div class = "crop">
-                <img class="img-thumbnail" src= "{{entry.thumbnail.url}}" >
-            </div>
-            <br>
-            <div class="writer">  
-                <div style="color: #1A223B; font-size: medium; ">
-                    <img class="avatar-home" src="{{entry.profile.avatar.url}}"> {{ topic.owner.username|title }}
-                </div>
-            
-                <div>
-                    {{entry.date_added}}
-                </div>
-            </div>  
-            <div class = "myblogpost">
-                <div >
+    <div class="row">
+        <div class="reactions col-lg-1 d-none d-lg-block">
+            <div class="position-fixed">
+                <div class="like" style="margin-top: 0.5cm;margin-left:0.55cm"> 
+             
+                    <form action="{% url 'blogyapp:like_unlike' entry.id %}" method='post'>
+                        {% csrf_token %}
+    
+                        {% if entry in entry.profile.liked_articles.all %}
+                        <button href="#" class="btn btn-outline-danger btn-sm position-relative" name="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                              </svg> 
+                              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
+                                {{entry.likes}}
+                                <span class="visually-hidden">unread messages</span>
+                              </span>
+                             </button>
+                        {% else %}
+                        <button style= "color: #051622;" href="#" class="btn btn-outline-light btn-sm position-relative" name="submit">
+                             <svg name="submit" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                        </svg> 
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
+                            {{entry.likes}}
+                            <span class="visually-hidden">unread messages</span>
+                          </span>
+                    </button>
                     
-                    <h5 style="font-weight: 600;"> 
-                        {{entry.entry_title}}
-                    </h5>
-                    <div class="postIntro">
-                        <p>{{entry.introduction}}</p>
-                    </div>
+                        {% endif %}
+                       
+                    </form>
+                </div>
                 
-                    <hr>
-                    <div class = "entry_text" style="font-weight: 400;font-size: medium; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" >
-                    {{entry.text|safe}}
+                <div class="bookmark"  style="margin-top: 0.5cm;margin-left:0.55cm">
+    
+                    <form action="{% url 'blogyapp:bookmark' entry.id %}" method='post'>
+                        {% csrf_token %}
+    
+                        {% if entry in entry.profile.bookmarked_articles.all %}
+                        <button href="#" class="btn btn-outline-warning btn-sm position-relative name="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
+                              </svg> 
+                              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
+                                {{entry.bookmarks}}
+                                <span class="visually-hidden">unread messages</span>
+                              </span>
+                             </button>
+                        {% else %}
+                        <button style= "color: #051622;" href="#" class="btn btn-light btn-sm position-relative" name="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+                                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                                <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
+                              </svg>
+                              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
+                                {{entry.bookmarks}}
+                                <span class="visually-hidden">unread messages</span>
+                              </span>
+                             </button>
+                    
+                        {% endif %}
+                       
+                    </form>
+                    
+    
+                     
+                </div>
+              
+            </div>
+        </div>
+    
+        <div class="col-md-7  ">
+            
+              <div class="d-flex" >  
+                    <div class="position-relative"  >
+                      <img style="height: 50px; width:50px;border-radius:50%;border: gray 2px solid;" src="{{entry.profile.avatar.url}}"  class="img-flex"  alt="">
+                    </div>
+                    &nbsp;
+                    <div class="col">
+               
+                    <div class="row">  
+                        <a href="{% url 'blogyapp:profile_detail' entry.profile.id %}" style="margin-left: 3px;color:rgb(36, 36, 36);margin-bottom: 2px;">{{entry.profile.name.get_full_name}}</a> 
                     </div>
                    
-        
-                    
-        
-                </div>
-        </div>
-        </div>
-        
-        
-        <br>
-        <hr>
-        <section class="comment-section" >   
-           
-        <h6> Comments  ({{comments.count}})</h6>
-       
-        <form  method='POST' action="{% url 'blogyapp:read' entry.id %}" >
-            {% bootstrap_form form%}
-            {% csrf_token %}
-            {% buttons %}
-
-            {% if user.is_authenticated %}  
-            <button class="btn btn-outline-success btn-sm" type="submit">comment <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
-                <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
-            </svg></button>
-
-            <!-- Button trigger modal -->
-           {% else %}
-                <button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    comment <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
-                        <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
-                    </svg>
-                </button>
-                
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Login to comment</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                        Only registered users can comment, sign in or sign up below ..!
-                        </div><center> 
-                        <div class="modal-footer" style="background-color: #1c5883;">
-                        <a href="{% url 'users:register' %}" class="btn btn-warning btn-sm">Sign Up</a> <a href="{% url 'users:login' %}" class="btn btn-outline-warning btn-sm">Sign in</a>      
-                        </div></center>
-                    </div>
-                    </div>
-                </div>
-  
-                {% endif %}
-            {% endbuttons %}
-        </form>
-        <br>
-        
-        <ul> 
-        
-        {% for c in comments%}
-            
-            
-            <div class="comments"> 
-                <h6><img class="avatar-home" src="{{c.profile.avatar.url}}"> {{ c.profile.name|title }}</h6>
-                <h6>{{ c.date_created }}</h6>
-            
-                <h5> {{c.comment}}</h5>
-            </div>
-        
-        <br>
-        
-        {% endfor %}
-        
-        </ul>
-        
-       
-        </section>
-        
-            
+                    <div class="row">
+                        <div class="col-12">
+                            <div class=" d-flex  ">
 
 
-    </div>
+                                {% if entry.profile.twitter_link %}
+                                    <div style="margin-right: 10px;">
+                                        <a href="{{entry.profile.twitter_link}}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-twitter text-primary " viewBox="0 0 16 16">
+                                                <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                {% endif %}
 
-    <div class="col-sm-4 ">
-        <div style=" min-height:4cm; border-radius: 50%;" class="">
-            <div style="background-color:#051622;height: 1.4cm;">
-               <div style="padding-top:0.9cm;padding-left: 0.4cm;"><img class="avatar-read" src="{{entry.profile.avatar.url}}"> </div>
-               <div style="margin-left: 0.4cm;">{{ topic.owner.username|title }}</div>
-            </div>   
-            
-            <div style="padding-top: 0.2cm;padding-left: 6cm;" > 
-                <form action="{% url 'blogyapp:follow_unfollow' entry.profile.id %}" method='post'>
-                    {% csrf_token %}
-                    {% if entry.profile.name in followings %}
-                    
-                    <button href="#" class="btn btn-outline-danger btn-sm " name="submit">Unsubscribe</button>
-                    {% else %}
-                    <button href="#" class="btn btn-outline-primary btn-sm" name="submit">Subscribe</button>
-                
-                    {% endif %}
-                    <br>
-                    <br>
-                </form>
-            </div> 
-            <br>
-            <center> <div id = "bio-read" style="color:rgb(54, 54, 54)">{{entry.profile.bio}}</div></center>
-            <div class="info-user" >  
-               <ul style="list-style: none; font-size: 1rem;">
-                <li> followers: {{entry.profile.followers}}</li>
-                <li>Articles: {{entry.profile.entry_set.count}}</li>
-                <li>Joined: {{entry.profile.date_created}}</li>
-                <li>website: allstackstudios.herokuapp.com</li>
-                </ul>
-            </div>
+                                {% if entry.profile.linkedin_link %}
+                                    <div style="margin-right: 10px;">
+                                        <a href="{{entry.profile.linkedin_link}}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-linkedin text-primary" viewBox="0 0 16 16">
+                                                <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                            {% endif %}
 
-            <div>
-                <h6 style="font-weight: 600; margin-left: 0.8cm;"> More from {{ topic.owner.username|title }}</h6>
-                
-                <ul style="width:100%;">
-                    {% for i in entry.profile.entry_set.all|slice:":3" %}
-                        <div class="card card-body" style="margin-bottom: 0.2cm;"> 
-                        
-                            <h6 style="font-weight: 600;margin-bottom: 0cm;">{{i.entry_title}} </h6>
-                            <div style=" margin-top: 0cm; color: rgb(59, 59, 59);font-style: oblique;font-size: 0.8rem;"> {{i.date_added}}</div> 
-                
-                            <div>{{i.introduction|truncatechars:80}}</div>
-                     
-                        </div>
-                    {% endfor %}
-                </ul>
-            </div>
-
-
-        </div>
-    </div>
-</div>
-
-<footer class="fixed-bottom">
-   
-<div style="height: 1.3cm; background-color:rgb(243, 243, 243);display: flex;">
-   
-   
-
-    <div class="like" style="margin-top: 0.3cm;margin-left: 1.5cm;"> 
-
-        <form action="{% url 'blogyapp:like_unlike' entry.id %}" method='post'>
-            {% csrf_token %}
-
-            {% if entry in entry.profile.liked_articles.all %}
-            <button href="#" class="btn btn-outline-danger btn-sm position-relative" name="submit">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                  </svg> 
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                    {{entry.likes}}
-                    <span class="visually-hidden">unread messages</span>
-                  </span>
-                 </button>
-            {% else %}
-            <button style= "color: #051622;" href="#" class="btn btn-outline-light btn-sm position-relative" name="submit">
-                 <svg name="submit" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-            </svg> 
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                {{entry.likes}}
-                <span class="visually-hidden">unread messages</span>
-              </span>
-        </button>
-        
-            {% endif %}
-           
-        </form>
-    </div>
-    
-    <div class="bookmark"  style="margin-top: 0.3cm;margin-left:0.55cm">
-
-        <form action="{% url 'blogyapp:bookmark' entry.id %}" method='post'>
-            {% csrf_token %}
-
-            {% if entry in entry.profile.bookmarked_articles.all %}
-            <button href="#" class="btn btn-outline-warning btn-sm position-relative name="submit">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
-                  </svg> 
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                    {{entry.bookmarks}}
-                    <span class="visually-hidden">unread messages</span>
-                  </span>
-                 </button>
-            {% else %}
-            <button style= "color: #051622;" href="#" class="btn btn-light btn-sm position-relative" name="submit">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
-                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
-                    <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
-                  </svg>
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                    {{entry.bookmarks}}
-                    <span class="visually-hidden">unread messages</span>
-                  </span>
-                 </button>
-        
-            {% endif %}
-           
-        </form>
-        
-
-         
-    </div>
-
-
-
-</div>
-
-</footer>
-
-</div>
-
-<!--  ############################################################################# Smaller #####################################################################################*/ --> 
-
-
-<div class="tablet container-fluid"> 
-    <div class="row">
-        <div class="reactions col-sm-1">
-            <div class="position-fixed">
-                <div class="like" style="margin-top: 0.5cm;margin-left:0.55cm"> 
-             
-                    <form action="{% url 'blogyapp:like_unlike' entry.id %}" method='post'>
-                        {% csrf_token %}
-    
-                        {% if entry in entry.profile.liked_articles.all %}
-                        <button href="#" class="btn btn-outline-danger btn-sm position-relative" name="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                              </svg> 
-                              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                                {{entry.likes}}
-                                <span class="visually-hidden">unread messages</span>
-                              </span>
-                             </button>
-                        {% else %}
-                        <button style= "color: #051622;" href="#" class="btn btn-outline-light btn-sm position-relative" name="submit">
-                             <svg name="submit" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                        </svg> 
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                            {{entry.likes}}
-                            <span class="visually-hidden">unread messages</span>
-                          </span>
-                    </button>
-                    
-                        {% endif %}
-                       
-                    </form>
-                </div>
-                
-                <div class="bookmark"  style="margin-top: 0.5cm;margin-left:0.55cm">
-    
-                    <form action="{% url 'blogyapp:bookmark' entry.id %}" method='post'>
-                        {% csrf_token %}
-    
-                        {% if entry in entry.profile.bookmarked_articles.all %}
-                        <button href="#" class="btn btn-outline-warning btn-sm position-relative name="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
-                              </svg> 
-                              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                                {{entry.bookmarks}}
-                                <span class="visually-hidden">unread messages</span>
-                              </span>
-                             </button>
-                        {% else %}
-                        <button style= "color: #051622;" href="#" class="btn btn-light btn-sm position-relative" name="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
-                                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
-                                <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
-                              </svg>
-                              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                                {{entry.bookmarks}}
-                                <span class="visually-hidden">unread messages</span>
-                              </span>
-                             </button>
-                    
-                        {% endif %}
-                       
-                    </form>
-                    
-    
-                     
-                </div>
-              
-            </div>
-        </div>
-    
-        <div class="col-sm-12">
-            
-            <div id="content" >
-                <div class = "crop">
-                    <img class="img-thumbnail" src= "{{entry.thumbnail.url}}" >
-                </div>
-                <br>
-                <div class="writer">  
-                    <div style="color: #1A223B; font-size: larger; font-weight: 700;">
-                        <img class="avatar-home" src="{{entry.profile.avatar.url}}"> {{ topic.owner.username|title }}
-                    </div>
-                
-                    <div>
-                        {{entry.date_added}}
-                    </div>
-                </div>  
-                <div class = "myblogpost">
-                    <div >
-                        
-                        <h2 style="font-weight: 700;"> 
-                            {{entry.entry_title}}
-                        </h2>
-                        <div class="postIntro">
-                            <p>{{entry.introduction}}</p>
-                        </div>
-                    
-                        <hr>
-                        <div class = "entry_text" style="font-weight: 400;font-size: medium; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" >
-                        {{entry.text|safe}}
-                        </div>
-                       
-            
-                        
-            
-                    </div>
-            </div>
-            </div>
-            
-            
-            <br>
-            <hr>
-            <section class="comment-section" >   
-               
-            <h6> Comments  ({{comments.count}})</h6>
-           
-            <form  method='POST' action="{% url 'blogyapp:read' entry.id %}" >
-                {% bootstrap_form form%}
-                {% csrf_token %}
-                {% buttons %}
-    
-                {% if user.is_authenticated %}  
-                <button class="btn btn-outline-success btn-sm" type="submit">comment <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
-                    <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
-                </svg></button>
-    
-                <!-- Button trigger modal -->
-               {% else %}
-                    <button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        comment <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
-                            <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
-                        </svg>
-                    </button>
-                    
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Login to comment</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            {% if entry.profile.personal_link %}
+                            <div style="margin-right: 10px;">
+                                <a href="{{entry.profile.personal_link}}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-globe2 text-primary" viewBox="0 0 16 16">
+                                        <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855-.143.268-.276.56-.395.872.705.157 1.472.257 2.282.287V1.077zM4.249 3.539c.142-.384.304-.744.481-1.078a6.7 6.7 0 0 1 .597-.933A7.01 7.01 0 0 0 3.051 3.05c.362.184.763.349 1.198.49zM3.509 7.5c.036-1.07.188-2.087.436-3.008a9.124 9.124 0 0 1-1.565-.667A6.964 6.964 0 0 0 1.018 7.5h2.49zm1.4-2.741a12.344 12.344 0 0 0-.4 2.741H7.5V5.091c-.91-.03-1.783-.145-2.591-.332zM8.5 5.09V7.5h2.99a12.342 12.342 0 0 0-.399-2.741c-.808.187-1.681.301-2.591.332zM4.51 8.5c.035.987.176 1.914.399 2.741A13.612 13.612 0 0 1 7.5 10.91V8.5H4.51zm3.99 0v2.409c.91.03 1.783.145 2.591.332.223-.827.364-1.754.4-2.741H8.5zm-3.282 3.696c.12.312.252.604.395.872.552 1.035 1.218 1.65 1.887 1.855V11.91c-.81.03-1.577.13-2.282.287zm.11 2.276a6.696 6.696 0 0 1-.598-.933 8.853 8.853 0 0 1-.481-1.079 8.38 8.38 0 0 0-1.198.49 7.01 7.01 0 0 0 2.276 1.522zm-1.383-2.964A13.36 13.36 0 0 1 3.508 8.5h-2.49a6.963 6.963 0 0 0 1.362 3.675c.47-.258.995-.482 1.565-.667zm6.728 2.964a7.009 7.009 0 0 0 2.275-1.521 8.376 8.376 0 0 0-1.197-.49 8.853 8.853 0 0 1-.481 1.078 6.688 6.688 0 0 1-.597.933zM8.5 11.909v3.014c.67-.204 1.335-.82 1.887-1.855.143-.268.276-.56.395-.872A12.63 12.63 0 0 0 8.5 11.91zm3.555-.401c.57.185 1.095.409 1.565.667A6.963 6.963 0 0 0 14.982 8.5h-2.49a13.36 13.36 0 0 1-.437 3.008zM14.982 7.5a6.963 6.963 0 0 0-1.362-3.675c-.47.258-.995.482-1.565.667.248.92.4 1.938.437 3.008h2.49zM11.27 2.461c.177.334.339.694.482 1.078a8.368 8.368 0 0 0 1.196-.49 7.01 7.01 0 0 0-2.275-1.52c.218.283.418.597.597.932zm-.488 1.343a7.765 7.765 0 0 0-.395-.872C9.835 1.897 9.17 1.282 8.5 1.077V4.09c.81-.03 1.577-.13 2.282-.287z"/>
+                                    </svg>
+                                </a>
                             </div>
-                            <div class="modal-body">
-                            Only registered users can comment, sign in or sign up below ..!
-                            </div><center> 
-                            <div class="modal-footer" style="background-color: #1c5883;">
-                            <a href="{% url 'users:register' %}" class="btn btn-warning btn-sm">Sign Up</a> <a href="{% url 'users:login' %}" class="btn btn-outline-warning btn-sm">Sign in</a>      
-                            </div></center>
-                        </div>
-                        </div>
+                            {% endif %}
+
+                            </div>
+                        </div>  
                     </div>
-      
-                    {% endif %}
-                {% endbuttons %}
-            </form>
-            <br>
-            
-            <ul> 
-            
-            {% for c in comments%}
-                
-                
-                <div class="comments"> 
-                    <h6><img class="avatar-home" src="{{c.profile.avatar.url}}"> {{ c.profile.name|title }}</h6>
-                    <h6>{{ c.date_created }}</h6>
-                
-                    <h5> {{c.comment}}</h5>
+         
                 </div>
-            
-            <br>
-            
-            {% endfor %}
-            
-            </ul>
-            
-           
-            </section>
-            
-                
-    
-    
-        </div>
-       
-        <div style=" min-height:4cm; border-radius: 50%;" class="">
-            <div style="background-color:#051622;height: 1.4cm;">
-               <div style="padding-top:0.9cm;padding-left: 0.4cm;"><img class="avatar-read" src="{{entry.profile.avatar.url}}"> </div>
-               <div style="margin-left: 0.4cm;">{{ topic.owner.username|title }}</div>
-            </div>   
-            
-            <div style="padding-top: 0.2cm;padding-left: 6cm;" > 
-                <form action="{% url 'blogyapp:follow_unfollow' entry.profile.id %}" method='post'>
-                    {% csrf_token %}
-                    {% if entry.profile.name in followings %}
-                    
-                    <button href="#" class="btn btn-outline-danger btn-sm " name="submit">Unsubscribe</button>
-                    {% else %}
-                    <button href="#" class="btn btn-outline-primary btn-sm" name="submit">Subscribe</button>
-                
-                    {% endif %}
-                    <br>
-                    <br>
-                </form>
-            </div> <br>
-            <center> <div id = "bio-read" style="color:rgb(54, 54, 54)">{{entry.profile.bio}}</div></center>
-            <div class="info-user" >  
-               <ul style="list-style: none; font-size: 1rem;">
-                <li> followers: {{entry.profile.followers}}</li>
-                <li>Articles: {{entry.profile.entry_set.count}}</li>
-                <li>Joined: {{entry.profile.date_created}}</li>
-                <li>website: allstackstudios.herokuapp.com</li>
-                </ul>
-            </div>
-
-            <div>
-                <h6 style="font-weight: 600; margin-left: 0.8cm;"> More from {{ topic.owner.username|title }}</h6>
-                
-                <ul style="width:100%;">
-                    {% for i in entry.profile.entry_set.all|slice:":3" %}
-                        <div class="card card-body" style="margin-bottom: 0.2cm;"> 
-                        
-                            <h6 style="font-weight: 600;margin-bottom: 0cm;">{{i.entry_title}} </h6>
-                            <div style=" margin-top: 0cm; color: rgb(59, 59, 59);font-style: oblique;font-size: 0.8rem;"> {{i.date_added}}</div> 
-                
-                            <div>{{i.introduction|truncatechars:80}}</div>
-                     
-                        </div>
-                    {% endfor %}
-                </ul>
-            </div>
-
-
-        </div>
-    </div>
-    
-    <footer class="fixed-bottom">
-       
-    <div style="height: 1.3cm; background-color:rgb(243, 243, 243);display: flex;">
-       
-       
-    
-        <div class="like" style="margin-top: 0.3cm;margin-left: 1.5cm;"> 
-    
-            <form action="{% url 'blogyapp:like_unlike' entry.id %}" method='post'>
-                {% csrf_token %}
-    
-                {% if entry in entry.profile.liked_articles.all %}
-                <button href="#" class="btn btn-outline-danger btn-sm position-relative" name="submit">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                      </svg> 
-                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                        {{entry.likes}}
-                        <span class="visually-hidden">unread messages</span>
-                      </span>
-                     </button>
-                {% else %}
-                <button style= "color: #051622;" href="#" class="btn btn-outline-light btn-sm position-relative" name="submit">
-                     <svg name="submit" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                </svg> 
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                    {{entry.likes}}
-                    <span class="visually-hidden">unread messages</span>
-                  </span>
-            </button>
-            
-                {% endif %}
-               
-            </form>
-        </div>
-        
-        <div class="bookmark"  style="margin-top: 0.3cm;margin-left:0.55cm">
-    
-            <form action="{% url 'blogyapp:bookmark' entry.id %}" method='post'>
-                {% csrf_token %}
-    
-                {% if entry in entry.profile.bookmarked_articles.all %}
-                <button href="#" class="btn btn-outline-warning btn-sm position-relative name="submit">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
-                      </svg> 
-                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                        {{entry.bookmarks}}
-                        <span class="visually-hidden">unread messages</span>
-                      </span>
-                     </button>
-                {% else %}
-                <button style= "color: #051622;" href="#" class="btn btn-light btn-sm position-relative" name="submit">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
-                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
-                        <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
-                      </svg>
-                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                        {{entry.bookmarks}}
-                        <span class="visually-hidden">unread messages</span>
-                      </span>
-                     </button>
-            
-                {% endif %}
-               
-            </form>
-            
-    
-             
-        </div>
-    
-    
-    
-    </div>
-    
-    </footer>
-    
-    </div>
-
-<!-- #########################################  DESKTOP ######################################################-->
-<div class=" desktop container-fluid">  
-
-    <div class="row">
-        <div class="reactions col-sm-1">
-            <div class="position-fixed">
-                <div class="like" style="margin-top: 0.5cm;margin-left:0.55cm"> 
-             
-                    <form action="{% url 'blogyapp:like_unlike' entry.id %}" method='post'>
-                        {% csrf_token %}
-    
-                        {% if entry in entry.profile.liked_articles.all %}
-                        <button href="#" class="btn btn-outline-danger btn-sm position-relative" name="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                              </svg> 
-                              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                                {{entry.likes}}
-                                <span class="visually-hidden">unread messages</span>
-                              </span>
-                             </button>
-                        {% else %}
-                        <button style= "color: #051622;" href="#" class="btn btn-outline-light btn-sm position-relative" name="submit">
-                             <svg name="submit" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                        </svg> 
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                            {{entry.likes}}
-                            <span class="visually-hidden">unread messages</span>
-                          </span>
-                    </button>
-                    
-                        {% endif %}
-                       
-                    </form>
                 </div>
-                
-                <div class="bookmark"  style="margin-top: 0.5cm;margin-left:0.55cm">
-    
-                    <form action="{% url 'blogyapp:bookmark' entry.id %}" method='post'>
-                        {% csrf_token %}
-    
-                        {% if entry in entry.profile.bookmarked_articles.all %}
-                        <button href="#" class="btn btn-outline-warning btn-sm position-relative name="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
-                              </svg> 
-                              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                                {{entry.bookmarks}}
-                                <span class="visually-hidden">unread messages</span>
-                              </span>
-                             </button>
-                        {% else %}
-                        <button style= "color: #051622;" href="#" class="btn btn-light btn-sm position-relative" name="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
-                                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
-                                <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
-                              </svg>
-                              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                                {{entry.bookmarks}}
-                                <span class="visually-hidden">unread messages</span>
-                              </span>
-                             </button>
-                    
-                        {% endif %}
-                       
-                    </form>
-                    
-    
-                     
-                </div>
-              
-            </div>
-        </div>
-    
-        <div class="col-sm-7">
-            
-            <div id="content" >
+
                 <div class="row">
+                    <div class="col"> 
+                      <p style="font-size: 0.85rem;color:rgb(74, 74, 74);margin-left: 2px;margin-top: 3px;"> {{entry.date_added|date:" d M Y"}} <span style="font-weight:700;font-size:larger">  &centerdot; </span> {{entry.text|safe|readtime}}</p> 
+                    </div>
+                  </div>
+
+                  <h2 style="font-weight: 700;margin-bottom: 20px;"> 
+                    {{entry.entry_title}}
+                </h2>
+                <div class="postIntro">
+                    <p style="margin-left: 15px ; font-size: 0.9rem;">{{entry.introduction}}</p>
+                </div>
+            
+
+                  <div class="row">
                     <div class = "crop col-12">
                         <img style="width: 100% ;" class="img-fluid" src= "{{entry.thumbnail.url}}" >
                     </div>
                 </div>
                 
-                <br>
-                <div class="writer">  
-                    <div style="color: #1A223B; font-size: larger; font-weight: 700;">
-                        <img class="avatar-home" src="{{entry.profile.avatar.url}}"> {{ entry.profile.name }}
-                    </div>
-                
-                    <div>
-                        {{entry.date_added}}
-                    </div>
-                </div>  
-                <div class = "myblogpost">
-                    <div >
-                        
-                        <h2 style="font-weight: 700;"> 
-                            {{entry.entry_title}}
-                        </h2>
-                        <div class="postIntro">
-                            <p>{{entry.introduction}}</p>
-                        </div>
+
+                <div >
                     
-                        <hr>
-                        <div class = "entry_text" style="font-weight: 400;font-size: medium; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" >
-                        {{entry.text|safe}}
-                        </div>
-                       
-            
+                    <center> <h1> <strong style="color: gray;"> . . .</strong></h1></center>
+
+                    <p class = "entry_text" style="font-size: 0.9rem; margin-bottom: 0cm !important; background-color: #ffffff00;" >
+                    {{entry.text|safe}}
+                    </p>
                         
+                </div>
             
-                    </div>
-            </div>
-            </div>
-            
-            
-            <br>
-            <hr>
-            <section class="comment-section" >   
-               
-            <h6 id="comments"> Comments  ({{comments.count}})</h6>
            
-            <form  method='POST' action="{% url 'blogyapp:read' entry.id %}" >
+            
+            
+            <center> <h1> <strong style="color: gray;"> . . .</strong></h1></center>
+
+                <br>
+
+            <section class="comment-section" id="comments">   
+               
+            <form  method='POST' action="{% url 'blogyapp:read' entry.id %}"  style="border-radius: 20px !important;">
                 {% bootstrap_form form%}
                 {% csrf_token %}
+                <div class="d-flex justify-content-end">
+                    <div>  
                 {% buttons %}
     
                 {% if user.is_authenticated %}  
@@ -762,48 +248,98 @@
       
                     {% endif %}
                 {% endbuttons %}
+            </div>
+            </div>
             </form>
+                           
+         
             <br>
             
-            <ul> 
-            
+         <h6 style="margin-bottom: 15px;"><strong>   Comments  ({{comments.count}}) </strong>    </h6> 
+           
             {% for c in comments%}
                 
                 
-                <div class="comments"> 
-                    <h6><img class="avatar-home" src="{{c.profile.avatar.url}}"> {{ c.profile.name|title }}</h6>
-                    <h6>{{ c.date_created }}</h6>
+                <div class="comments card card-body" style="margin-bottom: 10px !important;"> 
+
+                    <div class="d-flex " style="margin-bottom: 2px !important;">
+                        <img class="avatar-home" src="{{entry.profile.avatar.url}}"> 
+            
+                        <span style="font-size: 0.9rem;margin-left: 5px;"> 
+                        
+                            <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.83rem;color: rgb(53, 53, 53);font-weight: 600;" >{{entry.profile.name.get_full_name}}  <span style="color: gray;margin: 0px 3px 0px 3px"> &bull; </span>  <span style="font-weight: 400;font-size:0.75rem;color:gray"> {{c.date_created|date:"d M Y"}}</span> </h6>
+                            
+                            <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.73rem;color: rgb(109, 108, 108);"> @{{entry.profile.name}} </h6> 
+                          
+                        </span>
+                 
+                    </div>
                 
-                    <h5> {{c.comment}}</h5>
+                    <p style="font-size: 0.9rem;color:rgb(73, 73, 73);margin:0cm;"> {{c.comment}}</p>
                 </div>
             
-            <br>
-            
+   
             {% endfor %}
-            
-            </ul>
-            
+
            
             </section>
-            
-                
-    
-    
+
         </div>
        
-        <div class="col-sm-4">  
-        <div style=" min-height:4cm; border-radius: 50%;">
-            <div style="background-color:#051622;height: 1.4cm;">
-               <div style="padding-top:0.9cm;padding-left: 0.4cm;"><img class="avatar-read" src="{{entry.profile.avatar.url}}"> </div>
-               <div style="margin-left: 0.4cm;">{{ topic.owner.username|title }}</div>
+        <div class="col-md-5 col-lg-4 ">  
+
+        <div style="  background-color: #96969620;height: 100%;">
+
+            <div class="position-relative" style="background-color:#004d84;height: 1.4cm;border-radius: 10px 10px 0px 0px;">
+                <div class="d-flex " style="margin-bottom: 5px;padding-top: 38px;padding-left: 20px;">
+                    <img class="avatar-read" src="{{entry.profile.avatar.url}}"> 
+        
+                    <span style="font-size: 0.9rem;font-weight: 600;margin-left: 5px;padding-top:20px;"> 
+                    
+                        <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 1rem;color: rgb(44, 44, 44);font-weight: 600;" >{{entry.profile.name.get_full_name}}</h6>
+                        <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.85rem;color: rgb(109, 108, 108);"> @{{entry.profile.name}} </h6> 
+                      
+                    </span>
+             
+                </div>
+              
             </div>   
             
-            <div style="padding-top: 0.2cm;padding-left: 4cm;" > 
+            <div class="d-flex justify-content-end " > 
+                <div class="d-none d-sm-block " style="padding-top: 0.2cm;margin-right: 20px;" >
+                    <form action="{% url 'blogyapp:follow_unfollow' entry.profile.id %}" method='post'>
+                        {% csrf_token %}
+                        {% if entry.profile.name in followings %}
+                        
+                        <button href="#" class="btn btn-outline-danger btn-sm " name="submit" >Unsubscribe</button>
+    
+                        {% elif request.user == entry.profile.name %}
+                        <a href="{% url 'blogyapp:edit_profile' entry.profile.id %}" class="btn btn-outline-primary btn-sm"> Edit Profile </a>
+    
+                        {% else %}
+                        <button href="#" class="btn btn-outline-primary btn-sm" name="submit">Subscribe</button>
+                    
+                        {% endif %}
+                        <br>
+                        <br>
+                    </form>
+                    <a href="{% url 'blogyapp:edit_profile' entry.profile.id %}" class="btn btn-outline-primary btn-sm"> Edit Profile </a>
+                </div>
+           
+                <br>
+            </div> 
+  
+            <center>
+            <div class="d-block d-sm-none" style="padding-top: 65px;">
                 <form action="{% url 'blogyapp:follow_unfollow' entry.profile.id %}" method='post'>
                     {% csrf_token %}
                     {% if entry.profile.name in followings %}
                     
-                    <button href="#" class="btn btn-outline-danger btn-sm " name="submit">Unsubscribe</button>
+                    <button href="#" class="btn btn-outline-danger btn-sm " name="submit" >Unsubscribe</button>
+
+                    {% elif request.user == entry.profile.name %}
+                    <a href="{% url 'blogyapp:edit_profile' entry.profile.id %}" class="btn btn-outline-primary btn-sm"> Edit Profile </a>
+
                     {% else %}
                     <button href="#" class="btn btn-outline-primary btn-sm" name="submit">Subscribe</button>
                 
@@ -811,41 +347,141 @@
                     <br>
                     <br>
                 </form>
-            </div> <br>
-            <center> <div id = "bio-read" style="color:rgb(54, 54, 54)">{{entry.profile.bio}}</div></center>
-            <div class="info-user" >  
-               <ul style="list-style: none; font-size: 1rem;">
-                <li> followers: {{entry.profile.followers}}</li>
-                <li>Articles: {{entry.profile.entry_set.count}}</li>
-                <li>Joined: {{entry.profile.date_created}}</li>
-                <li>website: allstackstudios.herokuapp.com</li>
-                </ul>
+                <h6  style="color:rgb(74, 74, 74);font-size: 0.9rem; width: 85%;"> {{entry.profile.bio}}</h6>  
             </div>
 
-            <div>
-                <h6 style="font-weight: 600; margin-left: 0.8cm;"> More from {{ topic.owner.username|title }}</h6>
+            <div class="d-none d-sm-block" >
+                <h6  style="color:rgb(74, 74, 74);font-size: 0.9rem; width: 85%;"> {{entry.profile.bio}}</h6>  
+            </div>
+
+            </center>
+            <br>
+            <div style="margin-left: 20px;margin-right: 20px;">
+                <h6 style="color: #464646;"> More from <span style="font-weight: 600;color: #292929;"> {{ entry.profile.name.get_full_name }} </span>  </h6>
                 
-                <ul style="width:100%;">
+           
                     {% for i in entry.profile.entry_set.all|slice:":3" %}
+                    {% if i.id != entry.id %}
                         <div class="card card-body" style="margin-bottom: 0.2cm;"> 
                         
-                            <h6 style="font-weight: 600;margin-bottom: 0cm;">{{i.entry_title}} </h6>
-                            <div style=" margin-top: 0cm; color: rgb(59, 59, 59);font-style: oblique;font-size: 0.8rem;"> {{i.date_added}}</div> 
+                            <a href="{% url 'blogyapp:read' i.id  %}" style="font-weight: 600;margin-bottom: 0cm;">{{i.entry_title}} </a>
+                            <div style=" margin-top: 0cm; color: rgb(59, 59, 59);font-style: oblique;font-size: 0.8rem;"> {{i.date_added|date:"d M Y" }}</div> 
                 
-                            <div>{{i.introduction|truncatechars:80}}</div>
+                            <p style="font-size: 0.9rem;color:rgb(93, 93, 93)" >{{i.introduction|truncatechars:80}}</p>
                      
                         </div>
+                    {% endif %}
                     {% endfor %}
-                </ul>
+       
             </div>
 
 
         </div>
-    </div>
+        </div>
     </div>
 
 </div>
 
+<footer class="fixed-bottom d-block d-lg-none position-relative" style="background-color:#e8e8e8;height: 50px;">
+    <br>
+    <div class="d-flex justify-content-center text-align-center">
+        <div class="row">
+            <div class="col-4">
+                <div class="like" style="margin-right:0.3cm"> 
+                 
+                    <form class="d-flex " action="{% url 'blogyapp:like_unlike' entry.id %}" method='post'>
+                        {% csrf_token %}
+    
+                        {% if entry in entry.profile.liked_articles.all %}
+                   
+                        <button  class="btn btn-outline-danger btn-sm position-relative" name="submit" style="border: none;" >
+                          <div class="d-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">                                
+                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                              </svg> 
+                              <span style="font-weight: 500;">
+                               &nbsp;&nbsp;{{entry.likes}}
+                              </span>
+                            </div>
+                        </button>
+                        {% else %}
+
+                        <button style= "color: #051622;border: none;" class="btn btn-outline-secondary btn-sm position-relative" name="submit">
+                          <div class="d-flex">  
+                             <svg name="submit" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                            </svg> 
+                        
+                        <span style="font-weight: 500;">
+                          &nbsp;&nbsp;{{entry.likes}}  
+                        </span>
+                      </div>
+                      </button>
+     
+                        {% endif %}
+                       
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="bookmark"  style="margin-right:0.3cm">
+        
+                    <form action="{% url 'blogyapp:bookmark' entry.id %}" method='post'>
+                        {% csrf_token %}
+    
+                        {% if entry in entry.profile.bookmarked_articles.all %}
+                        <button class="btn btn-outline-warning btn-sm position-relative" name="submit" style="border: none;">
+                          <div class="d-flex">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
+                          </svg> 
+                            <span style="font-weight: 500;">
+                            &nbsp;&nbsp;{{entry.bookmarks}}
+                            </span>
+                               
+                          </div>
+                      </button>
+                        {% else %}
+                        <button style= "color: #051622;border: none;" class="btn btn-outline-secondary btn-sm position-relative" name="submit">
+                          <div class="d-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+                              <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                              <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                            <span  style="font-weight: 500;">
+                              &nbsp;&nbsp;{{entry.bookmarks}}
+                            </span>
+                          </div>
+                         
+                      </button>
+                            
+                        {% endif %}
+                       
+                    </form>
+
+                  </div>  
+            </div>
+
+            <div class="col-4">
+              
+                <div  id="comments" style="margin-right:0cm">
+                    <a href="{% url 'blogyapp:read' entry.id %}#comments" class="btn btn-outline-secondary btn-sm position-relative" name="submit" style="border: none;">
+                      <div class="d-flex"> 
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                      </svg>
+                        <span style="font-weight: 500;">
+                         &nbsp;&nbsp;{{entry.entry.count}}
+                        </span>
+                      </div>
+                      </a>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+</footer>
 
 {% else %}
 <strong> Entry not published yet </strong>
@@ -854,3 +490,7 @@
 {% endif %}
 
 {% endblock %}
+
+
+
+

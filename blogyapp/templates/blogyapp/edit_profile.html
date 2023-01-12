@@ -1,0 +1,25 @@
+{% extends 'blogyapp/base.html' %}
+
+<head>
+  {% load bootstrap5 %}
+  {% load static %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  {% load read-time %}
+</head>
+
+{% block content %}
+
+<form action="{% url 'blogyapp:edit_profile' profile.id %}" method="post" enctype="multipart/form-data" >
+
+    {% csrf_token %}  
+    {% bootstrap_form form %}
+
+    {% buttons %}
+    <button class="btn btn-outline-success" name="submit">Save changes</button>
+    {% endbuttons %}
+
+</form>
+
+
+{% endblock content %}

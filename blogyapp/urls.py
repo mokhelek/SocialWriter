@@ -10,12 +10,12 @@ urlpatterns = [
 
     path('new_entry/<int:profile_id>/', views.new_entry, name='new_entry'),
     path('edit_entry/<int:entry_id>/', views.edit_entry, name='edit_entry'), # does entry have an id??
-   
+    path('edit_profile/<int:profile_id>/', views.edit_profile, name="edit_profile"),
 
     path('read/<int:read_id>/',views.read, name = "read"),
     path('delete_entry/<int:entry_id>/', views.delete_entry , name = "delete_entry"),
 
-    # path('dashboard/',  views.dashboard , name="dashboard"),
+    path('dashboard/',  views.dashboard , name="dashboard"),
    
 
     path('profile_detail/<int:profile_id>/', views.profile_detail, name='profile_detail'), 

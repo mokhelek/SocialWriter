@@ -1,11 +1,12 @@
 
+from xml.etree.ElementTree import Comment
 from django.shortcuts import render, redirect
 
 from django.contrib.auth.models import User 
 from .models import  Entry , Comments
 
 from django.contrib.admin.models import LogEntry 
-from .forms import EntryForm , CommentsForm
+from .forms import EntryForm , CommentsForm , ProfileForm
 
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
@@ -35,7 +36,7 @@ def home1(request):
         other_users = Profile.objects.exclude(name__in =followings).exclude(Q(name=my_profile.name))[:6] 
         
         
-        context = { "entries":entries   ,
+        context = { "entries":entries ,
                    "followings":followings, 
                    "my_guys":my_guys ,
                    "other_users":other_users , 
@@ -123,10 +124,6 @@ def following(request):
         
         return render(request, 'blogyapp/landing_page.html' , {"popular":popular,"top_authors_details":top_authors_details})
 
-
-
-
-
 def popular(request):
 
     if request.user.is_authenticated:
@@ -170,7 +167,19 @@ def popular(request):
         return render(request, 'blogyapp/landing_page.html' , {"popular":popular,"top_authors_details":top_authors_details})
 
 
-
+def edit_profile(request, profile_id):
+    profile = Profile.objects.get(id = profile_id)
+    if request.method != 'POST' :
+        form = ProfileForm(instance = profile)
+    else:
+        form = ProfileForm(request.POST, request.FILES ,instance = profile )
+        if form.is_valid():
+            form.save()
+            return redirect('blogyapp:profile_detail', profile_id )
+            
+    context = {"form":form,
+               "profile":profile}
+    return render(request, 'blogyapp/edit_profile.html', context )
 
 @login_required
 def new_entry(request, profile_id ):
@@ -232,11 +241,8 @@ def read(request, read_id):
         my_profile = Profile.objects.get(name =request.user)  
         followings = my_profile.following.all()
         entry = Entry.objects.get(id=read_id) 
-        comments = Comments.objects.filter( entry = entry)  # showing only the comments of a specific entry post
-     
-        #profile_login_user = Profile.objects.get(name = request.user) 
-        
-        #commenter = profile_login_user  #profile of logged in user
+        comments = Comments.objects.filter( entry = entry).order_by("-date_created")
+    
         popularity = entry.popularity
         
         if request.method != 'POST':
@@ -246,24 +252,26 @@ def read(request, read_id):
             
             form = CommentsForm(data=request.POST)
             if form.is_valid():
-                #form.profile_login_user = profile_login_user 
+              
                 new_comment = form.save(commit=False)
                 popularity = popularity + 1
                 entry.popularity = popularity
                 new_comment.entry = entry 
-                # first variable is the actual field from the model that you want to attach to ...
-                # the second variable is the queryset or varible that you update with
-                # in simple  terms this is a " from " & "to"
+               
                 new_comment.profile = Profile.objects.get(name = request.user) 
                 entry.save(update_fields=["popularity"])
                 new_comment.save()
                 return redirect('blogyapp:read', read_id= entry.id)
         
-        context = {"entry": entry, "form":form  ,"comments":comments , "followings":followings}
+        context = {"entry": entry,
+                   "form":form  ,
+                   "comments":comments ,
+                   "followings":followings}
+        
         return render(request, "blogyapp/read.html", context)
     else:
         entry = Entry.objects.get(id=read_id) 
-        comments = Comments.objects.filter( entry = entry)  # showing only the comments of a specific entry post
+        comments = Comments.objects.filter( entry = entry)  
        
         
         popularity = entry.popularity
@@ -292,20 +300,20 @@ def read(request, read_id):
         return render(request, "blogyapp/read.html", context)
         
 
-def practice(request):
-    profiles = Profile.objects.all()
-    context = {"profiles":profiles}
-    return render(request , "blogyapp/practice.html" , context)
-
 def profile_detail(request,profile_id):
     profile =Profile.objects.get(id=profile_id) #Profile of a specific user
+    profile_comments = Comments.objects.filter(profile = profile).order_by("-date_created")
+
     profile_posts = profile.profiles_posts()
     
     my_profile = Profile.objects.get(name =request.user)  
-    followings = my_profile.following.all()
+    followings = my_profile.following.all()  # people that the logged in user follows
 
-
-    context ={"profile":profile, "followings":followings, "profile_posts":profile_posts}
+    context ={"profile":profile,
+              "followings":followings,
+              "profile_posts":profile_posts,
+              "profile_comments":profile_comments,
+              }
     return render(request , "blogyapp/profile_detail.html" , context )
 
 def follow_unfollow(request,profile_id):
@@ -417,30 +425,68 @@ def bookmark(request,entry_id):
             return redirect('blogyapp:read', entry_id )
     
 def my_bookmarks(request, profile_id):
-    
-    return render(request,"blogyapp/bookmarks.html")
+    my_profile =Profile.objects.get(name =request.user)
+    entries = my_profile.bookmarked_articles.all()
+    context = {"entries":entries,"my_profile":my_profile }
+    return render(request,"blogyapp/bookmarks.html",context )
 
 def user_entries(request):
+    my_profile =Profile.objects.get(name =request.user)
+    entries = Entry.objects.filter(profile = my_profile ).order_by("-date_added")
     
-    return render(request,"blogyapp/user_entries.html")
+    form = request.POST
+    
+    search_text = request.POST.get('searchtext')
+
+    
+    # ----------------- Filter the articles ------------------  
+    if "all" in form :
+        entries = Entry.objects.filter(profile = my_profile)
+        
+    if "published" in form :
+        entries = Entry.objects.filter(profile = my_profile , uploaded = True )
+        
+    if "unpublished" in form :
+        entries = Entry.objects.filter(profile = my_profile, uploaded = False ) 
+        
+    
+    # ----------------- Sorting the articles ------------------    
+     
+    if "nameup" in form :
+        entries = Entry.objects.filter(profile = my_profile).order_by("-entry_title")
+        
+    if "namedown" in form :
+        entries = Entry.objects.filter(profile = my_profile).order_by("entry_title")
+        
+    if "dateup" in form :
+        entries = Entry.objects.filter(profile = my_profile ).order_by("-date_added")
+        
+    if "datedown" in form :
+        entries = Entry.objects.filter(profile = my_profile).order_by("date_added") 
+        
+    # ----------------- Searching the articles ------------------ 
+       
+    if "searchtext" in form :
+        entries = Entry.objects.filter(entry_title__contains = search_text ).order_by("-date_added") 
+        
+    context = {  "entries":entries , }
+    return render(request,"blogyapp/articles.html" , context)
 
 def publish_or_unpublish(request , entry_id):
     entry = Entry.objects.get(id = entry_id)
-    
-    profile_for_article = entry.profile
+    uploaded = entry.uploaded
+    profile_for_article = Profile.objects.get(name = request.user )
     
  
-    entries = entry.order_by('-date_added') 
-    uploaded = entry.uploaded
-    print(uploaded)
-    
+    entries = Entry.objects.filter(profile = profile_for_article) .order_by('-date_added') 
+  
     if uploaded is True:
         uploaded = False
         entry.uploaded = uploaded
         entry.save(update_fields=['uploaded'])
         entry.save()
    
-        return redirect("blogyapp:index" )
+        return redirect("blogyapp:user_entries" )
         
     if uploaded is False:
         uploaded = True
@@ -448,11 +494,24 @@ def publish_or_unpublish(request , entry_id):
         entry.save(update_fields=['uploaded'])
         entry.save()
       
-        return redirect("blogyapp:index" )
+        return redirect("blogyapp:user_entries" )
     
     
     return render(request, 'blogyapp/articles.html', {"entries":entries})
         
       
+def dashboard(request):
     
-    
+    profile =Profile.objects.get(name = request.user ) #Profile of a specific user
+
+    profile_posts = profile.profiles_posts()
+    profile_comments = Comments.objects.filter(profile = profile).order_by("-date_created")
+    my_profile = Profile.objects.get(name =request.user)  
+    followings = my_profile.following.all()  # people that the logged in user follows
+
+    context ={"profile":profile,
+              "followings":followings,
+              "profile_posts":profile_posts,
+             "profile_comments":profile_comments,
+              }
+    return render (request , "blogyapp/dashboard.html",context )

@@ -1,5 +1,9 @@
 {% extends 'blogyapp/base.html' %}
 {% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load read-time %}
+
 {% block content %}
 
 
@@ -17,23 +21,27 @@
 </head>
    
 
-    <div class="mobile container-fluid" style="width: 100%;">  
+    <div class="container-fluid" style="width: 95%;">  
   <br>
  
-        <h4 style="font-weight: 600;">  Articles</h4>
-      
-        
-          <a class="btn btn-outline-primary btn-sm" href="#" style = "text-decoration: none;">Write</a>
-   
+  <h4 style="font-weight: 600;margin-top: 0.2cm;margin-bottom: 25px;color: rgb(17, 17, 17);"> 
+    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
+      <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+      <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+      <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+    </svg>&nbsp;
+    My Articles 
+    <span style="font-size: 1.1rem;color:gray"> ( {{entries.count}} ) </span> 
+   </h4>
 
-        <div class="tools" style="display: flex;"> 
+      <div class="tools" style="display: flex;margin-bottom: 20px;"> 
         <div class="dropdown">
           <button class="btn btn-light dropdown-toggle btn-sm" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
               <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z"/>
             </svg>  Filter Articles
           </button>
-          <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
+          <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2" style="width: 200px;">
             
        
 
@@ -44,15 +52,15 @@
                 <div style="margin-left: 0.2cm;">  
 
                   <div>   
-                    <button style= "color: #051622;font-weight: 600;" href="#" class="btn btn-light btn-sm"  name="all"> All Articles </button> 
+                    <button style= "color: #051622;" href="#" class="btn btn-light btn-sm"  name="all"> All Articles </button> 
                    </div>
 
                   <div>   
-                 <button style= "color: #051622;font-weight: 600;" href="#" class="btn btn-light btn-sm"  name="unpublished"> Unpublished Articles </button> 
+                 <button style= "color: #051622;" href="#" class="btn btn-light btn-sm"  name="unpublished"> Unpublished Articles </button> 
                 </div>
 
                 <div> 
-                   <button style= "color: #051622;font-weight: 600;" href="#" class="btn btn-light btn-sm " name="published"> Published Articles </button>  
+                   <button style= "color: #051622;" href="#" class="btn btn-light btn-sm " name="published"> Published Articles </button>  
                   </div>
 
 
@@ -65,7 +73,7 @@
            
           </ul>
         </div>
-        |
+        &nbsp;&nbsp;
         <div class="dropdown">
           <button class="btn btn-light dropdown-toggle btn-sm" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-sort-down" viewBox="0 0 16 16">
@@ -127,48 +135,145 @@
            
           </ul>
         </div>
-        &nbsp;|&nbsp;
+        &nbsp;&nbsp;
         <br>
         <div class = "search">
           <form class="d-flex"  action="" method="POST" >
             {% csrf_token %}   
             <input class="form-control  form-control-sm" name = "searchtext" type='text' placeholder="Search Articles" aria-label="Search">
             
-            <button class="btn btn-outline-success btn-sm" type="submit" name = "search">Search</button>
+            <button style="margin-left: 10px;" class="btn btn-outline-success btn-sm" type="submit" name = "search">Search</button>
           </form>
         </div>
        
       </div>
 
-  
-
-
-    <!-- ##########################################################################################################################################    -->
  
       <div class="row">
-        <h5 style="font-weight: 600;margin-top: 0.2cm;margin-bottom: 0.2cm;"> Articles ({{entries.count}})</h5>
+  
         {% for entry in entries %}
-        <div class="col-sm-3">
+        <div class="col-md-4">
          
-          <div style=" margin: 0cm;" class="card card-body">
+          <div class="card  ">
+            <div  >
+              <img style="width: 100%; height: 250px;" class="card-img-top" src="{{entry.thumbnail.url}}" alt="" >
+            </div>
             
-          <div class="article-thumbnail" style="height: 125px;">  
-            <a id="thumbnail" href="{% url 'blogyapp:read' entry.id %}"><img  class="img-thumbnail " src= "{{entry.thumbnail.url}}" ></a>
+      
+          <div class="card-body" style="height: 100px;overflow: hidden;"> 
+            <div style="font-size:0.86rem;color: #696969;"> {{entry.date_added|date:"d M Y"}}</div>
+            <a style="font-size: 1.4rem;color: rgb(42, 42, 42);font-weight: 600;" href="{% url 'blogyapp:read' entry.id %}">
+              {{ entry.entry_title}}
+            </a>
+ 
+       
           </div>
 
-          <div style="height: 3.3cm;overflow: hidden;"> 
-          <h6 style="font-weight: 600;">{{ entry.entry_title|title}}</h6> 
+          
+     <br>
+          <div class="d-flex container-fluid" >
+                    
+            <div class="like" style="margin-right:0.3cm"> 
+         
+                <form class="d-flex " action="{% url 'blogyapp:like_unlike' entry.id %}" method='post'>
+                    {% csrf_token %}
 
-          <h6>  {{entry.introduction}}  </h6>
+                    {% if entry in entry.profile.liked_articles.all %}
+               
+                    <button  class="btn btn-outline-danger btn-sm position-relative" name="submit" style="border: none;" >
+                      <div class="d-flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">                                
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                          </svg> 
+                          <span style="font-weight: 500;">
+                           &nbsp;&nbsp;{{entry.likes}}
+                          </span>
+                        </div>
+                    </button>
+                    {% else %}
+
+                    <button style= "color: #051622;border: none;" class="btn btn-outline-secondary btn-sm position-relative" name="submit">
+                      <div class="d-flex">  
+                         <svg name="submit" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                        </svg> 
+                    
+                    <span style="font-weight: 500;">
+                      &nbsp;&nbsp;{{entry.likes}}  
+                    </span>
+                  </div>
+                  </button>
+ 
+                    {% endif %}
+                   
+                </form>
+            </div>
+            
+            <div class="bookmark"  style="margin-right:0.3cm">
+
+              <form action="{% url 'blogyapp:bookmark' entry.id %}" method='post'>
+                  {% csrf_token %}
+
+                  {% if entry in entry.profile.bookmarked_articles.all %}
+                  <button class="btn btn-outline-warning btn-sm position-relative" name="submit" style="border: none;">
+                    <div class="d-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
+                    </svg> 
+                      <span style="font-weight: 500;">
+                      &nbsp;&nbsp;{{entry.bookmarks}}
+                      </span>
+                         
+                    </div>
+                </button>
+                  {% else %}
+                  <button style= "color: #051622;border: none;" class="btn btn-outline-secondary btn-sm position-relative" name="submit">
+                    <div class="d-flex">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
+                      </svg>
+                      <span  style="font-weight: 500;">
+                        &nbsp;&nbsp;{{entry.bookmarks}}
+                      </span>
+                    </div>
+                   
+                </button>
+                      
+                  {% endif %}
+                 
+              </form>
+
+            </div>
+
+            <div  id="comments" style="margin-right:0cm">
+              <a href="{% url 'blogyapp:read' entry.id %}#comments" class="btn btn-outline-secondary btn-sm position-relative" name="submit" style="border: none;">
+                <div class="d-flex"> 
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square" viewBox="0 0 16 16">
+                  <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                </svg>
+                  <span style="font-weight: 500;">
+                   &nbsp;&nbsp;{{entry.entry.count}}
+                  </span>
+                </div>
+                </a>
+            </div>
+
+
+            <div style="width: 100% !important;" class="container-fluid d-flex justify-content-end" >
+              <div >
+               <h6 style="font-size: 0.75rem;cursor:default;padding-left: 0px;"> {{entry.text|safe|readtime}} </h6> 
+              </div>
+            </div>
+          
         </div>
-            <h5> . . .  </h5>
 
-            <div style="font-style:oblique ; font-size:0.9rem;font-weight:600"> created : {{entry.date_added|date:"d M"}}</div>
+
+            
             <hr>
             <center>  
-            <div style="display:flexbox;" >
-              <a style="text-decoration: none; color:rgb(53, 52, 98)" href="{% url 'blogyapp:edit_entry' entry.id %}"> Edit</a> 
-              <a data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-left: 0.5cm;margin-right:0.5cm;text-decoration: none; color:rgb(53, 52, 98)" href="#"> Delete </a>
+            <div style="display:flexbox;margin-bottom: 20px ;" >
+              <a style="text-decoration: none; " class="btn btn-primary btn-sm"  href="{% url 'blogyapp:edit_entry' entry.id %}"> Edit</a> 
 
               <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -187,11 +292,11 @@
                 </div>
             </div>
             {% if entry.uploaded is True %}
-              <a style="text-decoration: none; color:rgb(53, 52, 98)" href="{% url 'blogyapp:publish_or_unpublish' entry.id %}"> Unpublish</a>
+              <a class="btn btn-outline-secondary btn-sm" style="text-decoration: none;margin-left: 0.9cm;margin-right:0.9cm" href="{% url 'blogyapp:publish_or_unpublish' entry.id %}"> Unpublish</a>
              {% else %} 
-              <a style="text-decoration: none; color:rgb(53, 52, 98)" href="{% url 'blogyapp:publish_or_unpublish' entry.id %}"> Publish</a>
+              <a class="btn btn-outline-primary btn-sm" style="text-decoration: none;margin-left: 0.9cm;margin-right:0.9cm" href="{% url 'blogyapp:publish_or_unpublish' entry.id %}"> Publish</a>
             {% endif %}
-
+            <a data-bs-toggle="modal" data-bs-target="#exampleModal" style="text-decoration: none; color:rgb(255, 47, 47)" href="#" > Delete </a>
             </div>
           </center>
 
@@ -206,12 +311,6 @@
 
     </div>
   
-    
- 
-
-
-
-   
 
 
 {% endblock content %}

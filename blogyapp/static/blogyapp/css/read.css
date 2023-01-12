@@ -11,8 +11,8 @@ p, h1, h2, h3, h4, h5, h6, button, a, span, div{
 
 
 body {
-    background-color: rgb(255, 255, 255);
-    color: #1A223B;
+    background-color: rgb(241, 241, 241);
+
 
 }
 #hovering:hover {
@@ -28,6 +28,9 @@ a{
 
 }
 
+a:hover{
+    color: #2855df;
+}
 
 #thumbnail{
     height: 30%;
@@ -35,23 +38,23 @@ a{
     overflow: hidden;
 }
 .comments{
-    min-height: 2cm;
-    border: 0.5px solid rgb(176, 175, 175);
-    padding-left: 0.8cm;
-    padding-top: 0.2cm;
+    border-radius: 20px;
+    border: 1px rgb(209, 209, 209) solid;
 }
 
 
 .postIntro{
     font-style: oblique;
     font-size: medium;
+    border-left: 3px #2855df solid;
+    
 }
 
 .avatar{
     border-radius: 50%;
-    border: 4px rgb(221, 153, 26) solid;
-    width: 250px !important;
-    height: 250px !important;
+    border: 2px rgba(255, 255, 255, 0.861) solid !important;
+    width: 70px !important;
+    height: 70px !important;
 }
 
 .avatar-home{
@@ -68,9 +71,9 @@ a{
 }
 .avatar-read{
     border-radius: 50%;
-    border: 2px white solid;
-    width: 60px;
-    height: 60px;   
+    border: 2px #ababab solid;
+    width: 65px;
+    height: 65px;   
 }
 
 #mymenu a{
@@ -103,19 +106,6 @@ a{
     margin-top:0cm;
 }
 
-
-
-#bio{
- width: 56%;
-
-}
-#bio-read{
-    max-height: 3cm;
-    max-width: 8cm;
-    font-size: 1.2rem;
-    
-
-}
 
 .thumbnail {
  
