@@ -33,7 +33,7 @@ class Comments(models.Model):
     profile = models.ForeignKey(Profile,on_delete=models.CASCADE, null=True)
     entry = models.ForeignKey(Entry, on_delete=models.CASCADE,related_name="entry" ) 
     
-    date_created = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add =True)
     comment = models.CharField(max_length=200 ,null=True, blank=True )
     
     class Meta:
@@ -41,3 +41,24 @@ class Comments(models.Model):
         verbose_name_plural = 'comments'
 
     
+class Notification(models.Model):
+     profile = models.ForeignKey(Profile,on_delete=models.CASCADE, null=True)
+     entry = models.ForeignKey(Entry, on_delete=models.CASCADE ,null=True,blank=True) 
+     message = models.TextField()
+     date_created = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+     notification_viewed = models.BooleanField(default=False)
+     
+     def __str__(self):
+         return  f'{self.profile} commented ' 
+     
+     
+class Like(models.Model):
+    profile = models.ForeignKey(Profile,on_delete=models.CASCADE, null=True)
+    entry = models.ForeignKey(Entry, on_delete=models.CASCADE ,null=True,blank=True ) 
+    date_created = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    
+    
+class Bookmark(models.Model):
+    profile = models.ForeignKey(Profile,on_delete=models.CASCADE, null=True)
+    entry = models.ForeignKey(Entry, on_delete=models.CASCADE ,null=True,blank=True ) 
+    date_created = models.DateTimeField(auto_now_add=True,null=True,blank=True)

@@ -418,7 +418,7 @@
              <a class="d-flex"  style="text-decoration: none;" href="{% url 'blogyapp:profile_detail' entry.profile.id %}">
                <img class="avatar-home" src="{{entry.profile.avatar.url}}">
                 <span style="color: rgb(38, 38, 38);margin-left: 10px;">
-                   @{{entry.profile.name}}
+                   @{{entry.profile.name}} 
                    <h6 style="color: gray;font-size: 0.8rem;"> {{entry.date_added|date:"d M Y"}}</h6>
                   </span> 
              </a>
@@ -445,10 +445,10 @@
                
                       <form class="d-flex " action="{% url 'blogyapp:like_unlike' entry.id %}" method='post'>
                           {% csrf_token %}
-      
-                          {% if entry in entry.profile.liked_articles.all %}
+                    
+                          {% if entry in my_profile.liked_articles.all  %}
                      
-                          <button  class="btn btn-outline-danger btn-sm position-relative" name="submit" style="border: none;" >
+                          <button  class="btn btn-outline-danger btn-sm" name="submit" style="border: none;" >
                             <div class="d-flex">
                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">                                
                                   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
@@ -460,7 +460,7 @@
                           </button>
                           {% else %}
 
-                          <button style= "color: #051622;" class="btn btn-outline-light btn-sm position-relative" name="submit">
+                          <button style= "color: #051622;" class="btn btn-outline-light btn-sm " name="submit">
                             <div class="d-flex">  
                                <svg name="submit" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
                               <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
@@ -482,7 +482,7 @@
                     <form action="{% url 'blogyapp:bookmark' entry.id %}" method='post'>
                         {% csrf_token %}
     
-                        {% if entry in entry.profile.bookmarked_articles.all %}
+                        {% if entry in my_profile.bookmarked_articles.all %}
                         <button class="btn btn-outline-warning btn-sm position-relative" name="submit" style="border: none;">
                           <div class="d-flex">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
@@ -566,7 +566,7 @@
              <a class="d-flex"  style="text-decoration: none;" href="{% url 'blogyapp:profile_detail' entry.profile.id %}">
                <img class="avatar-home" src="{{entry.profile.avatar.url}}">
                 <span style="color: rgb(38, 38, 38);margin-left: 10px;">
-                   @{{entry.profile.name}}
+                   @{{entry.profile.name}}  
                    <h6 style="color: gray;font-size: 0.8rem;"> {{entry.date_added|date:"d M Y"}}</h6>
                   </span> 
              </a>
@@ -594,7 +594,7 @@
                       <form class="d-flex " action="{% url 'blogyapp:like_unlike' entry.id %}" method='post'>
                           {% csrf_token %}
       
-                          {% if entry in entry.profile.liked_articles.all %}
+                          {% if entry in my_profile.liked_articles.all  %}
                      
                           <button  class="btn btn-outline-danger btn-sm position-relative" name="submit" style="border: none;" >
                             <div class="d-flex">
@@ -630,7 +630,7 @@
                     <form action="{% url 'blogyapp:bookmark' entry.id %}" method='post'>
                         {% csrf_token %}
     
-                        {% if entry in entry.profile.bookmarked_articles.all %}
+                        {% if entry in my_profile.bookmarked_articles.all %}
                         <button class="btn btn-outline-warning btn-sm position-relative" name="submit" style="border: none;">
                           <div class="d-flex">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
@@ -739,7 +739,7 @@
                       <form class="d-flex " action="{% url 'blogyapp:like_unlike' entry.id %}" method='post'>
                           {% csrf_token %}
       
-                          {% if entry in entry.profile.liked_articles.all %}
+                          {% if entry in my_profile.liked_articles.all %}
                      
                           <button  class="btn btn-outline-danger btn-sm position-relative" name="submit" style="border: none;" >
                             <div class="d-flex">
@@ -775,7 +775,7 @@
                     <form action="{% url 'blogyapp:bookmark' entry.id %}" method='post'>
                         {% csrf_token %}
     
-                        {% if entry in entry.profile.bookmarked_articles.all %}
+                        {% if entry in my_profile.bookmarked_articles.all %}
                         <button class="btn btn-outline-warning btn-sm position-relative" name="submit" style="border: none;">
                           <div class="d-flex">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">

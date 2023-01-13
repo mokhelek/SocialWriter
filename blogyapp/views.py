@@ -3,7 +3,7 @@ from xml.etree.ElementTree import Comment
 from django.shortcuts import render, redirect
 
 from django.contrib.auth.models import User 
-from .models import  Entry , Comments
+from .models import  Entry , Comments , Like ,Bookmark
 
 from django.contrib.admin.models import LogEntry 
 from .forms import EntryForm , CommentsForm , ProfileForm
@@ -20,11 +20,10 @@ from django.db.models import Q
 
 
 def home1(request):
-
+    print(  "recommeded : ", request.path)
     if request.user.is_authenticated:
         
         followings_url = request.path
-        print(followings_url)
         
         recommended_articles = Entry.objects.all() 
         my_profile =Profile.objects.get(name =request.user)  # profile of logged in user
@@ -66,11 +65,11 @@ def home1(request):
 
 
 def following(request):
-
+    print(  "following : " +  request.path)
     if request.user.is_authenticated:
         
         followings_url = request.path
-        print(followings_url)
+
         
         recommended_articles = Entry.objects.all() 
         my_profile =Profile.objects.get(name =request.user)  # profile of logged in user
@@ -125,7 +124,7 @@ def following(request):
         return render(request, 'blogyapp/landing_page.html' , {"popular":popular,"top_authors_details":top_authors_details})
 
 def popular(request):
-
+    print(  "popular : "  ,  request.path)
     if request.user.is_authenticated:
       
         recommended_articles = Entry.objects.all() 
@@ -345,10 +344,13 @@ def follow_unfollow(request,profile_id):
 
     return render(request , "blogyapp/profile_detail.html" )
 
+
+"""  
 def like_unlike(request, entry_id):
     current_link = request.path    
     entry = Entry.objects.get(id = entry_id)
     profile = Profile.objects.get(name = request.user)
+    
     liked_articles = profile.liked_articles.all()
     number_of_likes = entry.likes
     popularity = entry.popularity
@@ -381,48 +383,81 @@ def like_unlike(request, entry_id):
             return redirect('blogyapp:home1')
         else:
             return redirect('blogyapp:read', entry_id )
+"""
+
+
+
+def like_unlike(request,entry_id):
+    profile = Profile.objects.get(name = request.user)
+    article = Entry.objects.get(id = entry_id )
+    number_of_likes = article.likes
+    liked = Like.objects.filter(profile = profile, entry = article).exists() 
+    popularity = article.popularity
+    
+    if liked:
+        Like.objects.filter(profile = profile, entry = article).delete()
+        profile.liked_articles.remove(article)
+        number_of_likes = number_of_likes - 1
+        popularity = popularity - 1
+        article.popularity = popularity
+        article.likes = number_of_likes
+        article.save(update_fields=["likes","popularity"])
+        article.save()
+        profile.save()
+        
+        
+    else:
+        Like.objects.create( profile = profile , entry = article )
+        profile.liked_articles.add(article)
+        number_of_likes = number_of_likes + 1
+        popularity = popularity + 1
+        article.popularity = popularity
+        article.likes = number_of_likes
+        article.save(update_fields=["likes","popularity"])
+        article.save()
+        profile.save()
+        
+
+    return redirect('blogyapp:home1')
+    
 
 def bookmark(request,entry_id):
-    current_link = request.path   
-    entry = Entry.objects.get(id = entry_id)
-    bookmarks  = entry.bookmarks  # int value of bookmarks
+    profile = Profile.objects.get(name = request.user)
+    article = Entry.objects.get(id = entry_id )
+    number_of_bookmarks = article.bookmarks
+    bookmarked = Bookmark.objects.filter(profile = profile, entry = article).exists() 
+    popularity = article.popularity
     
-    my_profile =Profile.objects.get(name = request.user)
-    
-    popularity = entry.popularity
-    
-    bookmarked_articles = my_profile.bookmarked_articles.all()
-    if request.method == 'POST':
-        if entry in bookmarked_articles: 
-            my_profile.bookmarked_articles.remove(entry)
-            
-            bookmarks = bookmarks - 1
-            popularity = popularity - 1
-            entry.popularity = popularity
-            
-            entry.bookmarks = bookmarks
-            
-            entry.save(update_fields=["bookmarks","popularity"])
-            
-            my_profile.save()
-        else:
-            my_profile.bookmarked_articles.add(entry)
-            
-            bookmarks = bookmarks + 1
-            popularity = popularity + 1
-            entry.popularity = popularity
-            
-            entry.bookmarks = bookmarks
-            
-            entry.save(update_fields=["bookmarks","popularity"])
-            
-            my_profile.save()
+    if bookmarked:
+        Bookmark.objects.filter(profile = profile, entry = article).delete()
+        profile.bookmarked_articles.remove(article)
+        number_of_bookmarks = number_of_bookmarks - 1
+        popularity = popularity - 1
+        article.popularity = popularity
+        article.bookmarks = number_of_bookmarks
+        article.save(update_fields=["bookmarks","popularity"])
+        article.save()
+        profile.save()
+        
+        
+    else:
+        Bookmark.objects.create( profile = profile , entry = article )
+        profile.bookmarked_articles.add(article)
+        number_of_bookmarks = number_of_bookmarks + 1
+        popularity = popularity + 1
+        article.popularity = popularity
+        article.bookmarks = number_of_bookmarks
+        article.save(update_fields=["bookmarks","popularity"])
+        article.save()
+        profile.save()
+        
+    return redirect('blogyapp:home1')
             
         
-        if current_link == f"/bookmark/{entry_id}/" :
+    """if current_link == f"/bookmark/{entry_id}/" :
             return redirect('blogyapp:home1')
         else:
-            return redirect('blogyapp:read', entry_id )
+            return redirect('blogyapp:read', entry_id )"""
     
 def my_bookmarks(request, profile_id):
     my_profile =Profile.objects.get(name =request.user)

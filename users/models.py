@@ -9,7 +9,7 @@ class Profile(models.Model):
     avatar = models.ImageField(null=True, upload_to="blogyapp/images/profiles_img", default="default.jpg")
     following = models.ManyToManyField(User,related_name="following", blank=True)
     followers = models.IntegerField(default=0) 
-    date_created = models.DateField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now=True)
     liked_articles = models.ManyToManyField("blogyapp.Entry",related_name="liked_articles", blank=True)
     bookmarked_articles = models.ManyToManyField("blogyapp.Entry",related_name="bookmarked_articles", blank=True)
     
