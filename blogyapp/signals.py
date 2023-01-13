@@ -40,3 +40,18 @@ def bookmark_notification(sender, instance, created,*args, **kwargs):
 
 post_save.connect(bookmark_notification, sender=Bookmark )
 
+
+
+def following_notification(sender, instance, action,*args, **kwargs):
+    if action == "post_add":
+        Notification.objects.create( 
+                                profile = instance,
+                           
+                                message = f" {instance} followed you " ,
+                                    )
+        
+
+m2m_changed.connect(following_notification, sender=Profile.following.through )
+
+
+

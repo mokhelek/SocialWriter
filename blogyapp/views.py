@@ -124,7 +124,8 @@ def following(request):
         return render(request, 'blogyapp/landing_page.html' , {"popular":popular,"top_authors_details":top_authors_details})
 
 def popular(request):
-    print(  "popular : "  ,  request.path)
+    #print(  "popular : "  ,  request.path)
+    
     if request.user.is_authenticated:
       
         recommended_articles = Entry.objects.all() 
@@ -388,6 +389,8 @@ def like_unlike(request, entry_id):
 
 
 def like_unlike(request,entry_id):
+    previous_url = request.META["HTTP_REFERER"]  
+
     profile = Profile.objects.get(name = request.user)
     article = Entry.objects.get(id = entry_id )
     number_of_likes = article.likes
@@ -418,10 +421,12 @@ def like_unlike(request,entry_id):
         profile.save()
         
 
-    return redirect('blogyapp:home1')
+    return redirect(previous_url + "#" + str(entry_id))
     
 
 def bookmark(request,entry_id):
+    previous_url = request.META["HTTP_REFERER"]  # url of previous page
+    
     profile = Profile.objects.get(name = request.user)
     article = Entry.objects.get(id = entry_id )
     number_of_bookmarks = article.bookmarks
@@ -451,7 +456,7 @@ def bookmark(request,entry_id):
         article.save()
         profile.save()
         
-    return redirect('blogyapp:home1')
+    return redirect( previous_url + "#" + str(entry_id) )
             
         
     """if current_link == f"/bookmark/{entry_id}/" :

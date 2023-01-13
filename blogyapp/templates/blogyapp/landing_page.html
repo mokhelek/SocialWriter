@@ -354,10 +354,10 @@
 
           <h5 style="font-size:1.1rem;margin-bottom: 20px;">
             <a style="text-decoration: none; " href="{% url 'blogyapp:home1' %}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-                    <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
-                </svg> &nbsp; Home
+              <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+              </svg> &nbsp; Home
             </a>
         </h5>
         
@@ -404,12 +404,12 @@
       <div class="col-md-6" >
         
         {% if request.path == following  %}
-        <div class="d-flex">
+        <div class="d-flex" style="margin-top: 4px;margin-bottom:4px"  >
           <a href="{% url 'blogyapp:home1'  %}" style="margin: 6px 23px 8px 0px;font-size:0.96rem  ;color: rgb(97, 96, 96);" > Recommended </a>  <a href="{% url 'blogyapp:following'  %}" style="margin: 6px 23px 8px 0px;font-weight: 600;"> Following </a>  <a href="{% url 'blogyapp:popular'  %}" style="margin: 6px 23px 8px 0px;font-size: 0.97rem;color: rgb(97, 96, 96);">Popular</a>
         </div>
         {% for entry in entries %}
           {% if entry.uploaded == True %}
-          <div class="card " style="margin-bottom: 10px;">
+          <div id="{{entry.id}}" class="card " style="margin-bottom: 10px;">
             {% if forloop.counter == 1 or forloop.counter == 5 or forloop.counter == 15 %}
               <img style="width: 100%;height: 270px;" class="card-img-top" src="{{entry.thumbnail.url}}" alt="">
             {% endif %}
@@ -552,12 +552,12 @@
         <!-- *************************************** Recommended ************************************* -->
 
         {% if request.path == recommended  %}
-        <div class="d-flex">
+        <div style="margin-top: 4px;margin-bottom:4px" class="d-flex">
           <a href="{% url 'blogyapp:home1'  %}" style="margin: 6px 23px 6px 0px;font-weight: 600;" > Recommended </a>  <a href="{% url 'blogyapp:following'  %}" style="margin: 6px 23px 8px 0px;font-size: 0.97rem;color: rgb(97, 96, 96);"> Following </a>  <a href="{% url 'blogyapp:popular'  %}" style="margin: 6px 23px 8px 0px;font-size: 0.97rem;color: rgb(97, 96, 96);">Popular</a>
         </div>
         {% for entry in entries %}
           {% if entry.uploaded == True %}
-          <div class="card " style="margin-bottom: 10px;">
+          <div id="{{entry.id}}" class="card " style="margin-bottom: 10px;">
             {% if forloop.counter == 1 or forloop.counter == 5 or forloop.counter == 15 %}
               <img style="width: 100%;height: 270px;" class="card-img-top" src="{{entry.thumbnail.url}}" alt="">
             {% endif %}
@@ -697,12 +697,12 @@
 
 
         {% if request.path == popular %}
-        <div class="d-flex">
+        <div style="margin-top: 4px;margin-bottom:4px" class="d-flex">
           <a href="{% url 'blogyapp:home1'  %}" style="margin: 6px 23px 8px 0px;font-size: 0.97rem;color: rgb(97, 96, 96);" > Recommended </a>  <a href="{% url 'blogyapp:following'  %}" style="margin: 6px 23px 8px 0px;font-size: 0.97rem;color: rgb(97, 96, 96);"> Following </a>  <a href="{% url 'blogyapp:popular'  %}" style="margin: 6px 23px 8px 0px;font-weight: 600;">Popular</a>
         </div>
         {% for entry in entries %}
           {% if entry.uploaded == True %}
-          <div class="card " style="margin-bottom: 10px;">
+          <div id="{{entry.id}}" class="card " style="margin-bottom: 10px;">
             {% if forloop.counter == 1 or forloop.counter == 5 or forloop.counter == 15 %}
               <img style="width: 100%;height: 270px;" class="card-img-top" src="{{entry.thumbnail.url}}" alt="">
             {% endif %}
@@ -847,9 +847,9 @@
 
       <div class="col-md-3 d-none d-md-block">
         
-        <h6>Who to follow</h6>
+        <h6 style="color:#0b145b;font-weight: 700;font-size: 1.08rem;margin-bottom: 15px;"> Who to follow </h6>
         {% for i in other_users %}
-        <div class="d-flex" style="margin-bottom: 20px;">
+        <div class="d-flex" style="margin-bottom: 15px;">
           <img class="avatar-home" src="{{i.avatar.url}}"> 
 
           <div style="font-size: 0.9rem;font-weight: 700;margin-left: 10px;"> 
@@ -858,12 +858,17 @@
           </div>
           
         </div>
-        <hr>
+
+        {% empty %}
+        <center>
+          <br>
+            <img style="width: 45%;" class="img-fluid" src="{% static 'blogyapp/images/undraw_no_data_re_kwbl.svg' %}" alt="">
+        </center>
         {% endfor %}
-        <br>
-        <h6> Following </h6>
+    
+        <h6 style="color:#0b145b;font-weight: 700;font-size: 1.08rem;margin-bottom: 15px;"> Following </h6>
         {% for i in my_guys %}
-        <div class="d-flex" style="margin-bottom: 20px;">
+        <div class="d-flex" style="margin-bottom: 15px;">
           <img class="avatar-home" src="{{i.avatar.url}}"> 
 
           <div style="font-size: 0.9rem;font-weight: 600;margin-left: 10px;"> 
@@ -872,7 +877,12 @@
           </div>
           
         </div>
-        <hr>
+        {% empty %}
+        <center>
+          <br>
+            <img style="width: 45%;" class="img-fluid" src="{% static 'blogyapp/images/undraw_no_data_re_kwbl.svg' %}" alt="">
+            <h6 style="color:#454545;font-weight: 700;font-size: 1.1rem;"> You are not following anyone </h6>
+        </center>
         {% endfor %}
 
       </div>
