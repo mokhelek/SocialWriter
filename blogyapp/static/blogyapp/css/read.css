@@ -11,7 +11,7 @@ p, h1, h2, h3, h4, h5, h6, button, a, span, div{
 
 
 body {
-    background-color: rgb(241, 241, 241);
+    background-color: rgb(248, 248, 248);
 
 
 }
@@ -59,9 +59,9 @@ a:hover{
 
 .avatar-home{
     border-radius: 50%;
-    border: 1px white solid;
-    width: 40px;
-    height: 40px;   
+    border: 1px rgb(201, 201, 201) solid;
+    width: 42px;
+    height: 42px;   
 }
 .avatar-home-user{
     border-radius: 50%;
