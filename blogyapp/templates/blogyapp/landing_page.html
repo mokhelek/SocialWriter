@@ -35,7 +35,20 @@
  }
 </style>
 
-
+<div class="container-fluid " >
+  <div class="row">
+    <div class="col">
+      <div id="search_bar" style="display: none;margin-top: 10px;" class="card card-body">
+        <form  action="{% url 'blogyapp:searched_articles' %}"   style="margin-right: 15px;" class="d-flex" role="search" method="post">
+          {% csrf_token %}   
+          <input class="form-control  form-control-sm" name = "search_text" type='text' placeholder="Search Articles" aria-label="Search">
+          <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+ 
+  </div>
+</div>
 
 
 {% if user.is_anonymous %}
@@ -316,7 +329,7 @@
 {% url 'blogyapp:following' as following %}
 {% url 'blogyapp:popular' as  popular %}
 
-<section style="background-color: rgb(240, 240, 240);">
+<section >
   <div class="d-none d-md-block">
     <br>
   </div>
@@ -843,12 +856,163 @@
 
 
 
+        <!--  ##########################################################  searched articles ##################################################  -->
+
+
+        {% if request.path == search_url  %}
+        <div class="d-flex" style="margin-top: 4px;margin-bottom:4px"  >
+          <a href="{% url 'blogyapp:home1'  %}" style="margin: 6px 23px 8px 0px;font-size:0.96rem  ;color: rgb(97, 96, 96);" > Recommended </a>  <a href="{% url 'blogyapp:following'  %}" style="margin: 6px 23px 8px 0px;font-size:0.96rem  ;color: rgb(97, 96, 96);"> Following </a>  <a href="{% url 'blogyapp:popular'  %}" style="margin: 6px 23px 8px 0px;font-size: 0.97rem;color: rgb(97, 96, 96);">Popular</a>
+        </div>
+        {% for entry in entries %}
+          {% if entry.uploaded == True %}
+          <div id="{{entry.id}}" class="card " style="margin-bottom: 10px;">
+            {% if forloop.counter == 1 or forloop.counter == 5 or forloop.counter == 15 %}
+              <img style="width: 100%;height: 270px;" class="card-img-top" src="{{entry.thumbnail.url}}" alt="">
+            {% endif %}
+            <div class="card-body">
+
+             <a class="d-flex"  style="text-decoration: none;" href="{% url 'blogyapp:profile_detail' entry.profile.id %}">
+               <img class="avatar-home" src="{{entry.profile.avatar.url}}">
+                <span style="color: rgb(38, 38, 38);margin-left: 10px;">
+                   @{{entry.profile.name}} 
+                   <h6 style="color: gray;font-size: 0.8rem;"> {{entry.date_added|date:"d M Y"}}</h6>
+                  </span> 
+             </a>
+              
+              
+              <div id="posts_margin" style="margin-left: 50px;margin-right: 10px">
+                <a id="post_title" href="{% url 'blogyapp:read' entry.id %}" style="font-weight: 700;font-size:1.4rem;color: rgb(45, 45, 45);text-decoration: none;">  {{entry.entry_title}} </a>
+                
+                <p class="d-block d-sm-none" style="color: rgb(100, 100, 100);size: 0.9rem;">
+                  {{entry.introduction|truncatechars:120}}
+                </p>
+
+                <p class="d-none d-sm-block" style="color: rgb(100, 100, 100);size: 0.9rem;">
+                  {{entry.introduction|truncatechars:200}}
+                </p>
+              
+              
+                <!-- ################################################################################################# -->
+
+
+                <div class="d-flex" style="width: 100%;">
+                  
+                  <div class="like" style="margin-right:0.3cm"> 
+               
+                      <form class="d-flex " action="{% url 'blogyapp:like_unlike' entry.id %}" method='post'>
+                          {% csrf_token %}
+                    
+                          {% if entry in my_profile.liked_articles.all  %}
+                     
+                          <button  class="btn btn-outline-danger btn-sm" name="submit" style="border: none;" >
+                            <div class="d-flex">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">                                
+                                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                </svg> 
+                                <span style="font-weight: 500;">
+                                 &nbsp;&nbsp;{{entry.likes}}
+                                </span>
+                              </div>
+                          </button>
+                          {% else %}
+
+                          <button style= "color: #051622;" class="btn btn-outline-light btn-sm " name="submit">
+                            <div class="d-flex">  
+                               <svg name="submit" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                              </svg> 
+                          
+                          <span style="font-weight: 500;">
+                            &nbsp;&nbsp;{{entry.likes}}  
+                          </span>
+                        </div>
+                        </button>
+       
+                          {% endif %}
+                         
+                      </form>
+                  </div>
+                  
+                  <div class="bookmark"  style="margin-right:0.3cm">
+      
+                    <form action="{% url 'blogyapp:bookmark' entry.id %}" method='post'>
+                        {% csrf_token %}
+    
+                        {% if entry in my_profile.bookmarked_articles.all %}
+                        <button class="btn btn-outline-warning btn-sm position-relative" name="submit" style="border: none;">
+                          <div class="d-flex">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
+                          </svg> 
+                            <span style="font-weight: 500;">
+                            &nbsp;&nbsp;{{entry.bookmarks}}
+                            </span>
+                               
+                          </div>
+                      </button>
+                        {% else %}
+                        <button style= "color: #051622;border: none;" class="btn btn-outline-secondary btn-sm position-relative" name="submit">
+                          <div class="d-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+                              <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                              <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                            <span  style="font-weight: 500;">
+                              &nbsp;&nbsp;{{entry.bookmarks}}
+                            </span>
+                          </div>
+                         
+                      </button>
+                            
+                        {% endif %}
+                       
+                    </form>
+
+                  </div>
+
+                  <div  id="comments" style="margin-right:0cm">
+                    <a href="{% url 'blogyapp:read' entry.id %}#comments" class="btn btn-outline-secondary btn-sm position-relative" name="submit" style="border: none;">
+                      <div class="d-flex"> 
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                      </svg>
+                        <span style="font-weight: 500;">
+                         &nbsp;&nbsp;{{entry.entry.count}}
+                        </span>
+                      </div>
+                      </a>
+                  </div>
+     
+
+                  <div style="width: 100% !important;" class="container-fluid d-flex justify-content-end" >
+                    <div >
+                     <h6 style="font-size: 0.75rem;cursor:default;padding-left: 0px;"> {{entry.text|safe|readtime}} </h6> 
+                    </div>
+                  </div>
+                
+              </div>
+          
+              <!-- ####################################################################################################### -->
+              </div>
+            
+            </div>
+            
+          </div>
+          {% endif %}
+        {% endfor %}
+
+        {% endif  %}
+
+
+
+
 
       </div>
 
-      <div class="col-md-3 d-none d-md-block">
-        
-        <h6 style="color:#0b145b;font-weight: 700;font-size: 1.08rem;margin-bottom: 15px;"> Who to follow </h6>
+      <div class="col-md-3 d-none d-md-block" style="background-color:#ebebeb;border-radius: 10px;">
+        <div class="container-fluid">
+
+        <h6 style="color:#0b145b;font-weight: 600;font-size: 1.08rem;margin-bottom: 15px;margin-top: 13px;"> Who to follow </h6>
         {% for i in other_users %}
         <div class="d-flex" style="margin-bottom: 15px;">
           <img class="avatar-home" src="{{i.avatar.url}}"> 
@@ -887,7 +1051,8 @@
         {% endfor %}
 
       </div>
-
+          
+    </div>
     </div>
   </div>
 </section>

@@ -20,7 +20,7 @@ from django.db.models import Q
 
 
 def home1(request):
-    print(  "recommeded : ", request.path)
+
     if request.user.is_authenticated:
         
         followings_url = request.path
@@ -165,6 +165,59 @@ def popular(request):
         popular = Entry.objects.order_by("-popularity")
         
         return render(request, 'blogyapp/landing_page.html' , {"popular":popular,"top_authors_details":top_authors_details})
+
+
+
+
+def searched_articles(request):
+
+    if request.user.is_authenticated:
+        search_url = request.path
+        form = request.POST
+        search_text = request.POST.get("search_text")
+        print(search_text)
+        searched_articles = Entry.objects.filter(entry_title__contains = search_text ).order_by("-date_added") 
+        
+        my_profile =Profile.objects.get(name =request.user)  
+        comments = Comments.objects.all()
+        entries = Entry.objects.all().order_by("-date_added")
+    
+        followings = my_profile.following.all()
+        my_guys = Profile.objects.filter(name__in = followings).exclude(Q(name=my_profile.name))[:6]  
+        other_users = Profile.objects.exclude(name__in =followings).exclude(Q(name=my_profile.name))[:6] 
+        
+        
+        context = { "entries":searched_articles,
+                   "followings":followings, 
+                   "my_guys":my_guys ,
+                   "other_users":other_users , 
+                   "my_profile":my_profile,
+                   "comments":comments, 
+                   "recommended_articles":searched_articles,
+                    "search_url":search_url,
+                   }
+        
+        return render(request, 'blogyapp/landing_page.html',context)
+    
+    
+    else:
+            
+        authors = Entry.objects.order_by("-popularity")
+        top_authors = []
+        
+        for i in authors:
+            if i.profile.name not in top_authors:
+                top_authors.append(i.profile.name) 
+        
+        top_authors_details = Profile.objects.filter(name__in=top_authors)[:10]
+
+        popular = Entry.objects.order_by("-popularity")[:4]
+        
+        return render(request, 'blogyapp/landing_page.html' , {"popular":popular,"top_authors_details":top_authors_details})
+
+
+
+
 
 
 def edit_profile(request, profile_id):
@@ -344,48 +397,6 @@ def follow_unfollow(request,profile_id):
         return redirect('blogyapp:profile_detail', profile_id = profile.id)
 
     return render(request , "blogyapp/profile_detail.html" )
-
-
-"""  
-def like_unlike(request, entry_id):
-    current_link = request.path    
-    entry = Entry.objects.get(id = entry_id)
-    profile = Profile.objects.get(name = request.user)
-    
-    liked_articles = profile.liked_articles.all()
-    number_of_likes = entry.likes
-    popularity = entry.popularity
-
-    if request.method == 'POST':
-        
-        if entry in liked_articles:
-            profile.liked_articles.remove(entry)
-            number_of_likes = number_of_likes - 1
-            popularity = popularity - 1
-            entry.popularity = popularity
-            entry.likes = number_of_likes
-            
-            entry.save(update_fields=["likes","popularity"])
-            entry.save()
-            profile.save()
-            
-        else:
-            profile.liked_articles.add(entry)
-            number_of_likes = number_of_likes + 1
-            popularity = popularity + 1
-            entry.popularity = popularity
-            entry.likes = number_of_likes
-            
-            entry.save(update_fields=["likes","popularity"])
-            entry.save()
-            profile.save()
-        
-        if current_link == f"/like_unlike/{entry_id}/" :
-            return redirect('blogyapp:home1')
-        else:
-            return redirect('blogyapp:read', entry_id )
-"""
-
 
 
 def like_unlike(request,entry_id):

@@ -34,7 +34,20 @@
   </style>
   
 {% block content %}
-
+<div class="container-fluid " >
+    <div class="row">
+      <div class="col">
+        <div id="search_bar" style="display: none;margin-top: 10px;" class="card card-body">
+          <form  action="{% url 'blogyapp:searched_articles' %}"   style="margin-right: 15px;" class="d-flex" role="search" method="post">
+            {% csrf_token %}   
+            <input class="form-control  form-control-sm" name = "search_text" type='text' placeholder="Search Articles" aria-label="Search">
+            <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+   
+    </div>
+  </div>
 
 {% if entry.uploaded is True %}
 <br>
@@ -255,9 +268,54 @@
          
             <br>
             
-         <h6 style="margin-bottom: 15px;"><strong>   Comments  ({{comments.count}}) </strong>    </h6> 
+        <div  id="recent_comments" style="margin-bottom: 30px;display: block;">
+         <h6 style="margin-bottom: 20px;"><strong>   Comments  ({{comments.count}}) </strong>    </h6> 
            
             {% for c in comments%}
+                {% if forloop.counter < 5 %}
+                
+                <div class="comments card card-body" style="margin-bottom: 10px !important;"> 
+
+                    <div class="d-flex " style="margin-bottom: 2px !important;">
+                        <img class="avatar-home" src="{{entry.profile.avatar.url}}"> 
+            
+                        <span style="font-size: 0.9rem;margin-left: 5px;"> 
+                        
+                            <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.83rem;color: rgb(53, 53, 53);font-weight: 600;" >{{entry.profile.name.get_full_name}}  <span style="color: gray;margin: 0px 3px 0px 3px"> &bull; </span>  <span style="font-weight: 400;font-size:0.75rem;color:gray"> {{c.date_created|date:"d M Y"}}</span> </h6>
+                            
+                            <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.73rem;color: rgb(109, 108, 108);"> @{{entry.profile.name}} </h6> 
+                          
+                        </span>
+                 
+                    </div>
+                
+                    <p style="font-size: 0.9rem;color:rgb(73, 73, 73);margin:0cm;"> {{c.comment}}</p>
+                </div>
+                {% endif %}
+                 {% empty %}
+                <center>
+                    <img style="width: 45%;" class="img-fluid" src="{% static 'blogyapp/images/undraw_no_data_re_kwbl.svg' %}" alt="">
+                    <br>
+
+                </center>
+                
+            {% endfor %}
+
+                <div class="container">
+                    <div class="row">
+                        <button onclick="comment_section()" class="btn btn-secondary btn-sm"> See All Comments </button>
+                    </div>
+                </div>
+             
+
+
+        </div>
+           
+
+        <div id="all_comments" style="margin-bottom: 30px;display: none;">
+            <h6 style="margin-bottom: 20px;"><strong>   Comments  ({{comments.count}}) </strong>    </h6> 
+           
+            {% for c in comments %}
                 
                 
                 <div class="comments card card-body" style="margin-bottom: 10px !important;"> 
@@ -277,58 +335,78 @@
                 
                     <p style="font-size: 0.9rem;color:rgb(73, 73, 73);margin:0cm;"> {{c.comment}}</p>
                 </div>
-            
-   
+            {% empty %}
+                <center>
+                    <img style="width: 45%;" class="img-fluid" src="{% static 'blogyapp/images/undraw_no_data_re_kwbl.svg' %}" alt="">
+                    <br>
+
+                </center>
             {% endfor %}
 
-           
+                {% if comments.count > 7 %}
+                <div class="container">
+                    <div class="row">
+                        <button onclick="comment_section()" class="btn btn-secondary btn-sm"> See recent Comments </button>
+                    </div>
+                </div>
+                {% endif %}
+
+
+
+
+        </div>
+
+
+
             </section>
 
         </div>
        
         <div class="col-md-5 col-lg-4 ">  
 
-        <div style="  background-color: #96969620;height: 100%;">
-
+        <div style="  background-color: #f2f2f2;height: 100%;">
             <div class="position-relative" style="background-color:#004d84;height: 1.4cm;border-radius: 10px 10px 0px 0px;">
+        
                 <div class="d-flex " style="margin-bottom: 5px;padding-top: 38px;padding-left: 20px;">
                     <img class="avatar-read" src="{{entry.profile.avatar.url}}"> 
         
-                    <span style="font-size: 0.9rem;font-weight: 600;margin-left: 5px;padding-top:20px;"> 
+                    <span style="margin-left: 5px;padding-top:20px;"> 
                     
                         <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 1rem;color: rgb(44, 44, 44);font-weight: 600;" >{{entry.profile.name.get_full_name}}</h6>
                         <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.85rem;color: rgb(109, 108, 108);"> @{{entry.profile.name}} </h6> 
-                      
-                    </span>
-             
-                </div>
-              
-            </div>   
-            
-            <div class="d-flex justify-content-end " > 
-                <div class="d-none d-sm-block " style="padding-top: 0.2cm;margin-right: 20px;" >
-                    <form action="{% url 'blogyapp:follow_unfollow' entry.profile.id %}" method='post'>
-                        {% csrf_token %}
-                        {% if entry.profile.name in followings %}
-                        
-                        <button href="#" class="btn btn-outline-danger btn-sm " name="submit" >Unsubscribe</button>
-    
-                        {% elif request.user == entry.profile.name %}
-                        <a href="{% url 'blogyapp:edit_profile' entry.profile.id %}" class="btn btn-outline-primary btn-sm"> Edit Profile </a>
-    
-                        {% else %}
-                        <button href="#" class="btn btn-outline-primary btn-sm" name="submit">Subscribe</button>
                     
-                        {% endif %}
-                        <br>
-                        <br>
-                    </form>
-                    <a href="{% url 'blogyapp:edit_profile' entry.profile.id %}" class="btn btn-outline-primary btn-sm"> Edit Profile </a>
+                    </span>
+            
                 </div>
-           
-                <br>
+        
             </div> 
-  
+
+       
+                <div class="d-flex justify-content-end " > 
+                
+                    <div class="d-none d-sm-block " style="padding-top: 35px;margin-right: 20px;" >
+                       
+                        <form action="{% url 'blogyapp:follow_unfollow' entry.profile.id %}" method='post'>
+                            {% csrf_token %}
+                            {% if entry.profile.name in followings %}
+                            
+                            <a href="#" class="btn btn-outline-danger btn-sm " name="submit" >Unsubscribe</a>
+        
+                            {% elif request.user == entry.profile.name %}
+                            <a href="{% url 'blogyapp:edit_profile' entry.profile.id %}" class="btn btn-outline-primary btn-sm"> Edit Profile </a>
+        
+                            {% else %}
+                            <a href="#" class="btn btn-outline-primary btn-sm" name="submit">Subscribe</a>
+                        
+                            {% endif %}
+                            <br>
+                            <br>
+                        </form>
+                    </div>
+               
+                    <br>
+                </div> 
+
             <center>
             <div class="d-block d-sm-none" style="padding-top: 65px;">
                 <form action="{% url 'blogyapp:follow_unfollow' entry.profile.id %}" method='post'>
@@ -382,10 +460,10 @@
 
 </div>
 
-<footer class="fixed-bottom d-block d-lg-none " style="background-color:#ffffff;height: 50px;">
-    <br>
+<footer class="fixed-bottom d-block d-lg-none" style="background-color:#ffffff;height: 60px;box-shadow: 0 0 6px gray;">
+
     <div class="d-flex justify-content-center text-align-center">
-        <div class="row">
+        <div class="row" style="margin-top: 13px;">
             <div class="col-4">
                 <div class="like" style="margin-right:0.3cm"> 
                  
@@ -478,19 +556,45 @@
                       </a>
                   </div>
             </div>
+        
         </div>
+    
     </div>
-    <br>
+
 </footer>
 
 {% else %}
 <center>
     <br>
       <img style="width: 45%;" class="img-fluid" src="{% static 'blogyapp/images/undraw_no_data_re_kwbl.svg' %}" alt="">
-      <br>
+      <br> <br>
       <h3> <strong> Entry Not Yet Published</strong></h3>
   </center>
 {% endif %}
+
+<script>
+
+    function comment_section(){
+        let recent_comments = document.getElementById("recent_comments") ;
+        let all_comments = document.getElementById("all_comments") ;
+
+        if (recent_comments.style.display =="block" ){
+            recent_comments.style.display = "none";
+            all_comments.style.display = "block";
+        } else{
+            recent_comments.style.display = "block";
+            all_comments.style.display = "none";
+
+        }
+
+    }
+
+
+
+
+</script>
+
+
 
 {% endblock %}
 
