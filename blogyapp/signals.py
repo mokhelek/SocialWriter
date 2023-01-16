@@ -8,7 +8,7 @@ def comment_notification(sender, instance, created, **kwargs):
 
 	if created:
 		Notification.objects.create( 
-            profile = instance.profile ,     
+            reactor_profile = instance.profile ,     
             entry = instance.entry,            
 			message= instance.comment,
 	
@@ -18,14 +18,14 @@ post_save.connect(comment_notification, sender=Comments )
 
 def delete_like_notification(sender, instance, **kwargs):
     
-    Notification.objects.filter(profile = instance.profile , entry = instance.entry ).delete()
+    Notification.objects.filter(reactor_profile = instance.profile , entry = instance.entry ).delete()
        
 post_delete.connect(delete_like_notification, sender=Like )
 
 
 def delete_bookmark_notification(sender, instance, **kwargs):
     
-    Notification.objects.filter(profile = instance.profile , entry = instance.entry ).delete()
+    Notification.objects.filter(reactor_profile = instance.profile , entry = instance.entry ).delete()
        
 post_delete.connect(delete_bookmark_notification, sender=Bookmark )
 
@@ -35,9 +35,9 @@ post_delete.connect(delete_bookmark_notification, sender=Bookmark )
 def like_notification(sender, instance, created,*args, **kwargs):
     if created :
         Notification.objects.create( 
-                                profile = instance.profile,
+                                reactor_profile = instance.profile,
                                 entry = instance.entry ,
-                                message = " liked your article -- test"
+                                message =  f"{instance.profile} liked your article "
                                     )
         
 
@@ -46,9 +46,9 @@ post_save.connect(like_notification, sender=Like )
 def bookmark_notification(sender, instance, created,*args, **kwargs):
     if created :
         Notification.objects.create( 
-                                profile = instance.profile,
+                                reactor_profile = instance.profile,
                                 entry = instance.entry ,
-                                message = " bookmarked your article -- test"
+                                message = f"{instance.profile} bookmarked your article "
                                     )
         
 
@@ -56,15 +56,33 @@ post_save.connect(bookmark_notification, sender=Bookmark )
 
 
 
-def following_notification(sender, instance, action,*args, **kwargs):
-    print("following signal : ",instance)
+def following_notification(sender, instance, action,pk_set ,*args, **kwargs):
+
     if action == "post_add":
+        user_id = []
+        for i in pk_set:
+            user_id.append(i)
+   
+        print( instance.following.get(id = user_id[0] ) )
+        profiles = Profile.objects.get(name = instance.following.get(id = user_id[0] ) )
         Notification.objects.create( 
-                                profile = instance,
+                                reactor_profile = instance, # the follower
                                 message = f"{instance} started following you" ,
+                                profile = profiles ,  # the  followed
                                     )
-    if action == "post_remove":
-       Notification.objects.filter(message = f"{instance} started following you").delete()
+    if action == "pre_remove":
+ 
+        user_id = []
+        for i in pk_set:
+            user_id.append(i)
+
+        print(user_id[0])
+      
+        profiles = Profile.objects.get(name = instance.following.get(id = user_id[0] ) )
+        
+        Notification.objects.filter(profile = profiles , reactor_profile = instance ).delete()
+
+            
 
 m2m_changed.connect(following_notification, sender=Profile.following.through )
 

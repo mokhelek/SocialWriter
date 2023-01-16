@@ -42,14 +42,16 @@ class Comments(models.Model):
 
     
 class Notification(models.Model):
-     profile = models.ForeignKey(Profile,on_delete=models.CASCADE, null=True)
+     profile = models.ForeignKey(Profile,on_delete=models.CASCADE,null=True,blank=True)
+     reactor_profile = models.ForeignKey(Profile,on_delete=models.CASCADE, null=True,blank=True,related_name="reactor_profile" )
+
      entry = models.ForeignKey(Entry, on_delete=models.CASCADE ,null=True,blank=True) 
      message = models.TextField()
      date_created = models.DateTimeField(auto_now_add=True,null=True,blank=True)
      notification_viewed = models.BooleanField(default=False)
      
      def __str__(self):
-         return  f'{self.profile} commented ' 
+         return  self.message
      
      
 class Like(models.Model):

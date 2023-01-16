@@ -1,0 +1,230 @@
+{% extends 'blogyapp/base.html' %}
+
+<head>
+  {% load bootstrap5 %}
+  {% load static %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  {% load read-time %}
+</head>
+
+
+
+{% block content %}
+
+
+<div class="container-fluid " >
+    <div class="row">
+      <div class="col">
+        <div id="search_bar" style="display: none;margin-top: 10px;" class="card card-body">
+          <form  action="{% url 'blogyapp:searched_articles' %}"   style="margin-right: 15px;" class="d-flex" role="search" method="post">
+            {% csrf_token %}   
+            <input class="form-control  form-control-sm" name = "search_text" type='text' placeholder="Search Articles" aria-label="Search">
+            <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+   
+    </div>
+</div>
+
+
+
+<div class="container-fluid" style="width: 100%;">
+<br>
+    <div class="row">
+
+      <div class="col-md-3 d-none d-md-block ">
+        <div class="card card-body">
+          
+            <div class="d-flex " style="margin-bottom: 5px;">
+              <img class="avatar-home" src="{{my_profile.avatar.url}}"> 
+  
+              <span style="font-size: 0.9rem;font-weight: 600;margin-left: 5px;"> 
+                <a href="{% url 'blogyapp:profile_detail' my_profile.id %}">
+                  <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.9rem;" >{{my_profile.name.get_full_name}}</h6>
+                  <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.85rem;color: rgb(128, 127, 127);"> @{{my_profile.name}} </h6> 
+                </a>
+                
+              </span>
+       
+          </div>
+
+          <div class="" style="width: 100%;font-size:0.85rem;margin:0cm">
+
+              <p style="margin: 0cm;color: rgb(86, 86, 86);">{{my_profile.bio}}</p>
+          </div>
+     
+        </div>
+
+        <br>
+
+        <div style="margin-left: 20px;">
+
+          <h5 style="font-size:1.1rem;margin-bottom: 20px;">
+            <a style="text-decoration: none; " href="{% url 'blogyapp:home1' %}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+              </svg> &nbsp; Home
+            </a>
+        </h5>
+        
+        <h5 style="font-size:1.1rem;margin-bottom: 20px;">
+          <a href="{% url 'blogyapp:user_entries' %}" style="text-decoration:none">  
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-journals" viewBox="0 0 16 16">
+            <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z"/>
+            <path d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z"/>
+          </svg> &nbsp; Articles
+        </a>
+        </h5>
+
+        <h5 style="font-size:1.1rem;margin-bottom: 20px;">
+          <a href="{% url 'blogyapp:dashboard' %}" style="text-decoration: none;">  
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-speedometer2" viewBox="0 0 16 16">
+            <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4zM3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.389.389 0 0 0-.029-.518z"/>
+            <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A7.988 7.988 0 0 1 0 10zm8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3z"/>
+          </svg> &nbsp; Dashboard
+          </a>
+        </h5>
+
+        
+        
+        <h5 style="font-size:1.1rem;margin-bottom: 20px;">
+          <a href="{% url 'blogyapp:my_bookmarks' my_profile.id %}" style="text-decoration: none;">  
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+            <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
+          </svg> &nbsp; Bookmarks
+          </a>
+        </h5>
+
+        <a href="{% url 'users:logout'  %}" class="btn btn-outline-secondary btn-sm" style="text-decoration: none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+            <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+          </svg> &nbsp; Sign Out
+        </a>
+     
+      </div>
+
+      </div>
+    
+
+    <div  class="col-md-6"  >
+    
+
+            {% for i in notifications  %}
+
+                <div style="margin-bottom:15px ;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill text-danger" viewBox="0 0 16 16">                                
+                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                  </svg> 
+                  &nbsp;&nbsp;
+                  <span class="rounded-pill" style="background-color: #ff03031e;">
+                    <span style="margin: 15px;"> 
+                      {{i.message}}
+                    </span>
+                   
+                  
+                  </span>
+
+                </div>
+       
+                <a class="d-flex"  style="text-decoration: none;" href="{% url 'blogyapp:profile_detail' i.reactor_profile.id %}">
+                  <img class="avatar-home" src="{{i.reactor_profile.avatar.url}}">
+                   <span style="color: rgb(38, 38, 38);margin-left: 10px;">
+                      @{{i.reactor_profile.name}} 
+                      <h6 style="color: gray;font-size: 0.8rem;"> {{i.date_created|date:"d M Y"}}</h6>
+                     </span> 
+                </a>
+
+                <div style="margin-left: 50px;margin-right: 10px" >
+                  <a href="{% url 'blogyapp:read' i.entry.id %}" style="font-size: 1.1rem;">
+                    {{i.entry.entry_title}}
+                  </a>
+                </div>
+              
+                <hr>
+             
+
+
+
+
+               {% empty %}
+
+
+
+               <center>
+                <br>
+                  <img style="width: 45%;" class="img-fluid" src="{% static 'blogyapp/images/undraw_void_-3-ggu.svg' %}" alt="">
+                  <br> <br><br>
+                  <h4> No notifications  </h4>
+              </center>
+            {% endfor %}
+    </div>
+
+
+      <div class="col-md-3 d-none d-md-block" style="background-color:#ebebeb;border-radius: 10px;">
+        <div class="container-fluid">
+
+        <h6 style="color:#0b145b;font-weight: 600;font-size: 1.08rem;margin-bottom: 15px;margin-top: 13px;"> Who to follow </h6>
+        {% for i in other_users %}
+        <div class="d-flex" style="margin-bottom: 15px;">
+          <img class="avatar-home" src="{{i.avatar.url}}"> 
+
+          <div style="font-size: 0.9rem;font-weight: 700;margin-left: 10px;"> 
+            <a style="text-decoration: none;" href="{% url 'blogyapp:profile_detail' i.id %}"> <h6 style="margin-bottom: 0cm;"> @{{i.name}}   </h6>  </a> 
+           <h6 style="margin-top:0cm;font-weight: 400;font-size: 0.80rem;color: rgb(108, 108, 108);">  {{i.bio|truncatechars:80}} </h6>
+          </div>
+          
+        </div>
+
+        {% empty %}
+        <center>
+          <br>
+            <img style="width: 45%;" class="img-fluid" src="{% static 'blogyapp/images/undraw_no_data_re_kwbl.svg' %}" alt="">
+        </center>
+        {% endfor %}
+    
+        <h6 style="color:#0b145b;font-weight: 700;font-size: 1.08rem;margin-bottom: 15px;"> Following </h6>
+        {% for i in my_guys %}
+        <div class="d-flex" style="margin-bottom: 15px;">
+          <img class="avatar-home" src="{{i.avatar.url}}"> 
+
+          <div style="font-size: 0.9rem;font-weight: 600;margin-left: 10px;"> 
+            <a style="text-decoration: none;" href="{% url 'blogyapp:profile_detail' i.id %}"> <h6 style="margin-bottom: 0cm;"> @{{i.name}}   </h6>  </a> 
+           <h6 style="margin-top:0cm;font-weight: 400;font-size: 0.80rem;color: rgb(108, 108, 108);">  {{i.bio|truncatechars:80}} </h6>
+          </div>
+          
+        </div>
+        {% empty %}
+        <center>
+          <br>
+            <img style="width: 45%;" class="img-fluid" src="{% static 'blogyapp/images/undraw_no_data_re_kwbl.svg' %}" alt="">
+            <h6 style="color:#454545;font-weight: 700;font-size: 1.1rem;"> You are not following anyone </h6>
+        </center>
+        {% endfor %}
+
+      </div>
+          
+    </div>
+
+    
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+{% endblock content %}

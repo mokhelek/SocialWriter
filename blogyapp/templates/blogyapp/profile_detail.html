@@ -127,25 +127,98 @@
 
             </div>
 
-            <div class="card card-body d-none d-md-block" style="box-shadow: 0 0 6px rgb(198, 197, 197);border-radius: 12px !important;">
+            <div class="d-none d-md-block">
             
 
-               <h5 style="margin-bottom: 14px;"><strong>Recent comments</strong> </h5> 
-              
-                {% for comment in profile_comments %}
-                <div style="margin-bottom: 7px; background-color: rgba(230, 230, 230, 0.449);">
-                    <h6 class="card-body" style="font-size: 0.95rem;color:rgb(60, 60, 60);"> {{comment.comment}} </h6> 
-                </div>
-                {% empty %}
-                <div class="card-body" style="margin-bottom: 7px; background-color: rgb(230, 230, 230);">
-                    <h6 style="font-size: 0.95rem;color:rgb(60, 60, 60);">No comments yet </h6>
-                </div>
-                    
-
-                {% endfor %}
+              <div  id="recent_comments" style="margin-bottom: 30px;display: block;">
+                <h6 style="margin-bottom: 20px;"><strong>   Comments  ({{profile_comments.count}}) </strong>    </h6> 
+                  
+                   {% for c in profile_comments %}
+                       {% if forloop.counter < 11 %}
+                       
+                       <div class="comments card card-body" style="margin-bottom: 10px !important;"> 
+       
+                           <div class="d-flex " style="margin-bottom: 2px !important;">
+                               <img class="avatar-home" src="{{c.profile.avatar.url}}"> 
+                   
+                               <span style="font-size: 0.9rem;margin-left: 5px;"> 
+                               
+                                   <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.83rem;color: rgb(53, 53, 53);font-weight: 600;" >{{c.profile.name.get_full_name}}  <span style="color: gray;margin: 0px 3px 0px 3px"> &bull; </span>  <span style="font-weight: 400;font-size:0.75rem;color:gray"> {{c.date_created|date:"d M Y"}}</span> </h6>
+                                   
+                                   <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.73rem;color: rgb(109, 108, 108);"> @{{c.profile.name}} </h6> 
+                                 
+                               </span>
+                        
+                           </div>
+                       
+                           <p style="font-size: 0.9rem;color:rgb(73, 73, 73);margin:0cm;"> {{c.comment}}</p>
+                       </div>
+                       {% endif %}
+                        {% empty %}
+                       <center>
+                           <img style="width: 45%;" class="img-fluid" src="{% static 'blogyapp/images/undraw_no_data_re_kwbl.svg' %}" alt="">
+                           <br>
+       
+                       </center>
+                       
+                   {% endfor %}
+                   {% if profile_comments.count > 10 %}
+                       <div class="container">
+                           <div class="row">
+                               <button onclick="comment_section()" class="btn btn-secondary btn-sm"> See All Comments </button>
+                           </div>
+                       </div>
+                    {% endif %}
+       
+       
+               </div>
+                  
+       
+               <div id="all_comments" style="margin-bottom: 30px;display: none;">
+                   <h6 style="margin-bottom: 20px;"><strong>   Comments  ({{profile_comments.count}}) </strong>    </h6> 
+                  
+                   {% for c in profile_comments %}
+                       
+                       
+                       <div class="comments card card-body" style="margin-bottom: 10px !important;"> 
+       
+                           <div class="d-flex " style="margin-bottom: 2px !important;">
+                               <img class="avatar-home" src="{{c.profile.avatar.url}}"> 
+                   
+                               <span style="font-size: 0.9rem;margin-left: 5px;"> 
+                               
+                                   <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.83rem;color: rgb(53, 53, 53);font-weight: 600;" >{{c.profile.name.get_full_name}}  <span style="color: gray;margin: 0px 3px 0px 3px"> &bull; </span>  <span style="font-weight: 400;font-size:0.75rem;color:gray"> {{c.date_created|date:"d M Y"}}</span> </h6>
+                                   
+                                   <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.73rem;color: rgb(109, 108, 108);"> @{{c.profile.name}} </h6> 
+                                 
+                               </span>
+                        
+                           </div>
+                       
+                           <p style="font-size: 0.9rem;color:rgb(73, 73, 73);margin:0cm;"> {{c.comment}}</p>
+                       </div>
+                   {% empty %}
+                       <center>
+                           <img style="width: 45%;" class="img-fluid" src="{% static 'blogyapp/images/undraw_no_data_re_kwbl.svg' %}" alt="">
+                           <br>
+       
+                       </center>
+                   {% endfor %}
+       
+                       {% if profile_comments.count > 10 %}
+                       <div class="container">
+                           <div class="row">
+                               <button onclick="comment_section()" class="btn btn-secondary btn-sm"> See recent Comments </button>
+                           </div>
+                       </div>
+                       {% endif %}
+       
+       
+       
+       
+               </div>
+       
             </div>
-
-
 
         </div>
 
@@ -185,7 +258,7 @@
 
             {% for entry in profile_posts %}
             {% if entry.uploaded == True %}
-            <div class="card " style="margin-bottom: 10px;">
+            <div id="{{entry.id}}" class="card " style="margin-bottom: 10px;">
               {% if forloop.counter == 1 or forloop.counter == 5 or forloop.counter == 15 %}
                 <img style="width: 100%;height: 270px;" class="card-img-top" src="{{entry.thumbnail.url}}" alt="">
               {% endif %}
@@ -222,7 +295,7 @@
                         <form class="d-flex " action="{% url 'blogyapp:like_unlike' entry.id %}" method='post'>
                             {% csrf_token %}
         
-                            {% if entry in entry.profile.liked_articles.all %}
+                            {% if entry in my_profile.liked_articles.all %}
                        
                             <button  class="btn btn-outline-danger btn-sm position-relative" name="submit" style="border: none;" >
                               <div class="d-flex">
@@ -258,8 +331,8 @@
                       <form action="{% url 'blogyapp:bookmark' entry.id %}" method='post'>
                           {% csrf_token %}
       
-                          {% if entry in entry.profile.bookmarked_articles.all %}
-                          <button class="btn btn-outline-warning btn-sm position-relative" name="submit" style="border: none;">
+                          {% if entry in my_profile.bookmarked_articles.all %}
+                          <button class="btn btn-outline-success btn-sm position-relative" name="submit" style="border: none;">
                             <div class="d-flex">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>

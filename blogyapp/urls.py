@@ -7,10 +7,10 @@ urlpatterns = [
     path("following/",views.following,name='following'),
     path("popular/",views.popular,name='popular'),
     path("search/",views.searched_articles,name='searched_articles'),
-     
+    path("notifications/", views.notifications , name = "notifications" ),
 
     path('new_entry/<int:profile_id>/', views.new_entry, name='new_entry'),
-    path('edit_entry/<int:entry_id>/', views.edit_entry, name='edit_entry'), # does entry have an id??
+    path('edit_entry/<int:entry_id>/', views.edit_entry, name='edit_entry'), 
     path('edit_profile/<int:profile_id>/', views.edit_profile, name="edit_profile"),
 
     path('read/<int:read_id>/',views.read, name = "read"),

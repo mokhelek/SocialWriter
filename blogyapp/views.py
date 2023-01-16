@@ -3,7 +3,7 @@ from xml.etree.ElementTree import Comment
 from django.shortcuts import render, redirect
 
 from django.contrib.auth.models import User 
-from .models import  Entry , Comments , Like ,Bookmark
+from .models import  Entry , Comments , Like ,Bookmark, Notification
 
 from django.contrib.admin.models import LogEntry 
 from .forms import EntryForm , CommentsForm , ProfileForm
@@ -166,9 +166,6 @@ def popular(request):
         
         return render(request, 'blogyapp/landing_page.html' , {"popular":popular,"top_authors_details":top_authors_details})
 
-
-
-
 def searched_articles(request):
 
     if request.user.is_authenticated:
@@ -214,10 +211,6 @@ def searched_articles(request):
         popular = Entry.objects.order_by("-popularity")[:4]
         
         return render(request, 'blogyapp/landing_page.html' , {"popular":popular,"top_authors_details":top_authors_details})
-
-
-
-
 
 
 def edit_profile(request, profile_id):
@@ -366,6 +359,7 @@ def profile_detail(request,profile_id):
               "followings":followings,
               "profile_posts":profile_posts,
               "profile_comments":profile_comments,
+              "my_profile":my_profile,
               }
     return render(request , "blogyapp/profile_detail.html" , context )
 
@@ -374,6 +368,7 @@ def follow_unfollow(request,profile_id):
     followers = profile.followers
     
     if request.method == 'POST':
+        
         my_profile =Profile.objects.get(name =request.user)  
         followings = my_profile.following.all()
         
@@ -566,3 +561,32 @@ def dashboard(request):
              "profile_comments":profile_comments,
               }
     return render (request , "blogyapp/dashboard.html",context )
+
+
+def notifications(request):
+
+    my_profile =Profile.objects.get(name =request.user)  
+    notifications = Notification.objects.filter( Q(entry__profile__name = request.user) | Q(profile__name = request.user) ).order_by("-date_created")
+    
+    array_of_words = []
+ 
+    for i in notifications :
+        x=i.message.split(" ") 
+        array_of_words.append(x)
+    print(array_of_words)
+    followings = my_profile.following.all()
+    my_guys = Profile.objects.filter(name__in = followings).exclude(Q(name=my_profile.name))[:6]  
+    other_users = Profile.objects.exclude(name__in =followings).exclude(Q(name=my_profile.name))[:6] 
+    
+    
+    context = { 
+                "followings":followings, 
+                "my_guys":my_guys ,
+                "other_users":other_users , 
+                "my_profile":my_profile,
+                "notifications":notifications ,
+
+                }
+        
+    
+    return render (request , "blogyapp/notifications.html", context)

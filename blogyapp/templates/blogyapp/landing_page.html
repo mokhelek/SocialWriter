@@ -415,8 +415,9 @@
       </div>
     
 
+      
       <div class="col-md-6" >
-        
+     
         {% if request.path == following  %}
         <div class="d-flex" style="margin-top: 4px;margin-bottom:4px"  >
           <a href="{% url 'blogyapp:home1'  %}" style="margin: 6px 23px 8px 0px;font-size:0.96rem  ;color: rgb(97, 96, 96);" > Recommended </a>  <a href="{% url 'blogyapp:following'  %}" style="margin: 6px 23px 8px 0px;font-weight: 600;"> Following </a>  <a href="{% url 'blogyapp:popular'  %}" style="margin: 6px 23px 8px 0px;font-size: 0.97rem;color: rgb(97, 96, 96);">Popular</a>
@@ -497,7 +498,7 @@
                         {% csrf_token %}
     
                         {% if entry in my_profile.bookmarked_articles.all %}
-                        <button class="btn btn-outline-warning btn-sm position-relative" name="submit" style="border: none;">
+                        <button class="btn btn-outline-success btn-sm position-relative" name="submit" style="border: none;">
                           <div class="d-flex">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
                               <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
@@ -557,6 +558,15 @@
             
           </div>
           {% endif %}
+
+        {% empty %}
+
+        <center>
+          <br>
+            <img style="width: 45%;" class="img-fluid" src="{% static 'blogyapp/images/undraw_void_-3-ggu.svg' %}" alt="">
+            <br> <br><br>
+            <h4> Feed Empty, follow others to see posts   </h4>
+        </center>
         {% endfor %}
 
         {% endif  %}
@@ -645,7 +655,7 @@
                         {% csrf_token %}
     
                         {% if entry in my_profile.bookmarked_articles.all %}
-                        <button class="btn btn-outline-warning btn-sm position-relative" name="submit" style="border: none;">
+                        <button class="btn btn-outline-success btn-sm position-relative" name="submit" style="border: none;">
                           <div class="d-flex">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
                               <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
@@ -705,6 +715,14 @@
             
           </div>
           {% endif %}
+          {% empty %}
+          <center>
+            <br>
+              <img style="width: 45%;" class="img-fluid" src="{% static 'blogyapp/images/undraw_void_-3-ggu.svg' %}" alt="">
+              <br> <br><br>
+              <h4> Feed Empty, no recommendations yet   </h4>
+          </center>
+    
         {% endfor %}
 
         {% endif  %}
@@ -790,7 +808,7 @@
                         {% csrf_token %}
     
                         {% if entry in my_profile.bookmarked_articles.all %}
-                        <button class="btn btn-outline-warning btn-sm position-relative" name="submit" style="border: none;">
+                        <button class="btn btn-outline-success btn-sm position-relative" name="submit" style="border: none;">
                           <div class="d-flex">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
                               <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
@@ -850,6 +868,13 @@
             
           </div>
           {% endif %}
+          {% empty %}
+          <center>
+            <br>
+              <img style="width: 45%;" class="img-fluid" src="{% static 'blogyapp/images/undraw_void_-3-ggu.svg' %}" alt="">
+              <br> <br><br>
+              <h4> Feed Empty, no popular post's yet   </h4>
+          </center>
         {% endfor %}
 
         {% endif  %}
@@ -939,7 +964,7 @@
                         {% csrf_token %}
     
                         {% if entry in my_profile.bookmarked_articles.all %}
-                        <button class="btn btn-outline-warning btn-sm position-relative" name="submit" style="border: none;">
+                        <button class="btn btn-outline-success btn-sm position-relative" name="submit" style="border: none;">
                           <div class="d-flex">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
                               <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
@@ -1008,6 +1033,7 @@
 
 
       </div>
+
 
       <div class="col-md-3 d-none d-md-block" style="background-color:#ebebeb;border-radius: 10px;">
         <div class="container-fluid">

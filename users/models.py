@@ -22,6 +22,10 @@ class Profile(models.Model):
     linkedin_link = models.URLField(blank=True, null=True)
     personal_link = models.URLField(blank=True, null=True)
     
+    class Meta:
+     
+        ordering = ["-date_created"]
+    
     def profiles_posts(self):
         return self.entry_set.all()
  

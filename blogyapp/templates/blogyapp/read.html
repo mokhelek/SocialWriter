@@ -300,13 +300,13 @@
                 </center>
                 
             {% endfor %}
-
+            {% if comments.count > 4 %}
                 <div class="container">
                     <div class="row">
                         <button onclick="comment_section()" class="btn btn-secondary btn-sm"> See All Comments </button>
                     </div>
                 </div>
-             
+             {% endif %}
 
 
         </div>
@@ -343,7 +343,7 @@
                 </center>
             {% endfor %}
 
-                {% if comments.count > 7 %}
+                {% if comments.count > 4 %}
                 <div class="container">
                     <div class="row">
                         <button onclick="comment_section()" class="btn btn-secondary btn-sm"> See recent Comments </button>
@@ -356,9 +356,6 @@
 
         </div>
 
-
-
-            </section>
 
         </div>
        
@@ -460,10 +457,10 @@
 
 </div>
 
-<footer class="fixed-bottom d-block d-lg-none" style="background-color:#ffffff;height: 60px;box-shadow: 0 0 6px gray;">
+<footer class="fixed-bottom d-block d-lg-none" style="background-color:#ffffff;height: 65px;box-shadow: 0 0 6px gray;">
 
     <div class="d-flex justify-content-center text-align-center">
-        <div class="row" style="margin-top: 13px;">
+        <div class="row" style="margin-top: 15px;">
             <div class="col-4">
                 <div class="like" style="margin-right:0.3cm"> 
                  
@@ -474,7 +471,7 @@
                    
                         <button  class="btn btn-outline-danger btn-sm position-relative" name="submit" style="border: none;" >
                           <div class="d-flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">                                
+                            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">                                
                                 <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                               </svg> 
                               <span style="font-weight: 500;">
@@ -486,7 +483,7 @@
 
                         <button style= "color: #051622;border: none;" class="btn btn-outline-secondary btn-sm position-relative" name="submit">
                           <div class="d-flex">  
-                             <svg name="submit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                             <svg name="submit" xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
                             <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
                             </svg> 
                         
@@ -509,9 +506,9 @@
                         {% csrf_token %}
     
                         {% if entry in entry.profile.bookmarked_articles.all %}
-                        <button class="btn btn-outline-warning btn-sm position-relative" name="submit" style="border: none;">
+                        <button class="btn btn-outline-success btn-sm position-relative" name="submit" style="border: none;">
                           <div class="d-flex">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
                               <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
                           </svg> 
                             <span style="font-weight: 500;">
@@ -523,7 +520,7 @@
                         {% else %}
                         <button style= "color: #051622;border: none;" class="btn btn-outline-secondary btn-sm position-relative" name="submit">
                           <div class="d-flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
                               <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
                               <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
                             </svg>
@@ -546,7 +543,7 @@
                 <div  id="comments" style="margin-right:0cm">
                     <a href="{% url 'blogyapp:read' entry.id %}#comments" class="btn btn-outline-secondary btn-sm position-relative" name="submit" style="border: none;">
                       <div class="d-flex"> 
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chat-square" viewBox="0 0 16 16">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-chat-square" viewBox="0 0 16 16">
                         <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                       </svg>
                         <span style="font-weight: 500;">
@@ -572,27 +569,6 @@
   </center>
 {% endif %}
 
-<script>
-
-    function comment_section(){
-        let recent_comments = document.getElementById("recent_comments") ;
-        let all_comments = document.getElementById("all_comments") ;
-
-        if (recent_comments.style.display =="block" ){
-            recent_comments.style.display = "none";
-            all_comments.style.display = "block";
-        } else{
-            recent_comments.style.display = "block";
-            all_comments.style.display = "none";
-
-        }
-
-    }
-
-
-
-
-</script>
 
 
 
