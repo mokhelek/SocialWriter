@@ -48,6 +48,7 @@ class Notification(models.Model):
      entry = models.ForeignKey(Entry, on_delete=models.CASCADE ,null=True,blank=True) 
      message = models.TextField()
      date_created = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+     type = models.CharField(max_length=50 , default="like")
      notification_viewed = models.BooleanField(default=False)
      
      def __str__(self):

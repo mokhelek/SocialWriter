@@ -11,7 +11,7 @@ def comment_notification(sender, instance, created, **kwargs):
             reactor_profile = instance.profile ,     
             entry = instance.entry,            
 			message= instance.comment,
-	
+            type = "comment",
 			)
 post_save.connect(comment_notification, sender=Comments )
 
@@ -37,7 +37,8 @@ def like_notification(sender, instance, created,*args, **kwargs):
         Notification.objects.create( 
                                 reactor_profile = instance.profile,
                                 entry = instance.entry ,
-                                message =  f"{instance.profile} liked your article "
+                                message =  f"{instance.profile} liked your article ",
+                                type = "like",
                                     )
         
 
@@ -48,7 +49,8 @@ def bookmark_notification(sender, instance, created,*args, **kwargs):
         Notification.objects.create( 
                                 reactor_profile = instance.profile,
                                 entry = instance.entry ,
-                                message = f"{instance.profile} bookmarked your article "
+                                message = f"{instance.profile} bookmarked your article ",
+                                type = "bookmark"
                                     )
         
 
@@ -69,6 +71,7 @@ def following_notification(sender, instance, action,pk_set ,*args, **kwargs):
                                 reactor_profile = instance, # the follower
                                 message = f"{instance} started following you" ,
                                 profile = profiles ,  # the  followed
+                                type = "follow"
                                     )
     if action == "pre_remove":
  

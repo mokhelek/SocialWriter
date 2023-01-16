@@ -568,12 +568,7 @@ def notifications(request):
     my_profile =Profile.objects.get(name =request.user)  
     notifications = Notification.objects.filter( Q(entry__profile__name = request.user) | Q(profile__name = request.user) ).order_by("-date_created")
     
-    array_of_words = []
- 
-    for i in notifications :
-        x=i.message.split(" ") 
-        array_of_words.append(x)
-    print(array_of_words)
+
     followings = my_profile.following.all()
     my_guys = Profile.objects.filter(name__in = followings).exclude(Q(name=my_profile.name))[:6]  
     other_users = Profile.objects.exclude(name__in =followings).exclude(Q(name=my_profile.name))[:6] 
