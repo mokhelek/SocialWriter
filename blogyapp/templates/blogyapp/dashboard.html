@@ -7,6 +7,10 @@
   {% bootstrap_javascript %}
   {% load read-time %}
   <link rel="stylesheet" type="text/css" href="{% static 'blogyapp/css/read.css' %}"/>
+
+ 
+
+
 </head>
 
 {% block content %}
@@ -25,137 +29,306 @@
     </div>
   </div>
 
+
+
+  <style>
+
+    @media screen and (max-width:574px){
+    #posts_margin{
+        margin-right: 0px !important;
+        margin-left: 2px !important;
+    }
+    .like, .bookmark, .comments{
+        margin-right: 0cm !important;
+    }
+    #post_title{
+    font-size: 1.1rem !important;
+    }
+    
+    }
+    
+</style>
+
+
+
+
 <div style="margin-top: 20px;width:93%" class="container-fluid">
     <h4> My Dashboard </h4>
     <div class="row">
-        <div class="col-4">
+        <div class="col-md-4">
                 
-                <div class="card card-body" style="background-color:rgb(24, 24, 83);border-radius: 12px !important;margin-bottom: 20px;">
-                    <div class="d-flex " style="margin-bottom: 5px;">
-                        <img class="avatar" src="{{profile.avatar.url}}"> 
-            
-                        <span style="font-size: 0.9rem;font-weight: 600;margin-left: 5px;padding-top:10px;"> 
-                        
-                            <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 1.2rem;color: rgb(232, 232, 232);font-weight: 600;" >{{profile.name.get_full_name}}</h6>
-                            <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.85rem;color: rgb(166, 166, 166);"> @{{profile.name}} </h6> 
-                          
-                        </span>
-                 
-                    </div>
-    
-    
-                    <center>
-                        <div class="container-fluid" style="width: 80%;margin-top: 10px;">
-                            <center>
+            <div class="card card-body" style="background-color:rgb(24, 24, 83);border-radius: 12px !important;margin-bottom: 20px;">
+                <div class="d-flex " style="margin-bottom: 5px;">
+                    <img class="avatar" src="{{profile.avatar.url}}"> 
         
-                                <div class="row">
-                                    {% if profile.linkedin_link %}
-                                    <div class="col-4">
-                                        <a href="{{profile.linkedin_link}}" style="color:#4b4eff">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
-                                                <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
-                                            </svg>
-                                        </a>
-                                      
-                                    </div>
-                                    {% endif %}
-    
-                                    {% if profile.twitter_link %}
-                                    <div class="col-4">
-                                        <a href="{{profile.twitter_link}}" style="color:#4b4eff">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
-                                            <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
-                                        </svg>
-                                    </a>
-                                    </div>
-                                    {% endif %}
-    
-                                    {% if profile.personal_link %}
-                                    <div class="col-4">
-                                        <a href="{{profile.personal_link}}" style="color:#4b4eff"> 
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-globe2" viewBox="0 0 16 16">
-                                            <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855-.143.268-.276.56-.395.872.705.157 1.472.257 2.282.287V1.077zM4.249 3.539c.142-.384.304-.744.481-1.078a6.7 6.7 0 0 1 .597-.933A7.01 7.01 0 0 0 3.051 3.05c.362.184.763.349 1.198.49zM3.509 7.5c.036-1.07.188-2.087.436-3.008a9.124 9.124 0 0 1-1.565-.667A6.964 6.964 0 0 0 1.018 7.5h2.49zm1.4-2.741a12.344 12.344 0 0 0-.4 2.741H7.5V5.091c-.91-.03-1.783-.145-2.591-.332zM8.5 5.09V7.5h2.99a12.342 12.342 0 0 0-.399-2.741c-.808.187-1.681.301-2.591.332zM4.51 8.5c.035.987.176 1.914.399 2.741A13.612 13.612 0 0 1 7.5 10.91V8.5H4.51zm3.99 0v2.409c.91.03 1.783.145 2.591.332.223-.827.364-1.754.4-2.741H8.5zm-3.282 3.696c.12.312.252.604.395.872.552 1.035 1.218 1.65 1.887 1.855V11.91c-.81.03-1.577.13-2.282.287zm.11 2.276a6.696 6.696 0 0 1-.598-.933 8.853 8.853 0 0 1-.481-1.079 8.38 8.38 0 0 0-1.198.49 7.01 7.01 0 0 0 2.276 1.522zm-1.383-2.964A13.36 13.36 0 0 1 3.508 8.5h-2.49a6.963 6.963 0 0 0 1.362 3.675c.47-.258.995-.482 1.565-.667zm6.728 2.964a7.009 7.009 0 0 0 2.275-1.521 8.376 8.376 0 0 0-1.197-.49 8.853 8.853 0 0 1-.481 1.078 6.688 6.688 0 0 1-.597.933zM8.5 11.909v3.014c.67-.204 1.335-.82 1.887-1.855.143-.268.276-.56.395-.872A12.63 12.63 0 0 0 8.5 11.91zm3.555-.401c.57.185 1.095.409 1.565.667A6.963 6.963 0 0 0 14.982 8.5h-2.49a13.36 13.36 0 0 1-.437 3.008zM14.982 7.5a6.963 6.963 0 0 0-1.362-3.675c-.47.258-.995.482-1.565.667.248.92.4 1.938.437 3.008h2.49zM11.27 2.461c.177.334.339.694.482 1.078a8.368 8.368 0 0 0 1.196-.49 7.01 7.01 0 0 0-2.275-1.52c.218.283.418.597.597.932zm-.488 1.343a7.765 7.765 0 0 0-.395-.872C9.835 1.897 9.17 1.282 8.5 1.077V4.09c.81-.03 1.577-.13 2.282-.287z"/>
-                                        </svg>
-                                    </a>
-                                    </div>
-                                    {% endif %}
-                                </div>
-                           </center>
-                           <br>
-                        </div>
-                        <p style="color: rgb(198, 198, 198);font-size: 0.8rem; margin-bottom: 20px;">
-                            {{profile.bio}}
-                        </p>
-                      
-                        <a href="{% url 'blogyapp:edit_profile' profile.id %}" class="btn btn-primary btn-md" > Edit Profile </a>
-    
-                    </center>
-    
-
-
+                    <span style="font-size: 0.9rem;font-weight: 600;margin-left: 5px;padding-top:10px;"> 
+                    
+                        <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 1.2rem;color: rgb(232, 232, 232);font-weight: 600;" >{{profile.name.get_full_name}}</h6>
+                        <h6 style="margin-bottom: 0cm;margin-top: 0cm;font-size: 0.85rem;color: rgb(166, 166, 166);"> @{{profile.name}} </h6> 
+                        
+                    </span>
+                
                 </div>
 
-                <div class="card card-body d-none d-md-block" style="box-shadow: 0 0 6px rgb(198, 197, 197);border-radius: 12px !important;">
-            
 
-                    <h5 style="margin-bottom: 14px;"><strong>Recent comments</strong> </h5> 
-                   
-                     {% for comment in profile_comments %}
-                     <div style="margin-bottom: 7px; background-color: rgba(230, 230, 230, 0.449);">
-                         <h6 class="card-body" style="font-size: 0.95rem;color:rgb(60, 60, 60);"> {{comment.comment}} </h6> 
-                     </div>
-                     {% empty %}
-                     <div class="card-body" style="margin-bottom: 7px; background-color: rgb(230, 230, 230);">
-                         <h6 style="font-size: 0.95rem;color:rgb(60, 60, 60);">No comments yet </h6>
-                     </div>
-                         
-     
-                     {% endfor %}
-                 </div>
+                <center>
+                    <div class="container-fluid" style="width: 80%;margin-top: 10px;">
+                        <center>
+    
+                            <div class="row">
+                                {% if profile.linkedin_link %}
+                                <div class="col-4">
+                                    <a href="{{profile.linkedin_link}}" style="color:#4b4eff">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+                                            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+                                        </svg>
+                                    </a>
+                                    
+                                </div>
+                                {% endif %}
 
+                                {% if profile.twitter_link %}
+                                <div class="col-4">
+                                    <a href="{{profile.twitter_link}}" style="color:#4b4eff">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                                        <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                                    </svg>
+                                </a>
+                                </div>
+                                {% endif %}
+
+                                {% if profile.personal_link %}
+                                <div class="col-4">
+                                    <a href="{{profile.personal_link}}" style="color:#4b4eff"> 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-globe2" viewBox="0 0 16 16">
+                                        <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855-.143.268-.276.56-.395.872.705.157 1.472.257 2.282.287V1.077zM4.249 3.539c.142-.384.304-.744.481-1.078a6.7 6.7 0 0 1 .597-.933A7.01 7.01 0 0 0 3.051 3.05c.362.184.763.349 1.198.49zM3.509 7.5c.036-1.07.188-2.087.436-3.008a9.124 9.124 0 0 1-1.565-.667A6.964 6.964 0 0 0 1.018 7.5h2.49zm1.4-2.741a12.344 12.344 0 0 0-.4 2.741H7.5V5.091c-.91-.03-1.783-.145-2.591-.332zM8.5 5.09V7.5h2.99a12.342 12.342 0 0 0-.399-2.741c-.808.187-1.681.301-2.591.332zM4.51 8.5c.035.987.176 1.914.399 2.741A13.612 13.612 0 0 1 7.5 10.91V8.5H4.51zm3.99 0v2.409c.91.03 1.783.145 2.591.332.223-.827.364-1.754.4-2.741H8.5zm-3.282 3.696c.12.312.252.604.395.872.552 1.035 1.218 1.65 1.887 1.855V11.91c-.81.03-1.577.13-2.282.287zm.11 2.276a6.696 6.696 0 0 1-.598-.933 8.853 8.853 0 0 1-.481-1.079 8.38 8.38 0 0 0-1.198.49 7.01 7.01 0 0 0 2.276 1.522zm-1.383-2.964A13.36 13.36 0 0 1 3.508 8.5h-2.49a6.963 6.963 0 0 0 1.362 3.675c.47-.258.995-.482 1.565-.667zm6.728 2.964a7.009 7.009 0 0 0 2.275-1.521 8.376 8.376 0 0 0-1.197-.49 8.853 8.853 0 0 1-.481 1.078 6.688 6.688 0 0 1-.597.933zM8.5 11.909v3.014c.67-.204 1.335-.82 1.887-1.855.143-.268.276-.56.395-.872A12.63 12.63 0 0 0 8.5 11.91zm3.555-.401c.57.185 1.095.409 1.565.667A6.963 6.963 0 0 0 14.982 8.5h-2.49a13.36 13.36 0 0 1-.437 3.008zM14.982 7.5a6.963 6.963 0 0 0-1.362-3.675c-.47.258-.995.482-1.565.667.248.92.4 1.938.437 3.008h2.49zM11.27 2.461c.177.334.339.694.482 1.078a8.368 8.368 0 0 0 1.196-.49 7.01 7.01 0 0 0-2.275-1.52c.218.283.418.597.597.932zm-.488 1.343a7.765 7.765 0 0 0-.395-.872C9.835 1.897 9.17 1.282 8.5 1.077V4.09c.81-.03 1.577-.13 2.282-.287z"/>
+                                    </svg>
+                                </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </center>
+                        <br>
+                    </div>
+                    <p style="color: rgb(198, 198, 198);font-size: 0.8rem; margin-bottom: 20px;">
+                        {{profile.bio}}
+                    </p>
+                    
+                    <a href="{% url 'blogyapp:edit_profile' profile.id %}" class="btn btn-primary btn-md" > Edit Profile </a>
+
+                </center>
+
+
+
+            </div>
+
+            <div class="card card-body d-none d-md-block" style="box-shadow: 0 0 6px rgb(198, 197, 197);border-radius: 12px !important;">
+        
+
+                <h5 style="margin-bottom: 14px;"><strong>Recent comments</strong> </h5> 
+                
+                    {% for comment in profile_comments %}
+                    <div style="margin-bottom: 7px; background-color: rgba(230, 230, 230, 0.449);">
+                        <h6 class="card-body" style="font-size: 0.95rem;color:rgb(60, 60, 60);"> {{comment.comment}} </h6> 
+                    </div>
+                    {% empty %}
+                    <div class="card-body" style="margin-bottom: 7px; background-color: rgb(230, 230, 230);">
+                        <h6 style="font-size: 0.95rem;color:rgb(60, 60, 60);">No comments yet </h6>
+                    </div>
+                        
+    
+                    {% endfor %}
+                </div>
 
         </div>
 
-        <div class="col-8">
+        <div class="col-md-8">
             <div class="row">
 
-                <div class="col-md-3">
-                    <div class="card card-body" style="height: 120px;">
+                <div style="margin-bottom: 15px;" class="col-6 col-md-3">
+                    <div class="card card-body" style="height: 120px;box-shadow: 0 0 6px rgb(169, 169, 169);">
                         <center>
-                            <h5 style="margin-top: 15px;" ><strong> 5 </strong></h5>
+                            <h5 style="margin-top: 15px;" ><strong> {{entries.count}} </strong></h5>
                             <h6 style="color: rgb(110, 110, 110);"> Article </h6>
                         </center>
                         
                     </div>
                 </div>
         
-                <div class="col-md-3">
-                    <div class="card card-body" style="height: 120px;">
+                <div style="margin-bottom: 15px;" class="col-6 col-md-3">
+                    <div class="card card-body" style="height: 120px;box-shadow: 0 0 6px rgb(169, 169, 169);">
                         <center>
-                            <h5 style="margin-top: 15px;"> <strong> 25 </strong></h5>
+                            <h5 style="margin-top: 15px;"> <strong> {{likes}} </strong></h5>
                             <h6 style="color: rgb(110, 110, 110);"> Likes </h6>
                         </center>
                     </div>
                 </div>
         
-                <div class="col-md-3">
-                    <div class="card card-body" style="height: 120px;">
+                <div style="margin-bottom: 15px;" class="col-6 col-md-3 ">
+                    <div class="card card-body" style="height: 120px;box-shadow: 0 0 6px rgb(169, 169, 169);">
                         <center>
-                            <h5 style="margin-top: 15px;"><strong> 5 </strong></h5>
+                            <h5 style="margin-top: 15px;"><strong> {{profile_comments.count}}</strong></h5>
                             <h6 style="color: rgb(110, 110, 110);"> comments </h6>
                         </center>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card card-body" style="height: 120px;">
+                <div style="margin-bottom: 15px;" class="col-6 col-md-3">
+                    <div class="card card-body" style="height: 120px;box-shadow: 0 0 6px rgb(169, 169, 169);">
                         <center>
-                            <h5 style="margin-top: 15px;" ><strong> 7 </strong></h5>
+                            <h5 style="margin-top: 15px;" ><strong> {{bookmarks}} </strong></h5>
                             <h6 style="color: rgb(110, 110, 110);"> Bookmarks </h6>
                         </center>
                     </div>
                 </div>
         
             </div>
+
+            <div class="row">
+                <div class="col">
+                    {% for entry in entries %}
+
+
+
+                    <div id="{{entry.id}}" class="card " style="margin-bottom: 10px;">
+                        {% if forloop.counter == 1 or forloop.counter == 5 or forloop.counter == 15 %}
+                          <img style="width: 100%;height: 270px;" class="card-img-top" src="{{entry.thumbnail.url}}" alt="">
+                        {% endif %}
+                        <div class="card-body">
+            
+                         <a class="d-flex"  style="text-decoration: none;" href="{% url 'blogyapp:profile_detail' entry.profile.id %}">
+                           <img class="avatar-home" src="{{entry.profile.avatar.url}}">
+                            <span style="color: rgb(38, 38, 38);margin-left: 10px;">
+                               @{{entry.profile.name}}
+                               <h6 style="color: gray;font-size: 0.8rem;"> {{entry.date_added|date:"d M Y"}}</h6>
+                              </span> 
+                         </a>
+                          
+                          
+                          <div id="posts_margin" style="margin-left: 50px;margin-right: 10px">
+                            <a id="post_title" href="{% url 'blogyapp:read' entry.id %}" style="font-weight: 700;font-size:1.4rem;color: rgb(45, 45, 45);text-decoration: none;">  {{entry.entry_title}} </a>
+                            
+                            <p class="d-block d-sm-none" style="color: rgb(100, 100, 100);size: 0.9rem;">
+                              {{entry.introduction|truncatechars:120}}
+                            </p>
+            
+                            <p class="d-none d-sm-block" style="color: rgb(100, 100, 100);size: 0.9rem;">
+                              {{entry.introduction|truncatechars:200}}
+                            </p>
+                          
+                          
+                            <!-- ################################################################################################# -->
+            
+            
+                            <div class="d-flex" style="width: 100%;">
+                              
+                              <div class="like" style="margin-right:0.3cm"> 
+                           
+                                  <form class="d-flex " action="{% url 'blogyapp:like_unlike' entry.id %}" method='post'>
+                                      {% csrf_token %}
+                  
+                                      {% if entry in my_profile.liked_articles.all %}
+                                 
+                                      <button  class="btn btn-outline-danger btn-sm position-relative" name="submit" style="border: none;" >
+                                        <div class="d-flex">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">                                
+                                              <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                            </svg> 
+                                            <span style="font-weight: 500;">
+                                             &nbsp;&nbsp;{{entry.likes}}
+                                            </span>
+                                          </div>
+                                      </button>
+                                      {% else %}
+            
+                                      <button style= "color: #051622;" class="btn btn-outline-light btn-sm position-relative" name="submit">
+                                        <div class="d-flex">  
+                                           <svg name="submit" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                          <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                                          </svg> 
+                                      
+                                      <span style="font-weight: 500;">
+                                        &nbsp;&nbsp;{{entry.likes}}  
+                                      </span>
+                                    </div>
+                                    </button>
+                   
+                                      {% endif %}
+                                     
+                                  </form>
+                              </div>
+                              
+                              <div class="bookmark"  style="margin-right:0.3cm">
+                  
+                                <form action="{% url 'blogyapp:bookmark' entry.id %}" method='post'>
+                                    {% csrf_token %}
+                
+                                    {% if entry in my_profile.bookmarked_articles.all %}
+                                    <button class="btn btn-outline-success btn-sm position-relative" name="submit" style="border: none;">
+                                      <div class="d-flex">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
+                                          <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
+                                      </svg> 
+                                        <span style="font-weight: 500;">
+                                        &nbsp;&nbsp;{{entry.bookmarks}}
+                                        </span>
+                                           
+                                      </div>
+                                  </button>
+                                    {% else %}
+                                    <button style= "color: #051622;border: none;" class="btn btn-outline-secondary btn-sm position-relative" name="submit">
+                                      <div class="d-flex">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+                                          <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                                          <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
+                                        </svg>
+                                        <span  style="font-weight: 500;">
+                                          &nbsp;&nbsp;{{entry.bookmarks}}
+                                        </span>
+                                      </div>
+                                     
+                                  </button>
+                                        
+                                    {% endif %}
+                                   
+                                </form>
+            
+                              </div>
+            
+                              <div  id="comments" style="margin-right:0cm">
+                                <a href="{% url 'blogyapp:read' entry.id %}#comments" class="btn btn-outline-secondary btn-sm position-relative" name="submit" style="border: none;">
+                                  <div class="d-flex"> 
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square" viewBox="0 0 16 16">
+                                    <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                  </svg>
+                                    <span style="font-weight: 500;">
+                                     &nbsp;&nbsp;{{entry.entry.count}}
+                                    </span>
+                                  </div>
+                                  </a>
+                              </div>
+                 
+            
+                              <div style="width: 100% !important;" class="container-fluid d-flex justify-content-end" >
+                                <div >
+                                 <h6 style="font-size: 0.75rem;cursor:default;padding-left: 0px;"> {{entry.text|safe|readtime}} </h6> 
+                                </div>
+                              </div>
+                            
+                          </div>
+                      
+                          <!-- ####################################################################################################### -->
+                          </div>
+                        
+                        </div>
+                        
+                      </div>
+
+
+
+                    {% endfor %}
+                </div>
+            </div>
+
         </div>
     </div>
 

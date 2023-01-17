@@ -92,14 +92,14 @@
 
         </div>
         
-         </button>
+      </a>
     
       &nbsp; &nbsp; 
 
       <div class="dropdown ">
           <img class="avatar-home  dropdown-toggle " type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" src="{{access_profiles.avatar.url}}">
          
-          <ul style="width: 350px;" class="dropdown-menu dropdown-menu-light dropdown-menu-end " aria-labelledby="dropdownMenuButton2">
+          <ul style="width: 350px;background-color: #fcfcfc;" class="dropdown-menu dropdown-menu-light dropdown-menu-end " aria-labelledby="dropdownMenuButton2">
             <div class="container-fluid">
 
               <div class="card card-body">
@@ -126,7 +126,7 @@
 
               <a href="{% url 'blogyapp:new_entry' access_profiles.id %}"  class="btn btn-outline-primary btn-md"  style="margin-bottom: 20px ;"> Write Article</a> <br>
 
-                <a href="#" class="btn btn-outline-secondary btn-sm" style="text-decoration: none;">
+                <a href="{% url 'users:logout' %}" class="btn btn-outline-secondary btn-sm" style="text-decoration: none;">
                   <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
                   <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
@@ -200,51 +200,47 @@
             
           </ul>
           {% if user.is_authenticated %}
-          <center>
-            <h6 style="font-size:1.1rem;font-weight: 600;color: #c7c5c5;"> Who to follow</h6>
-          </center>
-         
-          {% for i in other_users %}
-          <div class="d-flex" style="margin-bottom: 20px;">
-            <img class="avatar-home" src="{{i.avatar.url}}"> 
-  
-            <div style="font-size: 0.9rem;font-weight: 700;margin-left: 10px;"> 
-              <a style="text-decoration: none;" href="{% url 'blogyapp:profile_detail' i.id %}"> <h6 style="margin-bottom: 0cm;color: rgb(219, 219, 219);font-size: 0.95rem;"> @{{i.name}}   </h6>  </a> 
-             <h6 style="margin-top:0cm;font-weight: 400;font-size: 0.75rem;color: rgb(192, 192, 192);">  {{i.bio|truncatechars:80}} </h6>
-            </div>
-            
-          </div>
-      
-          {% empty%}
-          <center>
-            <h6 style="color: rgb(133, 133, 133); " >
-              You are following everyone!
-            </h6>
-          </center>
-          {% endfor %}
-          <br>
-          <center>
-            <h6 style="font-size:1.1rem;font-weight: 600;color: #c7c5c5;"> Following</h6>
-          </center>
-        
-          {% for i in my_guys %}
-          <div class="d-flex" style="margin-bottom: 20px;">
-            <img class="avatar-home" src="{{i.avatar.url}}"> 
-  
-            <div style="font-size: 0.9rem;font-weight: 600;margin-left: 10px;"> 
-              <a style="text-decoration: none;" href="{% url 'blogyapp:profile_detail' i.id %}"> <h6 style="margin-bottom: 0cm;color:  rgb(219, 219, 219);font-size: 0.95rem;"> @{{i.name}}   </h6>  </a> 
-             <h6 style="margin-top:0cm;font-weight: 400;font-size: 0.75rem;color:rgb(192, 192, 192);">  {{i.bio|truncatechars:80}} </h6>
-            </div>
-            
-          </div>
-        
-          {% empty %}
+          <div class="container-fluid">
 
-          <center>
-            <h6 style="color: rgb(133, 133, 133); " >Not Following Anyone </h6>
-          </center>
-          {% endfor %}
-          <br>
+            <h6 style="color:#ededed;font-weight: 600;font-size: 1.08rem;margin-bottom: 15px;margin-top: 13px;"> Who to follow </h6>
+            {% for i in other_users %}
+            <div class="d-flex" style="margin-bottom: 15px;">
+              <img class="avatar-home" src="{{i.avatar.url}}"> 
+    
+              <div style="font-size: 0.9rem;font-weight: 700;margin-left: 10px;"> 
+                <a style="text-decoration: none;" href="{% url 'blogyapp:profile_detail' i.id %}"> <h6 style="margin-bottom: 0cm;color:#e5e5e5"> @{{i.name}}   </h6>  </a> 
+               <h6 style="margin-top:0cm;font-weight: 400;font-size: 0.80rem;color: rgb(220, 220, 220);">  {{i.bio|truncatechars:80}} </h6>
+              </div>
+              
+            </div>
+    
+            {% empty %}
+            <center>
+              <br>
+                <img style="width: 45%;" class="img-fluid" src="{% static 'blogyapp/images/undraw_no_data_re_kwbl.svg' %}" alt="">
+            </center>
+            {% endfor %}
+        
+            <h6 style="color:#ededed;font-weight: 700;font-size: 1.08rem;margin-bottom: 15px;"> Following </h6>
+            {% for i in my_guys %}
+            <div class="d-flex" style="margin-bottom: 15px;">
+              <img class="avatar-home" src="{{i.avatar.url}}"> 
+    
+              <div style="font-size: 0.9rem;font-weight: 600;margin-left: 10px;"> 
+                <a style="text-decoration: none;" href="{% url 'blogyapp:profile_detail' i.id %}"> <h6 style="margin-bottom: 0cm;color:#e5e5e5"> @{{i.name}}   </h6>  </a> 
+               <h6 style="margin-top:0cm;font-weight: 400;font-size: 0.80rem;color: rgb(220, 220, 220);">  {{i.bio|truncatechars:80}} </h6>
+              </div>
+              
+            </div>
+            {% empty %}
+            <center>
+              <br>
+                <img style="width: 45%;" class="img-fluid" src="{% static 'blogyapp/images/undraw_no_data_re_kwbl.svg' %}" alt="">
+                <h6 style="color:#454545;font-weight: 700;font-size: 1.1rem;"> You are not following anyone </h6>
+            </center>
+            {% endfor %}
+    
+          </div>
           {% endif %}
           
           

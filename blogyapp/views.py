@@ -549,16 +549,29 @@ def publish_or_unpublish(request , entry_id):
 def dashboard(request):
     
     profile =Profile.objects.get(name = request.user ) #Profile of a specific user
-
+    my_profile =Profile.objects.get(name =request.user)
+    entries = Entry.objects.filter(profile = my_profile ).order_by("-date_added")
     profile_posts = profile.profiles_posts()
     profile_comments = Comments.objects.filter(profile = profile).order_by("-date_created")
     my_profile = Profile.objects.get(name =request.user)  
     followings = my_profile.following.all()  # people that the logged in user follows
+    
+    likes =  0
+    bookmarks = 0
+    
+    for i in entries :
+        likes = likes + i.likes
+        
+    for i in entries:
+        bookmarks = bookmarks + i.bookmarks
 
     context ={"profile":profile,
               "followings":followings,
               "profile_posts":profile_posts,
              "profile_comments":profile_comments,
+             "entries":entries,
+             "likes":likes,
+             "bookmarks":bookmarks ,
               }
     return render (request , "blogyapp/dashboard.html",context )
 
