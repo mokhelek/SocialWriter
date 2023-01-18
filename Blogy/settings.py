@@ -82,7 +82,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 
                 'blogyapp.context_processors.access_profile',
-                #'blogyapp.context_processors.profile_detail',
+                'blogyapp.context_processors.process_notifications',
             ],
         },
     },

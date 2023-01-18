@@ -1,4 +1,5 @@
 
+from blogyapp.views import notifications
 from users.models import Profile
 from blogyapp.models import Entry , Notification
 from django.db.models import Q
@@ -6,7 +7,7 @@ from django.db.models import Q
 def access_profile(request):
     if request.user.is_authenticated:
         
-        notifications = Notification.objects.filter( Q(entry__profile__name = request.user) | Q(profile__name = request.user) )
+        notifications = Notification.objects.filter( Q(entry__profile__name = request.user) | Q(profile__name = request.user) ).filter(notification_viewed = False )
         
         
         logged_in_user_articles = Entry.objects.filter(profile__name=request.user)
@@ -35,8 +36,27 @@ def access_profile(request):
                     "my_guys":my_guys , 
                     "other_users":other_users,
                     "logged_in_user_articles":logged_in_user_articles ,
-                    "notifications": notifications ,
+                    "all_notifications": notifications ,
                     }
                
     else:
         return {}
+
+def process_notifications(request):
+    try:
+        notifications_url = request.META["HTTP_REFERER"]
+        
+        notifications = Notification.objects.filter( Q(entry__profile__name = request.user) | Q(profile__name = request.user) )
+        
+        if notifications_url == "http://127.0.0.1:8000/notifications/":
+            for i in notifications:
+                if i.notification_viewed == False:
+                    i.notification_viewed = True
+                    i.save(update_fields=["notification_viewed"])
+                    i.save()
+        return {}
+            
+    except:
+        return {}
+        
+        

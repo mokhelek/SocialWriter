@@ -34,20 +34,6 @@
   </style>
   
 {% block content %}
-<div class="container-fluid " >
-    <div class="row">
-      <div class="col">
-        <div id="search_bar" style="display: none;margin-top: 10px;" class="card card-body">
-          <form  action="{% url 'blogyapp:searched_articles' %}"   style="margin-right: 15px;" class="d-flex" role="search" method="post">
-            {% csrf_token %}   
-            <input class="form-control  form-control-sm" name = "search_text" type='text' placeholder="Search Articles" aria-label="Search">
-            <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
-          </form>
-        </div>
-      </div>
-   
-    </div>
-  </div>
 
 {% if entry.uploaded is True %}
 <br>
@@ -190,10 +176,14 @@
                   <h2 style="font-weight: 700;margin-bottom: 20px;"> 
                     {{entry.entry_title}}
                 </h2>
-                <div class="postIntro container-fluid">
-                    <p style="margin-left: 15px ; font-size: 0.9rem;">{{entry.introduction}}</p>
+                
+                <div class="container-fluid">
+                    <div class="postIntro" >
+                        <p style="margin-left: 15px ; font-size: 0.9rem;">{{entry.introduction}}</p>
+                    </div>
+                
                 </div>
-            
+              
 
                   <div class="row">
                     <div class = "crop col-12">

@@ -13,27 +13,10 @@
 {% block content %}
 
 
-<div class="container-fluid " >
-    <div class="row">
-      <div class="col">
-        <div id="search_bar" style="display: none;margin-top: 10px;" class="card card-body">
-          <form  action="{% url 'blogyapp:searched_articles' %}"   style="margin-right: 15px;" class="d-flex" role="search" method="post">
-            {% csrf_token %}   
-            <input class="form-control  form-control-sm" name = "search_text" type='text' placeholder="Search Articles" aria-label="Search">
-            <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
-          </form>
-        </div>
-      </div>
-   
-    </div>
-</div>
-
-
-
 <div class="container-fluid" style="width: 93%;">
-<br>
-<h4>Notifications </h4>
-<br>
+
+<h4 style="margin:15px 0px 15px 0px">Notifications </h4>
+
     <div class="row">
 
       <div class="col-md-3 d-none d-md-block ">
@@ -113,102 +96,135 @@
       </div>
     
 
-    <div  class="col-md-6"  >
-    
 
+
+
+
+
+
+    <div  class="col-md-6"  >
+        
             {% for i in notifications  %}
           
-
+       
                   {% if   i.type == "like"  %}
                     <div style="margin-bottom:15px ;">
+                      <div class="d-flex">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill text-danger" viewBox="0 0 16 16">                                
                         <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                       </svg> 
                       &nbsp;&nbsp;
-                      <span class="rounded-pill" style="background-color: #ff03031e;">
-                        <span style="margin: 15px;"> 
-                          {{i.message}}
-                        </span>
-
+                      <span class="rounded-pill" style="background-color: #ff0a0a1e;padding-left: 4px;">
+                        <h6 style=" margin: 8px;font-size: 0.85rem;"> 
+                          {{i.message}} 
+                        </h6>
                       </span>
-
+                    </div>
                     </div>
                   {% endif %}
 
                   {% if   i.type == "bookmark"  %}
                   <div style="margin-bottom:15px ;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="text-success bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
-                  </svg> 
-                    &nbsp;&nbsp;
-                    <span class="rounded-pill" style="background-color: #14ff031e;">
-                      <span style="margin: 15px;"> 
-                        {{i.message}}
+                    <div class="d-flex">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="text-success bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
+                    </svg> 
+                      &nbsp;&nbsp;
+                      <span class="rounded-pill" style="background-color: #1aff0a1e;padding-left: 4px;">
+                        <h6 style=" margin: 8px;font-size: 0.85rem;"> 
+                          {{i.message}} 
+                        </h6>
                       </span>
-
-                    </span>
-
+                    </div>
+                 
                   </div>
                 {% endif %}
 
 
                 {% if   i.type == "comment"  %}
                 <div style="margin-bottom:15px ;">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class=" text-secondary bi bi-chat-fill" viewBox="0 0 16 16">
-                    <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9.06 9.06 0 0 0 8 15z"/>
-                  </svg>
-                  &nbsp;&nbsp;
-                  <span class="rounded-pill" style="background-color: #4343431e;">
-                    <span style="margin: 15px;"> 
-                      {{i.message}}
+                  <div class="d-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class=" text-secondary bi bi-chat-fill" viewBox="0 0 16 16">
+                      <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9.06 9.06 0 0 0 8 15z"/>
+                    </svg>
+                    &nbsp;&nbsp;&nbsp;
+                    <span class="rounded-pill" style="background-color: #4343431e;padding-left: 4px;">
+                      <h6 style=" margin: 8px;font-size: 0.85rem;"> 
+                        {{i.reactor_profile}} commented on your post
+                      </h6>
                     </span>
+                   
+                  </div>
 
-                  </span>
+                  <div class="container" style="margin-left: 10px;margin-top:8px;font-size:0.85rem;font-style:oblique;color:#5e5e5e">
+                   " {{i.message}} " 
+                  </div>
 
                 </div>
               {% endif %}
 
               {% if   i.type == "follow"  %}
               <div style="margin-bottom:15px ;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class=" text-primary bi bi-person-plus-fill" viewBox="0 0 16 16">
-                  <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                  <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
-                </svg>
-                &nbsp;&nbsp;
-                <span class="rounded-pill" style="background-color: #0314ff1e;">
-                  <span style="margin: 15px;"> 
-                    {{i.message}}
+                <div class="d-flex">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class=" text-primary bi bi-person-plus-fill" viewBox="0 0 16 16">
+                    <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                  </svg>
+                  &nbsp;&nbsp;
+                  <span class="rounded-pill" style="background-color: #0314ff1e;padding-left: 4px;">
+                    <h6 style="margin: 8px;"> 
+                      {{i.message}}
+                    </h6>
+  
                   </span>
-
-                </span>
+                </div>
+            
 
               </div>
             {% endif %}
 
+              {% if i.notification_viewed == False %}
+              <div style="border-left: 4px rgb(122, 122, 255) solid;">
+                {% else %}
 
+              <div>
 
-                <a class="d-flex"  style="text-decoration: none;" href="{% url 'blogyapp:profile_detail' i.reactor_profile.id %}">
-                  <img class="avatar-home" src="{{i.reactor_profile.avatar.url}}">
-                   <span style="color: rgb(38, 38, 38);margin-left: 10px;">
-                      @{{i.reactor_profile.name}} 
-                      <h6 style="color: gray;font-size: 0.8rem;"> {{i.date_created|date:"d M Y"}}</h6>
-                     </span> 
-                </a>
-
-                <div style="margin-left: 50px;margin-right: 10px" >
-                  {% if i.type != "follow" %}
-                  <a href="{% url 'blogyapp:read' i.entry.id %}" style="font-size: 1.1rem;">
-                    {{i.entry.entry_title}}
+                {% endif %}
+                <div style="margin-left: 15px;">
+                  <a class="d-flex"  style="text-decoration: none;" href="{% url 'blogyapp:profile_detail' i.reactor_profile.id %}">
+                    <img class="avatar-home" src="{{i.reactor_profile.avatar.url}}">
+                     <span style="color: rgb(38, 38, 38);margin-left: 10px;">
+                        @{{i.reactor_profile.name}} 
+                        <h6 style="color: gray;font-size: 0.8rem;"> {{i.date_created|timesince}} ago </h6>
+                       
+                     
+                       </span> 
                   </a>
-                  {% endif %}
+  
+                  <div style="margin-left: 50px;margin-right: 10px" >
+                    {% if i.type != "follow" %}
+                    <a href="{% url 'blogyapp:read' i.entry.id %}" style="font-size: 1.1rem;">
+                      {{i.entry.entry_title}}
+                    </a>
+                    {% else %}
+  
+                    <p>
+                     {{ i.reactor_profile.bio}}
+                    </p>
+  
+                    {% endif %}
+                  </div>
                 </div>
-              
+
+
+              </div>
+
+
+           
                 <hr>
 
 
                {% empty %}
-
-
 
                <center>
                 <br>
@@ -216,14 +232,33 @@
                   <br> <br><br>
                   <h4> No notifications  </h4>
               </center>
+
+          
             {% endfor %}
-    </div>
+          </div>
+          
 
 
-      <div class="col-md-3 d-none d-md-block" style="background-color:#ebebeb;border-radius: 10px;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div class="col-md-3 d-none d-md-block">
         <div class="container-fluid">
 
-        <h6 style="color:#0b145b;font-weight: 600;font-size: 1.08rem;margin-bottom: 15px;margin-top: 13px;"> Who to follow </h6>
+        <h6 style="color:#0b145b;font-size: 1.08rem;margin-bottom: 15px;margin-top: 13px;"> Who to follow </h6>
         {% for i in other_users %}
         <div class="d-flex" style="margin-bottom: 15px;">
           <img class="avatar-home" src="{{i.avatar.url}}"> 
@@ -242,7 +277,7 @@
         </center>
         {% endfor %}
     
-        <h6 style="color:#0b145b;font-weight: 700;font-size: 1.08rem;margin-bottom: 15px;"> Following </h6>
+        <h6 style="color:#0b145b;font-size: 1.08rem;margin-bottom: 15px;"> Following </h6>
         {% for i in my_guys %}
         <div class="d-flex" style="margin-bottom: 15px;">
           <img class="avatar-home" src="{{i.avatar.url}}"> 
@@ -265,9 +300,9 @@
           
     </div>
 
-    
-    </div>
   </div>
+   
+</div>
 
 
 

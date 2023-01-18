@@ -2,25 +2,9 @@
 {% load bootstrap5 %}
 
 {% block content %}
-<div class="container-fluid " >
-    <div class="row">
-      <div class="col">
-        <div id="search_bar" style="display: none;margin-top: 10px;" class="card card-body">
-          <form  action="{% url 'blogyapp:searched_articles' %}"   style="margin-right: 15px;" class="d-flex" role="search" method="post">
-            {% csrf_token %}   
-            <input class="form-control  form-control-sm" name = "search_text" type='text' placeholder="Search Articles" aria-label="Search">
-            <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
-          </form>
-        </div>
-      </div>
-   
-    </div>
-  </div>
-<p><h3><a href="#" style="
-    text-decoration: solid; border-radius: 15%; color: black; font-weight: 300;">topic
-</a></h3></p>
+
+ <h5>Edit entry</h5>
  
- <p>Edit entry:</p>
  
 <form action="{% url 'blogyapp:edit_entry' entry.id %}" method='post'>
  {% csrf_token %}

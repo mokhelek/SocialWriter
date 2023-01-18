@@ -1,11 +1,11 @@
 
 @font-face {
-    font-family: "poppins";
+    font-family: "montserrat";
     src: url('../fonts/montserrat/Montserrat-Regular.otf');
 }
 
 p, h1, h2, h3, h4, h5, h6, button, a, span, div{
-    font-family:poppins !important;
+    font-family: montserrat !important;
     
 }
 
@@ -148,7 +148,7 @@ a:hover{
 
 
 
-@media screen and (max-width:775px) {
+@media screen and (max-width:767px) {
     .search{
        display: none;
     }
@@ -160,7 +160,7 @@ a:hover{
     }
 }
 
-@media screen and (min-width:776px) {
+@media screen and (min-width:768px) {
     .search{
        display: inline-block;
     }

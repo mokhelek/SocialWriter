@@ -12,8 +12,28 @@
 {% block content %}
 
 <style>
+
+@font-face {
+    font-family: "poppins";
+    src: url('../static/blogyapp/fonts/poppins/Poppins-Bold.otf');
+}
+
+#hero_text{
+    font-family:poppins !important;
+ 
+    background: linear-gradient(to right, rgb(232, 232, 255) 25%, rgb(12, 20, 255) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+}
+#cta{
+  background: linear-gradient(to right, rgb(255, 245, 132) 0%, rgb(255, 251, 4) 90%);
+  box-shadow: 0 2px 4px 6px rgba(34, 34, 34, 0.182);
+}
+
+
   #landing_page {
-    background-image: url("../static/blogyapp/images/bg.png");
+    background-image: url("../static/blogyapp/images/bg2.png");
     background-repeat: no-repeat;
     background-position:center;
     width: 100% !important;
@@ -31,199 +51,177 @@
   #post_title{
    font-size: 1.1rem !important;
  }
+ #hero_text{
+   font-size:2.15rem !important;
+
+ }
+ #landing_page{
+   height: 650px !important;
+ }
+
+ #hero_intro{
+   font-size: 1.05rem !important;
+ }
   
  }
+
+@media screen and (min-width:766px) {
+  
+#hero-img{
+  width:60% !important;
+}
+#landing_page{
+   height: 950px !important;
+ }
+
+}
+
+@media screen and (min-width:991px) {
+  
+
+  #landing_page{
+     height: 680px !important;
+   }
+  
+  }
+
+
+
+
+
 </style>
 
-<div class="container-fluid " >
-  <div class="row">
-    <div class="col">
-      <div id="search_bar" style="display: none;margin-top: 10px;" class="card card-body">
-        <form  action="{% url 'blogyapp:searched_articles' %}"   style="margin-right: 15px;" class="d-flex" role="search" method="post">
-          {% csrf_token %}   
-          <input class="form-control  form-control-sm" name = "search_text" type='text' placeholder="Search Articles" aria-label="Search">
-          <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
- 
-  </div>
-</div>
 
 
 {% if user.is_anonymous %}
-    <section style="height:650px;" id="landing_page">
+    <section style="height:700px" id="landing_page">
 
 
-      <nav class="navbar navbar-dark " style="background-color:#05162200;  height: 2cm;">
+      <nav class="navbar navbar-dark " style="height: 60px; ">
+   
         <div class="container-fluid" style="width: 90%;">
-        <div style="display: flex;"> 
-          <div style="color:  rgb(251, 143, 1);" class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-            </svg> 
-          </div>
-          &nbsp; &nbsp;
-          <div style="display: flex;">
-            
-            <h4 style="font-weight:600"><a href="{% url 'blogyapp:home1' %}" style="text-decoration: none;color: rgb(26, 21, 157);">  Social</a></h4><h4 style="font-weight:600"><a href="{% url 'blogyapp:home1' %}" style="text-decoration: none;color: rgb(225, 166, 17);"> Writer</a></h4>
-          
-          </div>
-        </div> 
-         
-       
-        <div class = "search" > 
-        <div style="display: flex;">  
-            <button class="btn btn-outline-primary btn-sm"> write </button>
-           
-            &nbsp; &nbsp;
-          <form class="d-flex" role="search">
-            <input class="form-control me-2 form-control-sm" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-warning btn-sm" type="submit">Search</button>
-          </form>
-        </div>
-      </div>
-    
-      <div  class = "icon" >  
-        <div style="display: flex;">  
-          <button class="btn btn-outline-primary btn-sm"> write </button>
-    
-          &nbsp; &nbsp;
-          <form class="d-flex" role="search">
-            <input  id ="input" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <svg type="submit" class="bi bi-exclamation-triangle text-warning" width="25" height="25" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-            </svg>
-          
-          </form>
-        </div>
-      </div>
+
       
-          <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"  style= "width: 8.5cm;background-color:#051622;" aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-              {% if user.is_authenticated %}
-              <div  style="  color:rgb(225, 149, 36);  font-weight: 600; font-size: larger;" class="navbar-text">
-                <img class="avatar-home" src="{{access_profiles.avatar.url}}">   {{access_profiles.name}}</div>
-              {% endif %}
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <hr style="color: white; margin: 0cm;">
-            <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li class="nav-item">
-                  <a style="margin-top: 0cm; color:white; ; font-weight: 600; font-size: larger; display: flex;" class="nav-link active" aria-current="page" href="{% url 'blogyapp:home1' %}">
-                    <div style="color:rgb(225, 149, 36);"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-                      <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
-                    </svg> </div>&nbsp; Home</a>
-                </li>
-                <li class="nav-item">
-                  {% if user.is_authenticated %}
-                  <a style=" color:white; font-weight: 600; font-size: larger;display: flex;" class="nav-link" href="{% url 'blogyapp:dashboard' %}">
-                    <div style="color:rgb(225, 149, 36);"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-speedometer" viewBox="0 0 16 16">
-                      <path d="M8 2a.5.5 0 0 1 .5.5V4a.5.5 0 0 1-1 0V2.5A.5.5 0 0 1 8 2zM3.732 3.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 8a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 7.31A.91.91 0 1 0 8.85 8.569l3.434-4.297a.389.389 0 0 0-.029-.518z"/>
-                      <path fill-rule="evenodd" d="M6.664 15.889A8 8 0 1 1 9.336.11a8 8 0 0 1-2.672 15.78zm-4.665-4.283A11.945 11.945 0 0 1 8 10c2.186 0 4.236.585 6.001 1.606a7 7 0 1 0-12.002 0z"/>
-                    </svg></div>  &nbsp; Dashboard</a> 
-                  {% endif %}
-                </li>
-           
+          <div style="display: flex"> 
+
+          <span style="color:#f5ff65 ;border: none;" class="navbar-toggler d-block d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+          </svg> 
+          </span>
+
+
+
+          <span class="d-flex justify-content-center" style="padding-top: 2px">
+          <a style="text-decoration: none;font-size:1.3rem;font-weight:600;margin: 3px 8px 5px 8px;" href="{% url 'blogyapp:home1' %}">
+          <span style="color:white">Social</span><span style="color:rgb(250, 235, 13)">Writer</span>
+          </a> 
+          </span>
+
+          </div> 
+
+          <div class = "search" > 
+            
+            <div style="display: flex;">  
+
+              <form class="d-flex" role="search">
+                <input id="search_input" style="height: 15px !important;display: none;" id ="input" class="form-control me-2 rounded-pill form-control-sm" type="search" placeholder="Search" aria-label="Search">
                
-                <li class="nav-item">
-                  {% if user.is_authenticated %}
-                  <a style="  color:white;  font-weight: 600; font-size: larger;display: flex;" class="nav-link active" aria-current="page" href="{% url 'blogyapp:user_entries' %}">
-                    <div style="color:rgb(225, 149, 36);"> 
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
-                  <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
-                  <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
-                  <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
-                </svg>
-              </div> &nbsp; My Articles </a>
-              {% endif %}
-              </li>
-             
-    
-              
-                <li class="nav-item">
-                  {% if user.is_authenticated %}
-                  <a style=" color:white; font-weight: 600; font-size: larger;display: flex;" class="nav-link" href="{% url 'blogyapp:my_bookmarks' access_profiles.id %}"> 
-                    <div style="color:rgb(225, 149, 36);">
-                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
-                </svg></div> &nbsp; Bookmarks</a>
-                {% endif %}
-                </li>
-                
-    
-                <li class="nav-item">
-                  {% if user.is_authenticated %}
-                <a  style="  color:white;  font-weight: 600; font-size: larger;display: flex;" class="nav-link" href="{% url 'blogyapp:profile_detail' access_profiles.id  %}">
-                  <div style="color:rgb(225, 149, 36);"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                </svg></div> &nbsp; Account</a>
-                {% endif %}
-              </li>
-    
-                <li class="nav-item">  
-                {% if user.is_authenticated %}
-                              
-                <a  style="  color:white;  font-weight: 600; font-size: larger;display: flex;" class="nav-link" href="{% url 'users:logout' %}" > 
-                  <div style="color:rgb(225, 149, 36);font-weight: 800;"><svg style = "font-weight:800" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
-                    <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
-                  </svg> </div> &nbsp; Logout</a>
-                 
-                  {% endif %}
-                </li>
-                <hr style="color:white">
-                
-              </ul>
-              {% if user.is_authenticated %}
-              <div style="color: rgb(255, 255, 255); font-weight: 600;"><center>My Subscriptions </center></div>
-              <ul id ="mymenu-nav">
-                  
-                  {% for i in my_guys %}
-                   <div style= " margin-top: 0.1cm;"> <a style= "text-decoration: none;" href="{% url 'blogyapp:profile_detail' i.id %}">
-                      <img class="avatar-home" src="{{i.avatar.url}}"> </img> {{i.name}} 
-                    </a> </div>
-                    {% empty %}
-                    <p style="color: rgb(255, 255, 255);margin-left: 0.5cm;margin-top: 0.3cm;"> No Subscriptions Yet </p>
-                  {% endfor %}
-                  <a style="padding-left: 1.4cm; text-decoration: none; font-size: 15px;color: rgb(206, 206, 206);" href="#">
-                      See More <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
-                      <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
-                    </svg></a>
-                  <hr style="color: rgb(255, 255, 255); width:85%">
-              </ul>
-              <div style="color: rgb(255, 255, 255); font-weight: 600;"><center> Who to Follow </center> </div>
-    
-              <ul id="mymenu-nav">
-                  {% for i in other_users %}
-                     <div style= " margin-top: 0.1cm;"> <a style= "text-decoration: none; " href="{% url 'blogyapp:profile_detail' i.id %}">
-                      <img class="avatar-home" src="{{i.avatar.url}}"> </img> {{i.name}} </a> </div>
-                  {% endfor %}
-                  <a style="padding-left: 1.4cm; text-decoration: none; font-size: 15px;color: rgb(206, 206, 206);"  href="#">
-                      See More <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
-                      <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
-                    </svg></a>
-                    
-              </ul>
-              <br>
-              {% endif %}
-              
-              
-             
+                <a id="search_icon" onclick="searchbar_home()" class="nav-link" href="#">
+                  <svg type="submit" style="color: white;" class="bi bi-exclamation-triangle nav-item " width="23" height="23" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                  </svg>
+                </a>
+      
+              </form>
+            &nbsp;
+            <a class="nav-link text-light " href="#">About</a>
+            &nbsp; 
+              <a style="margin-right: 100px;" class="nav-link  text-light" href="#">Features</a>
+            &nbsp;
+            <a href="{% url 'users:login' %}" style="width: 110px;height:40px;font-size:1rem;background-color: #0019d6;" class="btn  btn-sm rounded-pill nav-link text-light"> sign in</a>
+
+
             </div>
           </div>
+
+          <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"  style= "width: 8.5cm;background-color:#051622;" aria-labelledby="offcanvasNavbarLabel">
+          <div class="offcanvas-header">
+          <a style="text-decoration: none;font-size:1.1rem;font-weight:600" href="{% url 'blogyapp:home1' %}"><span style="color:white">Social</span><span style="color:rgb(250, 235, 13)">Writer</span>  </a> 
+
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"> </button>
+          </div>
+          <hr style="color: white; margin: 0cm;">
+
+          <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a style="margin-top: 0cm; color:white;font-size: larger; display: flex;" class="nav-link active" aria-current="page" href="{% url 'blogyapp:home1' %}">
+                <div style="color:rgb(250, 235, 13)"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                  <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                </svg> </div>&nbsp;&nbsp; Home</a>
+            </li>
+
+            <li class="nav-item">
+            
+              <a style=" color:white; font-size: larger;display: flex;" class="nav-link" href="#">
+                <div style="color:rgb(250, 235, 13)"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-speedometer" viewBox="0 0 16 16">
+                  <path d="M8 2a.5.5 0 0 1 .5.5V4a.5.5 0 0 1-1 0V2.5A.5.5 0 0 1 8 2zM3.732 3.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 8a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 7.31A.91.91 0 1 0 8.85 8.569l3.434-4.297a.389.389 0 0 0-.029-.518z"/>
+                  <path fill-rule="evenodd" d="M6.664 15.889A8 8 0 1 1 9.336.11a8 8 0 0 1-2.672 15.78zm-4.665-4.283A11.945 11.945 0 0 1 8 10c2.186 0 4.236.585 6.001 1.606a7 7 0 1 0-12.002 0z"/>
+                </svg></div>  &nbsp;&nbsp; Features </a> 
+
+            </li>
+            
+
+            
+            <li class="nav-item">
+              
+              <a style="  color:white; font-size: 1.2rem;display: flex;" class="nav-link active" aria-current="page" href="#">
+                <div style="color:rgb(250, 235, 13)"> 
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
+              <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+              <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+              <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+            </svg>
+          </div> &nbsp;&nbsp; About </a>
+
+          </li>
+
+
+
+            <li class="nav-item">
+            
+              <form style="margin-right: 15px;" class="d-flex" role="search">
+                <input class="form-control me-2 form-control-sm" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-warning btn-sm" type="submit">Search</button>
+              </form>
+
+            </li>
+            
+
+            
+          </ul>
+
+
+
+
+          </div>
+
+          </div>
+
         </div>
+
       </nav> 
+
+
+
+
 
       <div class="container">
 
      
-    <div>
+    <div class=" d-none d-md-block">
       <br>
       <br>
       <br>
@@ -231,21 +229,54 @@
       <br>
    
     </div>
-     
+    
+    <div class="d-block d-md-none">
+      <br>
+      <br>
+    </div>
+
     <div class="row">
-      <div class="col-md-8">
-        <h1 id="hero_text" style="font-size: 3.5rem;font-weight:700;color:rgb(245, 245, 247)" >  Join The Writing Revolution </h1>  
-        <h4 style="width:92%;color: rgb(178, 179, 185);font-size: 1.2rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla est purus,
-          ultrices in porttitorin, accumsan non quam.
+
+      <div class="d-block d-lg-none col-12 col-lg-7">
+        <div class="container-fluid">
+          <center > 
+        <h1 id="hero_text" style="font-size: 3.2rem;" >  Join The Writing Revolution </h1>  
+        <h4 id="hero_intro" style="width:98%;color: rgb(178, 179, 185);font-size: 1.2rem;">
+          The ultimate platform for writers to connect, share and inspire, become part of a community where you can share your passion for writing
         </h4>
         <br>
       
-        <a class="btn btn-warning btn-lg" href="{% url 'users:register' %}"> Start Writing</a>
+        <a id="cta" class="btn btn-warning btn-md-lg btn-md " href="{% url 'users:register' %}"> Start Writing &nbsp; <span><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+        </svg></span></a>
+        </center>
       </div>
-      <div class="col-md-4">
 
+    </div>
+
+    <div class=" d-none d-lg-block col-lg-7">
+      <div class="container-fluid">
+        
+      <h1 id="hero_text" style="font-size: 3.2rem;" >  Join The Writing Revolution </h1>  
+      <h4 style="width:92%;color: rgb(178, 179, 185);font-size: 1.2rem;">
+        The ultimate platform for writers to connect, share and inspire, become part of a community where you can share your passion for writing
+
+      </h4>
+      <br>
+    
+      <a id="cta" class="btn btn-warning btn-lg" href="{% url 'users:register' %}"> Start Writing &nbsp; <span><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+      </svg></span></a>
+    
+    </div>
+
+  </div>
+
+      <div class="col-lg-5">
+        <br>
+        <img id="hero_img" class="img-fluid" src="{% static 'blogyapp/images/hero-pic.png' %}" alt="">
       </div>
-      
+
     </div>
          
   </div>
@@ -253,49 +284,159 @@
 
     <section style="background-color:rgba(238, 238, 238, 0.155) ;">
       <div class="container">
-        <br>
-        <h4 id="hero_text">Popular posts!</h4>
-       
+    
+        <h4 style="margin:20px 0px 20px 0px;" > <img style="opacity: 0.7;" height="35" width="35" src="{% static 'blogyapp/images/fire.png' %}" alt=""> <span style="padding-top: 15px;"> Popular Articles! </span>  </h4>
+   
         <div class="row">
 
-          <div class="col-md-9" >
+          <div class="col-md-9" style="margin-bottom: 30px;" >
      
-            {% for i in popular %}
-            <div class="card" style="margin-bottom:0.5cm;border-radius: 20px ;box-shadow: 0 0 10px rgb(207, 207, 207);">  
-              <div class="d-flex align-items-center">
-        
-                <img  height="190" width="190" src="{{i.thumbnail.url}}">
-        
-                <div style="margin-left: 20px;">
+            {% for entry in popular %}
+            {% if entry.uploaded == True %}
+            <div id="{{entry.id}}" class="card " style="margin-bottom: 10px;">
+              {% if forloop.counter == 1 or forloop.counter == 5 or forloop.counter == 15 %}
+                <img style="width: 100%;height: 270px;" class="card-img-top" src="{{entry.thumbnail.url}}" alt="">
+              {% endif %}
+              <div class="card-body">
   
-                  <div class="">
-                    <img class="avatar-home" src="{{i.profile.avatar.url}}"> <span style="color: rgb(38, 38, 38);"> @{{i.profile.name}}</span> 
-                     <span style="color: gray;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                    </svg></span>  
-                    <span style="color: gray;font-size: 0.9rem;"> {{i.date_added|date:"d M Y"}}</span>
-                  </div>
+               <a class="d-flex"  style="text-decoration: none;" href="{% url 'blogyapp:profile_detail' entry.profile.id %}">
+                 <img class="avatar-home" src="{{entry.profile.avatar.url}}">
+                  <span style="color: rgb(38, 38, 38);margin-left: 10px;">
+                     @{{entry.profile.name}}
+                     <h6 style="color: gray;font-size: 0.8rem;"> {{entry.date_added|date:"d M Y"}}</h6>
+                    </span> 
+               </a>
+                
+                
+                <div id="posts_margin" style="margin-left: 50px;margin-right: 10px">
+                  <a id="post_title" href="{% url 'blogyapp:read' entry.id %}" style="font-weight: 700;font-size:1.4rem;color: rgb(45, 45, 45);text-decoration: none;">  {{entry.entry_title}} </a>
                   
+                  <p class="d-block d-sm-none" style="color: rgb(100, 100, 100);size: 0.9rem;">
+                    {{entry.introduction|truncatechars:120}}
+                  </p>
   
-                    <h4 style="font-weight: 500;">
-                      <a id="hero_text" style="text-decoration: none;color: rgb(41, 41, 41);" href="{% url 'blogyapp:read' i.id %}">{{i.entry_title}}</a>
-                    </h4>
+                  <p class="d-none d-sm-block" style="color: rgb(100, 100, 100);size: 0.9rem;">
+                    {{entry.introduction|truncatechars:200}}
+                  </p>
+                
+                
+                  <!-- ################################################################################################# -->
   
-                    <div class="card-text text-muted">
-                        <h6>  {{ i.introduction|truncatechars:200}}</h6>
+  
+                  <div class="d-flex" style="width: 100%;">
+                    
+                    <div class="like" style="margin-right:0.3cm"> 
+                 
+                        <form class="d-flex " action="{% url 'blogyapp:like_unlike' entry.id %}" method='post'>
+                            {% csrf_token %}
+        
+                            {% if entry in my_profile.liked_articles.all %}
+                       
+                            <button  class="btn btn-outline-danger btn-sm position-relative" name="submit" style="border: none;" >
+                              <div class="d-flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">                                
+                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                  </svg> 
+                                  <span style="font-weight: 500;">
+                                   &nbsp;&nbsp;{{entry.likes}}
+                                  </span>
+                                </div>
+                            </button>
+                            {% else %}
+  
+                            <button style= "color: #051622;border: none;" class="btn btn-outline-secondary btn-sm position-relative" name="submit">
+                              <div class="d-flex">  
+                                 <svg name="submit" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                                </svg> 
+                            
+                            <span style="font-weight: 500;">
+                              &nbsp;&nbsp;{{entry.likes}}  
+                            </span>
+                          </div>
+                          </button>
+         
+                            {% endif %}
+                           
+                        </form>
                     </div>
-                    <a style="margin-top: 0.1cm;" href="#"> view</a>
+                    
+                    <div class="bookmark"  style="margin-right:0.3cm">
+        
+                      <form action="{% url 'blogyapp:bookmark' entry.id %}" method='post'>
+                          {% csrf_token %}
+      
+                          {% if entry in my_profile.bookmarked_articles.all %}
+                          <button class="btn btn-outline-success btn-sm position-relative" name="submit" style="border: none;">
+                            <div class="d-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
+                            </svg> 
+                              <span style="font-weight: 500;">
+                              &nbsp;&nbsp;{{entry.bookmarks}}
+                              </span>
+                                 
+                            </div>
+                        </button>
+                          {% else %}
+                          <button style= "color: #051622;border: none;" class="btn btn-outline-secondary btn-sm position-relative" name="submit">
+                            <div class="d-flex">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus" viewBox="0 0 16 16">
+                                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                                <path d="M8 4a.5.5 0 0 1 .5.5V6H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V7H6a.5.5 0 0 1 0-1h1.5V4.5A.5.5 0 0 1 8 4z"/>
+                              </svg>
+                              <span  style="font-weight: 500;">
+                                &nbsp;&nbsp;{{entry.bookmarks}}
+                              </span>
+                            </div>
+                           
+                        </button>
+                              
+                          {% endif %}
+                         
+                      </form>
+  
+                    </div>
+  
+                    <div  id="comments" style="margin-right:0cm">
+                      <a href="{% url 'blogyapp:read' entry.id %}#comments" class="btn btn-outline-secondary btn-sm position-relative" name="submit" style="border: none;">
+                        <div class="d-flex"> 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square" viewBox="0 0 16 16">
+                          <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                        </svg>
+                          <span style="font-weight: 500;">
+                           &nbsp;&nbsp;{{entry.entry.count}}
+                          </span>
+                        </div>
+                        </a>
+                    </div>
+       
+  
+                    <div style="width: 100% !important;" class="container-fluid d-flex justify-content-end" >
+                      <div >
+                       <h6 style="font-size: 0.75rem;cursor:default;padding-left: 0px;"> {{entry.text|safe|readtime}} </h6> 
+                      </div>
+                    </div>
+                  
                 </div>
-          
+
+                </div>
+              
               </div>
+              
             </div>
+            {% endif %}
             {% endfor %}
       
         </div>
   
         <div class="col-md-3">
-          <h5 style="margin-bottom: 20px;" id="hero_text" >Top Authors</h5>
+        
+          <h5 style="margin-bottom: 30px;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="text-secondary bi bi-trophy" viewBox="0 0 16 16">
+            <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935zM3.504 1c.007.517.026 1.006.056 1.469.13 2.028.457 3.546.87 4.667C5.294 9.48 6.484 10 7 10a.5.5 0 0 1 .5.5v2.61a1 1 0 0 1-.757.97l-1.426.356a.5.5 0 0 0-.179.085L4.5 15h7l-.638-.479a.501.501 0 0 0-.18-.085l-1.425-.356a1 1 0 0 1-.757-.97V10.5A.5.5 0 0 1 9 10c.516 0 1.706-.52 2.57-2.864.413-1.12.74-2.64.87-4.667.03-.463.049-.952.056-1.469H3.504z"/>
+          </svg> &nbsp;<span style="color: rgb(52, 52, 52);">Top Writers</span>  </h5>
           
+       
           {% for top_user in top_authors_details %}
           <div class="d-flex" style="margin-bottom: 20px;">
             <img class="avatar-home" src="{{top_user.avatar.url}}"> 
@@ -1035,10 +1176,10 @@
       </div>
 
 
-      <div class="col-md-3 d-none d-md-block" style="background-color:#ebebeb;border-radius: 10px;">
+      <div class="col-md-3 d-none d-md-block" >
         <div class="container-fluid">
-
-        <h6 style="color:#0b145b;font-weight: 600;font-size: 1.08rem;margin-bottom: 15px;margin-top: 13px;"> Who to follow </h6>
+          <br>
+        <h6 style="color:#0b145b;font-size: 1.08rem;margin-bottom: 15px;margin-bottom: 13px;"> Who to follow </h6>
         {% for i in other_users %}
         <div class="d-flex" style="margin-bottom: 15px;">
           <img class="avatar-home" src="{{i.avatar.url}}"> 
@@ -1053,11 +1194,11 @@
         {% empty %}
         <center>
           <br>
-            <img style="width: 45%;" class="img-fluid" src="{% static 'blogyapp/images/undraw_no_data_re_kwbl.svg' %}" alt="">
+            <img style="width: 45%;margin-bottom: 30px ;" class="img-fluid" src="{% static 'blogyapp/images/undraw_no_data_re_kwbl.svg' %}" alt="">
+           
         </center>
         {% endfor %}
-    
-        <h6 style="color:#0b145b;font-weight: 700;font-size: 1.08rem;margin-bottom: 15px;"> Following </h6>
+        <h6 style="color:#0b145b;font-size: 1.08rem;margin-bottom: 15px;"> Following </h6>
         {% for i in my_guys %}
         <div class="d-flex" style="margin-bottom: 15px;">
           <img class="avatar-home" src="{{i.avatar.url}}"> 

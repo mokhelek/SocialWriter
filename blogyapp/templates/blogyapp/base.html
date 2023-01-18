@@ -64,10 +64,11 @@
         <a href="{% url 'blogyapp:new_entry' access_profiles.id %}" class="btn btn-outline-primary btn-md"> Write Article </a>
        
         &nbsp; &nbsp;
-      <form style="margin-right: 15px;" class="d-flex" role="search">
-        <input class="form-control me-2 form-control-sm" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-warning btn-sm" type="submit">Search</button>
-      </form>
+        <form  action="{% url 'blogyapp:searched_articles' %}"   style="margin-right: 15px;" class="d-flex" role="search" method="post">
+          {% csrf_token %}   
+          <input class="form-control  form-control-sm" name = "search_text" type='text' placeholder="Search Articles" aria-label="Search">
+          <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
+        </form>
     </div>
   </div>
 
@@ -249,9 +250,22 @@
       </div>
   
   </nav> 
-  
-{% endif %}
 
+{% endif %}
+<div class="container-fluid " >
+  <div class="row">
+    <div class="col">
+      <div id="search_bar" style="display: none;margin-top: 10px;" class="card card-body">
+        <form  action="{% url 'blogyapp:searched_articles' %}"   style="margin-right: 15px;" class="d-flex" role="search" method="post">
+          {% csrf_token %}   
+          <input class="form-control  form-control-sm" name = "search_text" type='text' placeholder="Search Articles" aria-label="Search">
+          <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+ 
+  </div>
+</div>
     {% block content %}
     
     {% endblock content %}
@@ -294,9 +308,16 @@
 
     }
 
+    function searchbar_home(){
+      let search_input = document.getElementById("search_input")
+      let search_icon = document.getElementById("search_icon")
 
+      if (search_input.style.display=="none"){
+        search_input.style.display = "block" ;
+        search_icon.style.display = "none" ;
 
-
+      }
+  }
 
 </script>
 
