@@ -48,7 +48,7 @@ def process_notifications(request):
         
         notifications = Notification.objects.filter( Q(entry__profile__name = request.user) | Q(profile__name = request.user) )
         
-        if notifications_url == "http://127.0.0.1:8000/notifications/":
+        if notifications_url == "http://127.0.0.1:8000/notifications/" or notifications_url == "http://socialwriter.pythonanywhere.com/notifications/" or notifications_url == "https://socialwriter.pythonanywhere.com/notifications/":
             for i in notifications:
                 if i.notification_viewed == False:
                     i.notification_viewed = True

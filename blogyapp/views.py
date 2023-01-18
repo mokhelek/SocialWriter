@@ -312,7 +312,8 @@ def read(request, read_id):
         context = {"entry": entry,
                    "form":form  ,
                    "comments":comments ,
-                   "followings":followings}
+                   "followings":followings,
+                   "my_profile":my_profile}
         
         return render(request, "blogyapp/read.html", context)
     else:

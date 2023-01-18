@@ -378,6 +378,16 @@
               
             </div>
             {% endif %}
+
+            {% empty %}
+            <center>
+              <br>
+              <img style="width: 30%;"  src="{% static 'blogyapp/images/undraw_void_-3-ggu.svg' %}" alt="">
+              <br> <br><br>
+              <h4 style="font-size:1.2rem"> User has no articles yet  </h4>
+              <br>
+    
+            </center>
           {% endfor %}
   
         </div>        

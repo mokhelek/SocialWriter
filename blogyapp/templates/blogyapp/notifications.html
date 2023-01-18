@@ -203,7 +203,7 @@
   
                   <div style="margin-left: 50px;margin-right: 10px" >
                     {% if i.type != "follow" %}
-                    <a href="{% url 'blogyapp:read' i.entry.id %}" style="font-size: 1.1rem;">
+                    <a href="{% url 'blogyapp:read' i.entry.id %}" style="font-size: 0.9rem;color:rgb(104, 104, 104)">
                       {{i.entry.entry_title}}
                     </a>
                     {% else %}

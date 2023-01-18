@@ -10,16 +10,26 @@
 
 {% block content %}
 
-<form action="{% url 'blogyapp:edit_profile' profile.id %}" method="post" enctype="multipart/form-data" >
+<div class="d-flex justify-content-center">
 
-    {% csrf_token %}  
-    {% bootstrap_form form %}
+  <div class="col-10 col-md-8" >
+    <br>
+    <center><h4>Edit Profile</h4></center>
+    <br>
+    <form action="{% url 'blogyapp:edit_profile' profile.id %}" method="post" enctype="multipart/form-data" >
 
-    {% buttons %}
-    <button class="btn btn-outline-success" name="submit">Save changes</button>
-    {% endbuttons %}
+      {% csrf_token %}  
+      {% bootstrap_form form %}
 
-</form>
+      {% buttons %}
+      <button class="btn btn-outline-success" name="submit">Save changes</button>
+      {% endbuttons %}
+
+  </form>
+
+  </div>
+
+</div>
 
 
 {% endblock content %}

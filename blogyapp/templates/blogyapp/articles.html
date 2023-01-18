@@ -3,7 +3,7 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% load read-time %}
-
+{% load static %}
 {% block content %}
 
 
@@ -137,7 +137,7 @@
         </div>
         &nbsp;&nbsp;
         <br>
-        <div class = "search">
+        <div class = " d-none d-md-block">
           <form class="d-flex"  action="" method="POST" >
             {% csrf_token %}   
             <input class="form-control  form-control-sm" name = "searchtext" type='text' placeholder="Search Articles" aria-label="Search">
@@ -147,8 +147,17 @@
         </div>
        
       </div>
-
+      <div class="row d-block d-md-none">
+        <form class="d-flex"  action="" method="POST" >
+          {% csrf_token %}   
+          <input class="form-control  form-control-sm" name = "searchtext" type='text' placeholder="Search Articles" aria-label="Search">
+          
+          <button style="margin-left: 10px;" class="btn btn-outline-success btn-sm" type="submit" name = "search">Search</button>
+        </form>
+      </div>
  
+
+
       <div class="row">
   
         {% for entry in entries %}
@@ -306,7 +315,17 @@
           <br>
           </div>
         
-        {% endfor %}
+          {% empty %}
+          <center>
+            <br>
+            <img style="width: 30%;"  src="{% static 'blogyapp/images/undraw_void_-3-ggu.svg' %}" alt="">
+            <br> <br><br>
+            <h4 style="font-size:1.2rem"> You haven't written articles yet  </h4>
+            <br>
+            <a href="{% url 'blogyapp:new_entry' access_profiles.id %}" class="btn btn-outline-primary btn-md"> Write Article </a>
+          {% endfor %}
+          </center>
+         
       </div>
 
     </div>
