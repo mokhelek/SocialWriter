@@ -34,6 +34,122 @@
   </style>
   
 {% block content %}
+ 
+
+<nav class="navbar navbar-dark " style="height: 60px;box-shadow: 0 0 6px rgb(182, 182, 182); ">
+   
+    <div class="container-fluid" style="width: 98%;">
+  
+  
+      <div style="display: flex"> 
+  
+      <span style="color:#585858 ;border: none;" class="navbar-toggler d-block d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+      </svg> 
+      </span>
+  
+  
+  
+    
+      <span class="d-flex justify-content-center" style="padding-top: 5px;background-color: #092030;border-radius: 7px;">
+        <a style="text-decoration: none;font-size:1rem;font-weight:600;margin: 3px 8px 5px 8px;" href="{% url 'blogyapp:home1' %}">
+        <span style="color:white">Social</span><span style="color:rgb(250, 235, 13)">Writer</span>
+      </a> 
+      </span>
+  
+      </div> 
+  
+      <div class = "search" > 
+        
+        <div style="display: flex;">  
+  
+          <form class="d-flex" role="search">
+            <input id="search_input" style="height: 15px !important;display: none;" id ="input" class="form-control me-2 rounded-pill form-control-sm" type="search" placeholder="Search" aria-label="Search">
+           
+            <a id="search_icon" onclick="searchbar_home()" class="nav-link" href="#">
+              <svg type="submit" style="color: rgb(169, 169, 169);" class="bi bi-exclamation-triangle nav-item " width="23" height="23" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg>
+            </a>
+  
+          </form>
+        &nbsp;
+        <a class="nav-link text-secondary" href="#">About</a>
+        &nbsp; 
+          <a style="margin-right: 100px;" class="nav-link  text-secondary" href="#">Features</a>
+        &nbsp;
+        <a href="{% url 'users:register' %}" style="width: 110px;height:40px;font-size:1rem;background-color: #0019d6;" class="btn  btn-sm rounded-pill nav-link text-light"> sign up</a>
+  
+  
+        </div>
+      </div>
+  
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"  style= "width: 8.5cm;background-color:#051622;" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+      <a style="text-decoration: none;font-size:1.1rem;font-weight:600" href="{% url 'blogyapp:home1' %}"><span style="color:white">Social</span><span style="color:rgb(250, 235, 13)">Writer</span>  </a> 
+  
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"> </button>
+      </div>
+      <hr style="color: white; margin: 0cm;">
+  
+      <div class="offcanvas-body">
+      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+        <li class="nav-item">
+          <a style="margin-top: 0cm; color:white;font-size: larger; display: flex;" class="nav-link active" aria-current="page" href="{% url 'blogyapp:home1' %}">
+            <div style="color:rgb(250, 235, 13)"> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+              <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+            </svg> </div>&nbsp;&nbsp; Home</a>
+        </li>
+  
+        <li class="nav-item">
+        
+          <a style=" color:white; font-size: larger;display: flex;" class="nav-link" href="#">
+          Features </a> 
+  
+        </li>
+        
+  
+        
+        <li class="nav-item">
+          
+          <a style="  color:white; font-size: 1.2rem;display: flex;" class="nav-link active" aria-current="page" href="#">
+           About </a>
+  
+      </li>
+  
+      <li class="nav-item">
+        <a href="{% url 'users:register' %}" style="width: 110px;height:40px;font-size:1rem;background-color: #0019d6;" class="btn  btn-sm rounded-pill nav-link text-light"> sign up</a>
+  
+      </li>
+  
+        <li class="nav-item">
+        
+          <form style="margin-right: 15px;" class="d-flex" role="search">
+            <input class="form-control me-2 form-control-sm" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-warning btn-sm" type="submit">Search</button>
+          </form>
+  
+        </li>
+        
+  
+        
+      </ul>
+  
+  
+  
+  
+      </div>
+  
+      </div>
+  
+    </div>
+  
+  </nav> 
+  
+  
+  
 
 {% if entry.uploaded is True %}
 <br>
