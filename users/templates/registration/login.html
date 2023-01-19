@@ -143,12 +143,12 @@
 
       </center>
         
-                <form style="width: 600px;" method="post" action="{% url 'users:login' %}" >
+                <form method="post" action="{% url 'users:login' %}" >
                     {% csrf_token %}
                     {% bootstrap_form form %}
                     <input style="border: none !important;" type="hidden" name="next" value="{% url 'blogyapp:home1' %}" />
                     <button name="submit" class="btn btn-outline-primary btn-sm">sign in</button>
-                    <span style="font-size: 0.9rem;color:#585858;margin-left:10px" >don't have an account? <a style="text-decoration:underline;color:#2c45ff" href="{% url 'users:register' %}">sign up</a></span>
+                    <span style="font-size: 1rem;color:#585858;margin-left:10px" >don't have an account? <a style="text-decoration:underline;color:#2c45ff" href="{% url 'users:register' %}">sign up</a></span>
                 
                 </form>
                 

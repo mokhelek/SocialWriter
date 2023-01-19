@@ -63,7 +63,7 @@ def home1(request):
         
         return render(request, 'blogyapp/landing_page.html' , {"popular":popular,"top_authors_details":top_authors_details})
 
-
+@login_required
 def following(request):
     print(  "following : " +  request.path)
     if request.user.is_authenticated:
@@ -123,6 +123,7 @@ def following(request):
         
         return render(request, 'blogyapp/landing_page.html' , {"popular":popular,"top_authors_details":top_authors_details})
 
+@login_required
 def popular(request):
     #print(  "popular : "  ,  request.path)
     
@@ -166,6 +167,7 @@ def popular(request):
         
         return render(request, 'blogyapp/landing_page.html' , {"popular":popular,"top_authors_details":top_authors_details})
 
+@login_required
 def searched_articles(request):
 
     if request.user.is_authenticated:
@@ -213,6 +215,7 @@ def searched_articles(request):
         return render(request, 'blogyapp/landing_page.html' , {"popular":popular,"top_authors_details":top_authors_details})
 
 
+@login_required
 def edit_profile(request, profile_id):
     profile = Profile.objects.get(id = profile_id)
     if request.method != 'POST' :
@@ -346,7 +349,7 @@ def read(request, read_id):
         context = {"entry": entry, "form":form ,"comments":comments }
         return render(request, "blogyapp/read.html", context)
         
-
+@login_required
 def profile_detail(request,profile_id):
     profile =Profile.objects.get(id=profile_id) #Profile of a specific user
     profile_comments = Comments.objects.filter(profile = profile).order_by("-date_created")
@@ -364,6 +367,7 @@ def profile_detail(request,profile_id):
               }
     return render(request , "blogyapp/profile_detail.html" , context )
 
+@login_required
 def follow_unfollow(request,profile_id):
     profile =Profile.objects.get(id=profile_id)
     followers = profile.followers
@@ -395,6 +399,7 @@ def follow_unfollow(request,profile_id):
     return render(request , "blogyapp/profile_detail.html" )
 
 
+@login_required
 def like_unlike(request,entry_id):
     previous_url = request.META["HTTP_REFERER"]  
 
@@ -431,6 +436,7 @@ def like_unlike(request,entry_id):
     return redirect(previous_url + "#" + str(entry_id))
     
 
+@login_required
 def bookmark(request,entry_id):
     previous_url = request.META["HTTP_REFERER"]  # url of previous page
     
@@ -470,13 +476,16 @@ def bookmark(request,entry_id):
             return redirect('blogyapp:home1')
         else:
             return redirect('blogyapp:read', entry_id )"""
-    
+ 
+@login_required   
 def my_bookmarks(request, profile_id):
     my_profile =Profile.objects.get(name =request.user)
     entries = my_profile.bookmarked_articles.all()
     context = {"entries":entries,"my_profile":my_profile }
     return render(request,"blogyapp/bookmarks.html",context )
 
+
+@login_required
 def user_entries(request):
     my_profile =Profile.objects.get(name =request.user)
     entries = Entry.objects.filter(profile = my_profile ).order_by("-date_added")
@@ -519,6 +528,8 @@ def user_entries(request):
     context = {  "entries":entries , }
     return render(request,"blogyapp/articles.html" , context)
 
+
+@login_required
 def publish_or_unpublish(request , entry_id):
     entry = Entry.objects.get(id = entry_id)
     uploaded = entry.uploaded
@@ -545,8 +556,9 @@ def publish_or_unpublish(request , entry_id):
     
     
     return render(request, 'blogyapp/articles.html', {"entries":entries})
+       
         
-      
+@login_required     
 def dashboard(request):
     
     profile =Profile.objects.get(name = request.user ) #Profile of a specific user
@@ -577,6 +589,7 @@ def dashboard(request):
     return render (request , "blogyapp/dashboard.html",context )
 
 
+@login_required
 def notifications(request):
 
     my_profile =Profile.objects.get(name =request.user)  

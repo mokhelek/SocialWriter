@@ -126,19 +126,19 @@
     
   </div>
   
-<div   style="" class=" d-flex justify-content-center"> 
+<div class=" d-flex justify-content-center"> 
     <div>
         <center>
             <h2 style="margin-bottom: 15px;">Sign up for an account</h2> 
 
         </center>
-        <form style="width: 600px;" method="post" action="{% url 'users:register' %}">
+        <form method="post" action="{% url 'users:register' %}">
             {% csrf_token %}
             {% bootstrap_form form %}
             
             
             <button class="btn btn-outline-success btn-sm" name="submit">Sign Up</button>
-            <span style="font-size: 0.9rem;color:#585858;margin-left:10px" >already have an account? <a style="text-decoration:underline;color:#2c45ff" href="{% url 'users:login' %}">sign in</a></span>
+            <span style="font-size: 1rem;color:#585858;margin-left:10px" >already have an account? <a style="text-decoration:underline;color:#2c45ff" href="{% url 'users:login' %}">sign in</a></span>
     
          
         </form>
