@@ -2,7 +2,7 @@
 SocialWriter is a social media platform where a community of writers can connect, share and inspire.
 
 ## Demo
-![App Screenshot](screely-1675344936744.png)
+![App Screenshot](87504993fa172a690934ec0b7b68a479914dd1d2.gif)
 
 
 ### Features
