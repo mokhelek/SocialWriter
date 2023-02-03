@@ -16,6 +16,7 @@ SocialWriter is a social media platform where a community of writers can conne
 - Filter & Sort articles
 - Notification System 
 - Dashboard for Stats
+- Authentication system 
 
 
 ## Tech Stack
