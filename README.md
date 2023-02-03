@@ -3,8 +3,7 @@ SocialWriter is a social media platform where a community of writers can conne
 
 ## Demo
 
-![App Screenshot](screely-1675344936744.png)
-###### link: https://mzansichess.pythonanywhere.com
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uC3h0vbm22c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 ### Features
