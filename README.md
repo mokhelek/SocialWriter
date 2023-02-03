@@ -1,5 +1,5 @@
 <center>
-<img width=300 height=90 src="Screenshot_20230204-005906_Chrome.jpg">  
+<img width=350 height=90 src="Screenshot_20230204-005906_Chrome.jpg">  
 </center>
 <br>
 SocialWriter is a social media platform where a community of writers can connect, share and inspire.
