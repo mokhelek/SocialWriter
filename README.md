@@ -1,4 +1,4 @@
-## SocialWriter
+![App Screenshot]()
 SocialWriter is a social media platform where a community of writers can connect, share and inspire.
 
 ## Demo
