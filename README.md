@@ -5,9 +5,12 @@
 SocialWriter is a social media platform where a community of writers can connect, share and inspire.
 
 ## Demo
-![App Screenshot](87504993fa172a690934ec0b7b68a479914dd1d2.gif)
+![  screenshot-rocks (1).png ](87504993fa172a690934ec0b7b68a479914dd1d2.gif)
+
+<img width=350 height=90 src="screenshot-rocks (1).png">  
 <br>
 ### 🔗 [SocialWriter live link >>](https://socialwriter.pythonanywhere.com)
+
 Username: demo <br>
 Password: demopassword 
 ### Features
