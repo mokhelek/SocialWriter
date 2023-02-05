@@ -9,6 +9,7 @@ SocialWriter is a social media platform where a community of writers can conne
 
 <img width=350  src="screenshot-rocks (1).png">  
 <br>
+
 ### 🔗 [SocialWriter live link >>](https://socialwriter.pythonanywhere.com)
 
 Username: demo <br>
