@@ -8,8 +8,7 @@ SocialWriter is a social media platform where a community of writers can conne
 ![  screenshot-rocks (1).png ](87504993fa172a690934ec0b7b68a479914dd1d2.gif)
 
 
-![App Screenshot](screenshot-rocks (1).png)
-
+<img src="screenshot-rocks (1).png">
 
 
 ### 🔗 [SocialWriter live link >>](https://socialwriter.pythonanywhere.com)
